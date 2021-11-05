@@ -1,10 +1,12 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Math;
 
 /**
  *
  * @author Erica Oliver
- * @version 1.0 - Oct 26, 2021
+ * @version 1.1 - Nov 5, 2021
  */
 
 public class Main {
@@ -12,26 +14,27 @@ public class Main {
     static double maximumGroupSize;
     static ArrayList<ArrayList> groups;
 
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException {
         groups = new ArrayList<>();
         maximumGroupSize = 4;
-        initStudents();
         sort(students);
+        writeCSV();
     }
 
-    public void validateFile(){}
-
-    public void readCSV(){}
-
-    public static void initStudents(){
-        students = new ArrayList<>();
-        students.add(new Student("A"));
-        students.add(new Student("B"));
-        students.add(new Student("C"));
-        students.add(new Student("D"));
-        students.add(new Student("E"));
-        students.add(new Student("F"));
-        students.add(new Student("G"));
+    /**
+     * Write the groups to a CSV file which can be opened in Excel
+     * @throws IOException
+     */
+    public static void writeCSV() throws IOException {
+        FileWriter writer = new FileWriter("groups.csv");
+        writer.append("Name,Student ID,Program,Grade,Email Address,Group Number\n");
+        for (ArrayList<Student> group : groups){
+            for (Student student : group){
+                writer.append(student.csvRepresentation());
+            }
+        }
+        writer.flush();
+        writer.close();
     }
 
     /**
@@ -42,31 +45,19 @@ public class Main {
      * @param students The list of students to be grouped
      */
     public static void sort(ArrayList<Student> students) {
+        int groupCounter = 1;
         for (int x = 0; x <= Math.ceil(students.size()/maximumGroupSize); x++) {
             ArrayList group = new ArrayList<>();
             groups.add(group);
             for (int n = 1; n <= maximumGroupSize; n++) {
                 group.add(students.get(0));
+                students.get(0).setGroupNum(groupCounter);
                 students.remove(0);
                 if (students.size() == 0){
                     break;
                 }
             }
-        }
-    }
-
-    public static void printStudents(){
-        for (Student s : students){
-            System.out.println(s.getName());
-        }
-    }
-
-    public static void printGroups(){
-        for (ArrayList<Student> group : groups){
-            for (Student s : group){
-                System.out.println(s.getName());
-            }
-            System.out.println();
+            groupCounter++;
         }
     }
 
@@ -74,8 +65,11 @@ public class Main {
      * Print an optimization summary of the formed groups
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
+     *
+     * IN PROGRESS
      */
-    public void optimizationSummary(){
+    public static void optimizationSummary() throws IOException {
+        FileWriter writer = new FileWriter("Optimization Summary.txt");
         //first check the group size criteria
         int count4 = 0;
         int count3 = 0;
@@ -85,26 +79,32 @@ public class Main {
             else if (g.size() == 4) count3++;
             else countInvalid++;
         }
-        System.out.println("The number of groups with 4 students is " + count4);
-        System.out.println("The number of groups with 4 students is " + count3);
-        System.out.println("The number of groups with an invalid number of students is " + countInvalid);
+        writer.append("The number of groups with 4 students is " + count4);
+        writer.append("The number of groups with 4 students is " + count3);
+        writer.append("The number of groups with an invalid number of students is " + countInvalid);
 
         //next check the team leader criteria
-        // need to create a method that checks if there is a team leader
-        //do this by checking the program of the first student in the group
         int hasDefaultLeader = 0;
         int hasBackupLeader = 0;
         int hasNoLeader = 0;
-        for (ArrayList<ArrayList<Student>> g: groups){
-            if (g.get(0).get(0).isDefaultLeader()) hasDefaultLeader++;
-            else if (g.get(0).get(0).isBackupLeader()) hasBackupLeader++;
+        for (ArrayList<Student> group : groups){
+            if (group.get(0).isDefaultLeader()) hasDefaultLeader++;
+            else if (group.get(0).isBackupLeader()) hasBackupLeader++;
             else hasNoLeader++;
         }
-        System.out.println("The number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader);
-        System.out.println("The number of groups with a team leader from another SYSC program is " + hasBackupLeader);
-        System.out.println("The number of groups with no team leader is " + hasNoLeader);
+        writer.append("The number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader);
+        writer.append("The number of groups with a team leader from another SYSC program is " + hasBackupLeader);
+        writer.append("The number of groups with no team leader is " + hasNoLeader);
+
+        //check the mix of programs criteria
+        //check the grade criteria
+        //check the
+
+        writer.flush();
+        writer.close();
     }
 
+    /* IN PROGRESS
     /**
      * Convert grades to letter grades without +/-
      *

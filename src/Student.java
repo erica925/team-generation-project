@@ -1,7 +1,7 @@
 /**
- * The student class represents a single with all of its attributes
+ * The student class represents a single student with all of its attributes
  * @author Erica Oliver
- * @version 1.0 - Oct 26, 2021
+ * @version 1.1 - Nov 2, 2021
  */
 
 public class Student {
@@ -9,7 +9,8 @@ public class Student {
     private String studID;
     private String program;
     private String grade;
-    private String email; //not for optimization, just for the output file
+    private String email;
+    private int groupNum; //the group that the student is sorted into
 
     /**
      * Constructor for when we start using the optimization criteria
@@ -51,37 +52,35 @@ public class Student {
     }
 
     /**
-     * Team leaders should be enrolled in either Software or Compsys
+     * Team leaders should be enrolled in either Software or Computer Systems Engineering
      * @return true if the student can be a team leader
      */
     public boolean isDefaultLeader(){
-        if (program.equals("Software Engineering") |
-                program.equals("Computer Systems Engineering") |
-                program.equals("Communications Engineering") ) {
+        if (program.equals("Software Engineering") ||
+                program.equals("Computer Systems Engineering")) {
             return true;
         }
         return false;
     }
 
     /**
-     * If no Software or compsys students can be found, the team leader
-     * should come from one of the other SYSC programs (comm, elec, biomed)
+     * If no Software or Computer Systems students can be found, the team leader
+     * should come from one of the other SYSC programs (Communications or Biomedical Engineering)
      * @return true is the student can be a team leader
      */
     public boolean isBackupLeader(){
-        if (program.equals("Biomedical Engineering") |
-                program.equals("Communications Engineering") |
-                program.equals("Electrical Engineering")) {
+        if (program.equals("Biomedical Engineering") ||
+                program.equals("Communications Engineering")) {
             return true;
         }
         return false;
     }
 
     /**
-     * Print the student's attributes
+     * @return a string representation of the student
      */
-    public void printStudent(){
-        System.out.println("Name: " + name + ", Student ID: " + studID + ", Program: " + program + ", Grade: " + grade);
+    public String csvRepresentation(){
+        return name + "," + studID + "," + program + "," + grade + "," + email + "," + groupNum + "\n";
     }
 
 
@@ -126,6 +125,14 @@ public class Student {
     }
 
     /**
+     * Getter for groupNum attribute
+     * @return The group that the student was sorted into
+     */
+    public int getGroupNum() {
+        return groupNum;
+    }
+
+    /**
      * Setter for Name attribute
      */
     public void setName(String name) {
@@ -158,5 +165,12 @@ public class Student {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Setter for groupNum attribute
+     */
+    public void setGroupNum(int groupNum) {
+        this.groupNum = groupNum;
     }
 }
