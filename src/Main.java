@@ -36,7 +36,8 @@ public class Main {
      */
     public static void readCSV(String filename) throws IOException {
 
-        List<Student> students = new ArrayList<>(); // the list of students
+        //List<Student> students = new ArrayList<>(); // the list of students
+        students = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
         // reads the first line (headers of CSV file)
