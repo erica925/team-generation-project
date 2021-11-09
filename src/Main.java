@@ -27,6 +27,7 @@ public class Main {
         maximumGroupSize = 4;
         sort(students);
         writeCSV();
+        optimizationSummary();
     }
   
   /**
@@ -56,9 +57,6 @@ public class Main {
                 students.add(new Student(student[0]));
                 // next line
                 line = bufferedReader.readLine();
-            }
-            for(Student s: students){
-                System.out.println(s);
             }
         } else {
             System.out.println("Invalid header name");
@@ -133,15 +131,17 @@ public class Main {
         int count4 = 0;
         int count3 = 0;
         int countInvalid = 0;
-        for (ArrayList<ArrayList> g: groups){
-            if (g.size() == 4) count4++;
-            else if (g.size() == 4) count3++;
+        for (ArrayList<ArrayList> group: groups){
+            if (group.size() == 4) count4++;
+            else if (group.size() == 3) count3++;
             else countInvalid++;
         }
-        writer.append("The number of groups with 4 students is " + count4);
-        writer.append("The number of groups with 4 students is " + count3);
-        writer.append("The number of groups with an invalid number of students is " + countInvalid);
+        writer.append("\nThe number of groups with 4 students is " + count4);
+        writer.append("\nThe number of groups with 3 students is " + count3);
+        writer.append("\nThe number of groups with an invalid number of students is " + countInvalid);
+        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + count4*100/groups.size());
 
+        /*
         //next check the team leader criteria
         int hasDefaultLeader = 0;
         int hasBackupLeader = 0;
@@ -157,6 +157,7 @@ public class Main {
 
         //check the mix of programs criteria
         //check the grade criteria
+        */
 
         writer.flush();
         writer.close();
