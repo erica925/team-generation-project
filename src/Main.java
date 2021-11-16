@@ -33,7 +33,7 @@ public class Main {
         optimizationSummary(filename);
     }
   
-  /**
+    /**
      * Reads a CSV file into an ArrayList of students
      * @param filename The filename inputted by the user
      * @throws IOException
@@ -64,7 +64,7 @@ public class Main {
         }
     }
   
-  /**
+    /**
      * Checks if the inputted file is a CSV file
      * @param filename The filename inputted by the user
      * @throws IOException
@@ -130,9 +130,9 @@ public class Main {
             group.add(stud);
             students.remove(stud);
             for (int i = 0; i < students.size(); i++){
-                if (stud.getLabSection().equals(students.get(0).getLabSection())){
-                    group.add(students.get(0));
-                    students.remove(0);
+                if (stud.getLabSection().equals(students.get(i).getLabSection())){
+                    group.add(students.get(i));
+                    students.remove(i);
                 }
             }
         }
@@ -168,7 +168,7 @@ public class Main {
         writer.append("\nThe number of groups with 4 students is " + groupsOf4.size() + " : " + groupsOf4);
         writer.append("\nThe number of groups with 3 students is " + groupsOf3.size() + " : " + groupsOf3);
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
-        //writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
+        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
 
         /*
         //next check the team leader criteria
@@ -195,7 +195,7 @@ public class Main {
         ArrayList<ArrayList> diffLabs = new ArrayList();
         for (ArrayList<Student> group : groups){
             for (int i = 0; i < group.size()-1; i++){
-                for (int j = 1; j < group.size(); i++){
+                for (int j = i + 1; j < group.size(); j++){
                     if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())){
                         diffLabs.add(group);
                         break;
@@ -206,8 +206,8 @@ public class Main {
         int countSameLab = groups.size()-countDiffLabs; //the number of groups in which all students are registered in the same lab section
         writer.append("\nThe number of groups in which all students are registered in the same lab section is " + countSameLab);
         writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + countDiffLabs);
-        //writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
-        writer.append("\nThe groups that do not adhere to the lab section criterion are: \n" + diffLabs.toString());
+        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
+        writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString());
 
         writer.flush();
         writer.close();
