@@ -14,9 +14,10 @@ import java.util.Scanner;
  */
 
 public class Main {
-    static ArrayList<Student> students;
-    static double maximumGroupSize;
-    static ArrayList<ArrayList<Student>> groups;
+    private static ArrayList<Student> students;
+    private static double maximumGroupSize;
+    private static ArrayList<ArrayList<Student>> groups;
+    private static int totalStudents;
 
     public static void main(String args[]) throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -25,7 +26,9 @@ public class Main {
         validateFile(filename);
         groups = new ArrayList<>();
         maximumGroupSize = 4;
-        sort(students);
+        totalStudents = students.size();
+        //simpleSort(students);
+        sortLabSections(students);
         writeCSV();
         optimizationSummary(filename);
     }
@@ -46,13 +49,13 @@ public class Main {
         // reads the first student
         String line = bufferedReader.readLine();
 
-        // the header of the CSV file must be "Student Name"
-        if(header.contains("Student Name")) {
+        // the header of the CSV file must be "Student Name, Student ID, Program, Grade, Lab Section, Email"
+        if(header.contains("Student Name, Student ID, Program, Grade, Lab Section, Email")) {
             while (line != null) {
-                // gets the student's name
+                // gets the student's info
                 String [] student = line.split(",");
-                // adds name
-                students.add(new Student(student[0]));
+                // adds info
+                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]));
                 // next line
                 line = bufferedReader.readLine();
             }
@@ -67,7 +70,6 @@ public class Main {
      * @throws IOException
      */
     public static void validateFile(String filename) throws IOException {
-
         // Checking file extension
         if(filename.endsWith(".csv")) {
             readCSV(filename);
@@ -82,7 +84,7 @@ public class Main {
      */
     public static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
-        writer.append("Name,Student ID,Program,Grade,Email Address,Group Number\n");
+        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n");
         for (ArrayList<Student> group : groups){
             for (Student student : group){
                 writer.append(student.csvRepresentation());
@@ -93,13 +95,11 @@ public class Main {
     }
 
     /**
-     * Sort the students into groups following the optimization criteria
-     *
-     * For iteration 1 there is no criteria, they are just split into groups of 4
+     * Just split the students into groups of 4
      *
      * @param students The list of students to be grouped
      */
-    public static void sort(ArrayList<Student> students) {
+    public static void simpleSort(ArrayList<Student> students) {
         int groupCounter = 1;
         for (int x = 0; x <= Math.ceil(students.size()/maximumGroupSize); x++) {
             ArrayList group = new ArrayList<>();
@@ -117,6 +117,28 @@ public class Main {
     }
 
     /**
+     * Split the list of students by lab section
+     *
+     * @param students The list of students to be sorted
+     */
+    public static void sortLabSections(ArrayList<Student> students){
+        while (!students.isEmpty()){
+            ArrayList<Student> group = new ArrayList<>();
+            groups.add(group);
+            //compare the lab section of the first student in the list to every other student
+            Student stud = students.get(0);
+            group.add(stud);
+            students.remove(stud);
+            for (int i = 0; i < students.size(); i++){
+                if (stud.getLabSection().equals(students.get(0).getLabSection())){
+                    group.add(students.get(0));
+                    students.remove(0);
+                }
+            }
+        }
+    }
+
+    /**
      * Print an optimization summary of the formed groups
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
@@ -127,7 +149,6 @@ public class Main {
         FileWriter writer = new FileWriter(filename + " - optimization summary.txt");
 
         //first check the group size criteria
-
         //check the groups that have 4, 3 or an invalid number of students
         ArrayList<Integer> groupsOf4 = new ArrayList(); //the groups that have 4 students
         ArrayList<Integer> groupsOf3 = new ArrayList(); //the groups that have 3 students
@@ -139,15 +160,15 @@ public class Main {
         }
         //check how many groups of 3 should be expected based on the number of students registered
         int x = -1;
-        if (students.size()%4 == 0) x = 0;
-        else if (students.size()%4 == 1) x = 3;
-        else if (students.size()%4 == 2) x = 2;
-        else if (students.size()%4 == 3) x = 1;
-        writer.append("\nSince there are " + students.size() + " students, we should at least expect " + x + " groups of 3" );
+        if (totalStudents%4 == 0) x = 0;
+        else if (totalStudents%4 == 1) x = 3;
+        else if (totalStudents%4 == 2) x = 2;
+        else if (totalStudents%4 == 3) x = 1;
+        writer.append("\nSince there are " + totalStudents + " students, we should at least expect " + x + " group(s) of 3" );
         writer.append("\nThe number of groups with 4 students is " + groupsOf4.size() + " : " + groupsOf4);
         writer.append("\nThe number of groups with 3 students is " + groupsOf3.size() + " : " + groupsOf3);
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
-        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
+        //writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
 
         /*
         //next check the team leader criteria
@@ -185,7 +206,7 @@ public class Main {
         int countSameLab = groups.size()-countDiffLabs; //the number of groups in which all students are registered in the same lab section
         writer.append("\nThe number of groups in which all students are registered in the same lab section is " + countSameLab);
         writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + countDiffLabs);
-        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
+        //writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
         writer.append("\nThe groups that do not adhere to the lab section criterion are: \n" + diffLabs.toString());
 
         writer.flush();

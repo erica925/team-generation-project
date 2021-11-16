@@ -32,15 +32,6 @@ public class Student {
     }
 
     /**
-     * Simple constructor for now
-     *
-     * @param name The student's name
-     */
-    public Student(String name){
-        this.name = name;
-    }
-
-    /**
      *
      * @param s1 A student
      * @param s2 A student
@@ -82,9 +73,8 @@ public class Student {
      * @return a string representation of the student
      */
     public String csvRepresentation(){
-        return name + "," + studID + "," + program + "," + grade + "," + email + "," + groupNum + "\n";
+        return name + "," + studID + "," + program + "," + grade + "," + labSection + "," + email + "," + groupNum + "\n";
     }
-
 
     /**
      * Getter for Name attribute
