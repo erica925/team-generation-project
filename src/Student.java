@@ -1,7 +1,7 @@
 /**
  * The student class represents a single student with all of its attributes
  * @author Erica Oliver
- * @version 1.1 - Nov 2, 2021
+ * @version 1.2 - Nov 14, 2021
  */
 
 public class Student {
@@ -9,6 +9,7 @@ public class Student {
     private String studID;
     private String program;
     private String grade;
+    private String labSection;
     private String email;
     private int groupNum; //the group that the student is sorted into
 
@@ -21,11 +22,12 @@ public class Student {
      * @param grade The student's grade from a prerequisite course
      * @param email The student's email address
      */
-    public Student(String name, String studID, String program, String grade, String email) {
+    public Student(String name, String studID, String program, String grade, String labSection, String email) {
         this.name = name;
         this.studID = studID;
         this.program = program;
         this.grade = grade;
+        this.labSection = labSection;
         this.email = email;
     }
 
@@ -117,6 +119,14 @@ public class Student {
     }
 
     /**
+     * Getter for labSection attribute
+     * @return The student's lab section
+     */
+    public String getLabSection() {
+        return labSection;
+    }
+
+    /**
      * Getter for Email attribute
      * @return The student's email
      */
@@ -158,6 +168,13 @@ public class Student {
      */
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    /**
+     * Setter for labSection attribute
+     */
+    public void setLabSection(String labSection) {
+        this.labSection = labSection;
     }
 
     /**

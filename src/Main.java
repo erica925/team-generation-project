@@ -10,13 +10,13 @@ import java.util.Scanner;
 /**
  *
  * @author Erica Oliver, Wintana Yosief
- * @version 1.1 - Nov 5, 2021
+ * @version 1.2 - Nov 15, 2021
  */
 
 public class Main {
     static ArrayList<Student> students;
     static double maximumGroupSize;
-    static ArrayList<ArrayList> groups;
+    static ArrayList<ArrayList<Student>> groups;
 
     public static void main(String args[]) throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -27,7 +27,7 @@ public class Main {
         maximumGroupSize = 4;
         sort(students);
         writeCSV();
-        optimizationSummary();
+        optimizationSummary(filename);
     }
   
   /**
@@ -36,7 +36,6 @@ public class Main {
      * @throws IOException
      */
     public static void readCSV(String filename) throws IOException {
-
         //List<Student> students = new ArrayList<>(); // the list of students
         students = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
@@ -49,7 +48,6 @@ public class Main {
 
         // the header of the CSV file must be "Student Name"
         if(header.contains("Student Name")) {
-
             while (line != null) {
                 // gets the student's name
                 String [] student = line.split(",");
@@ -125,21 +123,31 @@ public class Main {
      *
      * IN PROGRESS
      */
-    public static void optimizationSummary() throws IOException {
-        FileWriter writer = new FileWriter("Optimization Summary.txt");
+    public static void optimizationSummary(String filename) throws IOException {
+        FileWriter writer = new FileWriter(filename + " - optimization summary.txt");
+
         //first check the group size criteria
-        int count4 = 0;
-        int count3 = 0;
-        int countInvalid = 0;
-        for (ArrayList<ArrayList> group: groups){
-            if (group.size() == 4) count4++;
-            else if (group.size() == 3) count3++;
-            else countInvalid++;
+
+        //check the groups that have 4, 3 or an invalid number of students
+        ArrayList<Integer> groupsOf4 = new ArrayList(); //the groups that have 4 students
+        ArrayList<Integer> groupsOf3 = new ArrayList(); //the groups that have 3 students
+        ArrayList<Integer> groupsOfInvalid = new ArrayList(); // the groups that have an invalid number of students
+        for (ArrayList<Student> group: groups){
+            if (group.size() == 4) groupsOf4.add(group.get(0).getGroupNum());
+            else if (group.size() == 3) groupsOf3.add(group.get(0).getGroupNum());
+            else groupsOfInvalid.add(group.get(0).getGroupNum());
         }
-        writer.append("\nThe number of groups with 4 students is " + count4);
-        writer.append("\nThe number of groups with 3 students is " + count3);
-        writer.append("\nThe number of groups with an invalid number of students is " + countInvalid);
-        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + count4*100/groups.size());
+        //check how many groups of 3 should be expected based on the number of students registered
+        int x = -1;
+        if (students.size()%4 == 0) x = 0;
+        else if (students.size()%4 == 1) x = 3;
+        else if (students.size()%4 == 2) x = 2;
+        else if (students.size()%4 == 3) x = 1;
+        writer.append("\nSince there are " + students.size() + " students, we should at least expect " + x + " groups of 3" );
+        writer.append("\nThe number of groups with 4 students is " + groupsOf4.size() + " : " + groupsOf4);
+        writer.append("\nThe number of groups with 3 students is " + groupsOf3.size() + " : " + groupsOf3);
+        writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
+        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
 
         /*
         //next check the team leader criteria
@@ -158,6 +166,27 @@ public class Main {
         //check the mix of programs criteria
         //check the grade criteria
         */
+
+
+        //check lab section criteria - each group should have students all from the same lab section
+        //for each group {count groups with all same lab section and which ones have mixed lab sections}
+        int countDiffLabs = 0; //the number of groups in which NOT all students are registered in the same lab section
+        ArrayList<ArrayList> diffLabs = new ArrayList();
+        for (ArrayList<Student> group : groups){
+            for (int i = 0; i < group.size()-1; i++){
+                for (int j = 1; j < group.size(); i++){
+                    if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())){
+                        diffLabs.add(group);
+                        break;
+                    }
+                }
+            }
+        }
+        int countSameLab = groups.size()-countDiffLabs; //the number of groups in which all students are registered in the same lab section
+        writer.append("\nThe number of groups in which all students are registered in the same lab section is " + countSameLab);
+        writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + countDiffLabs);
+        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
+        writer.append("\nThe groups that do not adhere to the lab section criterion are: \n" + diffLabs.toString());
 
         writer.flush();
         writer.close();
