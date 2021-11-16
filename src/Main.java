@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.io.*;
-import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 /**
  *
  * @author Erica Oliver, Wintana Yosief
+
  * @version 1.2 - Nov 15, 2021
+
  */
 
 public class Main {
@@ -26,6 +28,7 @@ public class Main {
         validateFile(filename);
         groups = new ArrayList<>();
         maximumGroupSize = 4;
+        sortPrograms(students);
         totalStudents = students.size();
         //simpleSort(students);
         sortLabSections(students);
@@ -54,8 +57,9 @@ public class Main {
             while (line != null) {
                 // gets the student's info
                 String [] student = line.split(",");
+
                 // adds info
-                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]));
+                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]);
                 // next line
                 line = bufferedReader.readLine();
             }
@@ -117,6 +121,96 @@ public class Main {
     }
 
     /**
+
+     * Sorting students into groups based on programs
+     * At most two students are from the same program
+     *
+     * @param students The list of students to be sorted
+     */
+    public static void sortPrograms(ArrayList<Student> students){
+
+       // Creates groups
+       for(int i = 0; i <= Math.ceil(students.size()/maximumGroupSize); i++) {
+           ArrayList group = new ArrayList<>();
+           group.add(students.get(0));
+           students.get(0).setGroupNum(i+1);
+           students.remove(0);
+           groups.add(group);
+
+       }
+
+
+
+       ListIterator<Student> studentsIterator = students.listIterator();
+       boolean groupFound = false;
+
+       // Iterates over students
+       while(studentsIterator.hasNext()) {
+
+           Student s = studentsIterator.next();
+
+           // Iterates over groups
+           for (int i = 0; i < groups.size(); i++) {
+               ArrayList<Student> group = groups.get(i);
+
+               ListIterator<Student> groupIterator = group.listIterator();
+
+               // Iterating over each student in a single group
+               while (groupIterator.hasNext()) {
+                   Student student = groupIterator.next();
+
+                   // Checking if students are in the same program
+                   if (!s.sameProgram(s, student) && group.size() < maximumGroupSize) {
+                       groupIterator.add(s); // adds student to group
+                       groupFound = true;
+                       s.setGroupNum(i + 1);
+                       studentsIterator.remove(); // removes student from list
+                       break;
+
+                   } else {
+
+
+                       if(group.size() < maximumGroupSize){
+
+                            // If only one student has matching program add student
+                            int matchingPrograms = countMatchingPrograms(s, group);
+                            if(matchingPrograms < 2) {
+                                groupIterator.add(s); // adds student to group
+                                groupFound = true;
+                                s.setGroupNum(i + 1);
+                                studentsIterator.remove(); // removes student from list
+                                break;
+                            }
+                       }
+
+                   }
+
+               }
+               if(groupFound){
+                   groupFound = false;
+                   break;
+               }
+           }
+       }
+
+    }
+
+    /**
+     * Counts how many students have matching programs with the given Student
+     * @param s The student
+     * @param group The group
+     * @return
+     */
+    private static int countMatchingPrograms(Student s, ArrayList<Student> group){
+        int count = 0;
+        for(Student student: group){
+            if(s.sameProgram(s,student)){
+                count += 1;
+            }
+        }
+        return count;
+
+     /*
      * Split the list of students by lab section
      *
      * @param students The list of students to be sorted
@@ -136,6 +230,7 @@ public class Main {
                 }
             }
         }
+
     }
 
     /**
