@@ -1,7 +1,7 @@
 /**
  * The student class represents a single student with all of its attributes
  * @author Erica Oliver
- * @version 1.1 - Nov 2, 2021
+ * @version 1.2 - Nov 14, 2021
  */
 
 public class Student {
@@ -9,6 +9,7 @@ public class Student {
     private String studID;
     private String program;
     private String grade;
+    private String labSection;
     private String email;
     private int groupNum; //the group that the student is sorted into
 
@@ -21,21 +22,13 @@ public class Student {
      * @param grade The student's grade from a prerequisite course
      * @param email The student's email address
      */
-    public Student(String name, String studID, String program, String grade, String email) {
+    public Student(String name, String studID, String program, String grade, String labSection, String email) {
         this.name = name;
         this.studID = studID;
         this.program = program;
         this.grade = grade;
+        this.labSection = labSection;
         this.email = email;
-    }
-
-    /**
-     * Simple constructor for now
-     *
-     * @param name The student's name
-     */
-    public Student(String name){
-        this.name = name;
     }
 
     /**
@@ -80,9 +73,8 @@ public class Student {
      * @return a string representation of the student
      */
     public String csvRepresentation(){
-        return name + "," + studID + "," + program + "," + grade + "," + email + "," + groupNum + "\n";
+        return name + "," + studID + "," + program + "," + grade + "," + labSection + "," + email + "," + groupNum + "\n";
     }
-
 
     /**
      * Getter for Name attribute
@@ -114,6 +106,14 @@ public class Student {
      */
     public String getGrade() {
         return grade;
+    }
+
+    /**
+     * Getter for labSection attribute
+     * @return The student's lab section
+     */
+    public String getLabSection() {
+        return labSection;
     }
 
     /**
@@ -158,6 +158,13 @@ public class Student {
      */
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    /**
+     * Setter for labSection attribute
+     */
+    public void setLabSection(String labSection) {
+        this.labSection = labSection;
     }
 
     /**
