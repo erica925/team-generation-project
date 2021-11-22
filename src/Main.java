@@ -59,7 +59,7 @@ public class Main {
                 String [] student = line.split(",");
 
                 // adds info
-                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]);
+                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]));
                 // next line
                 line = bufferedReader.readLine();
             }
@@ -201,14 +201,15 @@ public class Main {
      * @param group The group
      * @return
      */
-    private static int countMatchingPrograms(Student s, ArrayList<Student> group){
+    private static int countMatchingPrograms(Student s, ArrayList<Student> group) {
         int count = 0;
-        for(Student student: group){
-            if(s.sameProgram(s,student)){
+        for (Student student : group) {
+            if (s.sameProgram(s, student)) {
                 count += 1;
             }
         }
         return count;
+    }
 
      /*
      * Split the list of students by lab section
