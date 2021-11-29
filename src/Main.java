@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Erica Oliver, Wintana Yosief
 
- * @version 1.2 - Nov 15, 2021
+ * @version 1.2 - Nov 28, 2021
 
  */
 
@@ -28,11 +28,19 @@ public class Main {
         validateFile(filename);
         groups = new ArrayList<>();
         maximumGroupSize = 4;
-        sortPrograms(students);
+        //sortPrograms(students);
         totalStudents = students.size();
         //simpleSort(students);
-        sortLabSections(students);
+        ArrayList<ArrayList<Student>> labSectionGroups = sortLabSections(students);
+
+        for(ArrayList<Student> labSectionGroup: labSectionGroups){
+            sortPrograms(labSectionGroup);
+
+        }
         writeCSV();
+
+
+
         optimizationSummary(filename);
     }
   
@@ -110,7 +118,7 @@ public class Main {
             groups.add(group);
             for (int n = 1; n <= maximumGroupSize; n++) {
                 group.add(students.get(0));
-                students.get(0).setGroupNum(groupCounter);
+               // students.get(0).setGroupNum(groupCounter);
                 students.remove(0);
                 if (students.size() == 0){
                     break;
@@ -125,33 +133,34 @@ public class Main {
      * Sorting students into groups based on programs
      * At most two students are from the same program
      *
-     * @param students The list of students to be sorted
+     * @param labSectionStudents The list of students to be sorted
      */
-    public static void sortPrograms(ArrayList<Student> students){
+    public static void sortPrograms(ArrayList<Student> labSectionStudents){
 
        // Creates groups
-       for(int i = 0; i <= Math.ceil(students.size()/maximumGroupSize); i++) {
-           ArrayList group = new ArrayList<>();
-           group.add(students.get(0));
-           students.get(0).setGroupNum(i+1);
-           students.remove(0);
-           groups.add(group);
+        ArrayList<ArrayList<Student>> sortedGroups = new ArrayList<ArrayList<Student>>();
+       for(int i = 0; i < Math.ceil(labSectionStudents.size()/maximumGroupSize); i++) {
+           ArrayList<Student> group = new ArrayList<>();
+           group.add(labSectionStudents.get(0));
+           labSectionStudents.get(0).setGroupNum(labSectionStudents.get(0).getLabSection() + ".G" + (i + 1));
+           labSectionStudents.remove(0);
+           sortedGroups.add(group);
+
 
        }
 
-
-
-       ListIterator<Student> studentsIterator = students.listIterator();
+       ListIterator<Student> studentsIterator = labSectionStudents.listIterator();
        boolean groupFound = false;
 
        // Iterates over students
        while(studentsIterator.hasNext()) {
 
            Student s = studentsIterator.next();
+           System.out.println(s.getName());
 
            // Iterates over groups
-           for (int i = 0; i < groups.size(); i++) {
-               ArrayList<Student> group = groups.get(i);
+           for (int i = 0; i < sortedGroups.size(); i++) {
+               ArrayList<Student> group = sortedGroups.get(i);
 
                ListIterator<Student> groupIterator = group.listIterator();
 
@@ -163,7 +172,7 @@ public class Main {
                    if (!s.sameProgram(s, student) && group.size() < maximumGroupSize) {
                        groupIterator.add(s); // adds student to group
                        groupFound = true;
-                       s.setGroupNum(i + 1);
+                       s.setGroupNum(s.getLabSection() + ".G" + (i + 1));
                        studentsIterator.remove(); // removes student from list
                        break;
 
@@ -177,7 +186,7 @@ public class Main {
                             if(matchingPrograms < 2) {
                                 groupIterator.add(s); // adds student to group
                                 groupFound = true;
-                                s.setGroupNum(i + 1);
+                                s.setGroupNum(s.getLabSection() + ".G" + (i + 1));
                                 studentsIterator.remove(); // removes student from list
                                 break;
                             }
@@ -192,6 +201,8 @@ public class Main {
                }
            }
        }
+       groups.addAll(sortedGroups);
+
 
     }
 
@@ -216,10 +227,12 @@ public class Main {
      *
      * @param students The list of students to be sorted
      */
-    public static void sortLabSections(ArrayList<Student> students){
+    public static ArrayList<ArrayList<Student>> sortLabSections(ArrayList<Student> students){
+        ArrayList<ArrayList<Student>> labSections = new ArrayList<ArrayList<Student>>();
         while (!students.isEmpty()){
             ArrayList<Student> group = new ArrayList<>();
-            groups.add(group);
+            //groups.add(group);
+            labSections.add(group);
             //compare the lab section of the first student in the list to every other student
             Student stud = students.get(0);
             group.add(stud);
@@ -231,6 +244,7 @@ public class Main {
                 }
             }
         }
+        return labSections;
 
     }
 
@@ -246,9 +260,9 @@ public class Main {
 
         //first check the group size criteria
         //check the groups that have 4, 3 or an invalid number of students
-        ArrayList<Integer> groupsOf4 = new ArrayList(); //the groups that have 4 students
-        ArrayList<Integer> groupsOf3 = new ArrayList(); //the groups that have 3 students
-        ArrayList<Integer> groupsOfInvalid = new ArrayList(); // the groups that have an invalid number of students
+        ArrayList<String> groupsOf4 = new ArrayList(); //the groups that have 4 students
+        ArrayList<String> groupsOf3 = new ArrayList(); //the groups that have 3 students
+        ArrayList<String> groupsOfInvalid = new ArrayList(); // the groups that have an invalid number of students
         for (ArrayList<Student> group: groups){
             if (group.size() == 4) groupsOf4.add(group.get(0).getGroupNum());
             else if (group.size() == 3) groupsOf3.add(group.get(0).getGroupNum());
