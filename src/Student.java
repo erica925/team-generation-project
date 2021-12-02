@@ -38,10 +38,7 @@ public class Student {
      * @return true if the students are enrolled in the same program
      */
     public boolean sameProgram(Student s1, Student s2){
-        if (s1.program.equals(s2.program)){
-            return true;
-        }
-        return false;
+        return (s1.program.equals(s2.program));
     }
 
     /**

@@ -61,7 +61,7 @@ public class Main {
         String line = bufferedReader.readLine();
 
         // the header of the CSV file must be "Student Name, Student ID, Program, Grade, Lab Section, Email"
-        if(header.contains("Student Name, Student ID, Program, Grade, Lab Section, Email")) {
+        if(header.contains("Student Name,Student ID,Program,Grade,Lab Section,Email")) {
             while (line != null) {
                 // gets the student's info
                 String [] student = line.split(",");
