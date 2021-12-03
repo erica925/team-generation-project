@@ -8,6 +8,7 @@
 
 
 Input file specifications:
-The file must be of type csv - you can convert an Excel sheet to csv
-The columns must be "Student Name, Student ID, Program, Grade, Lab Section, Email"
+- The file must be of type csv - you can convert an Excel sheet to csv
+- The columns must be "Student Name, Student ID, Program, Grade, Lab Section, Email"
+- The grades must be given in letter form
 

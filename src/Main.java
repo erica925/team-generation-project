@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class Main {
     private static ArrayList<Student> students;
     private static double maximumGroupSize;
+    private static double minimumGroupSize;
     private static ArrayList<ArrayList<Student>> groups;
     private static int totalStudents;
 
@@ -28,19 +29,16 @@ public class Main {
         validateFile(filename);
         groups = new ArrayList<>();
         maximumGroupSize = 4;
+        minimumGroupSize = 3;
         //sortPrograms(students);
         totalStudents = students.size();
         //simpleSort(students);
         ArrayList<ArrayList<Student>> labSectionGroups = sortLabSections(students);
-
         for(ArrayList<Student> labSectionGroup: labSectionGroups){
             sortPrograms(labSectionGroup);
 
         }
         writeCSV();
-
-
-
         optimizationSummary(filename);
     }
   
@@ -101,6 +99,7 @@ public class Main {
             for (Student student : group){
                 writer.append(student.csvRepresentation());
             }
+            writer.append("\n");
         }
         writer.flush();
         writer.close();
@@ -129,58 +128,69 @@ public class Main {
     }
 
     /**
-
      * Sorting students into groups based on programs
      * At most two students are from the same program
+     * Students must be sorted into groups of 3 or 4
      *
      * @param labSectionStudents The list of students to be sorted
      */
     public static void sortPrograms(ArrayList<Student> labSectionStudents){
+        int num3Groups = 0; //the number of groups with 3 students
+        int num4Groups = 0; //the number of groups with 4 students
+        if (labSectionStudents.size()%4 == 0) {
+            num3Groups = 0;
+            num4Groups = labSectionStudents.size()/4;
+        }
+        if (labSectionStudents.size()%4 == 1) {
+            num3Groups = 3;
+            num4Groups = (labSectionStudents.size()-9)/4;
+        }
+        if (labSectionStudents.size()%4 == 2) {
+            num3Groups = 2;
+            num4Groups = (labSectionStudents.size()-6)/4;
+        }
+        if (labSectionStudents.size()%4 == 3) {
+            num3Groups = 1;
+            num4Groups = (labSectionStudents.size()-3)/4;
+        }
+        int numGroups = num3Groups + num4Groups;
 
-       // Creates groups
+        // Creates groups
         ArrayList<ArrayList<Student>> sortedGroups = new ArrayList<ArrayList<Student>>();
-       for(int i = 0; i < Math.ceil(labSectionStudents.size()/maximumGroupSize); i++) {
+        for(int i = 0; i < numGroups; i++){
            ArrayList<Student> group = new ArrayList<>();
            group.add(labSectionStudents.get(0));
            labSectionStudents.get(0).setGroupNum(labSectionStudents.get(0).getLabSection() + ".G" + (i + 1));
            labSectionStudents.remove(0);
            sortedGroups.add(group);
-
-
-       }
+        }
 
        ListIterator<Student> studentsIterator = labSectionStudents.listIterator();
        boolean groupFound = false;
-
        // Iterates over students
        while(studentsIterator.hasNext()) {
-
            Student s = studentsIterator.next();
-           System.out.println(s.getName());
-
+           //System.out.println(s.getName());
            // Iterates over groups
            for (int i = 0; i < sortedGroups.size(); i++) {
+               double groupSize;
+               if (i < num4Groups) groupSize = maximumGroupSize;
+               else  groupSize = minimumGroupSize;
+
                ArrayList<Student> group = sortedGroups.get(i);
-
                ListIterator<Student> groupIterator = group.listIterator();
-
                // Iterating over each student in a single group
                while (groupIterator.hasNext()) {
                    Student student = groupIterator.next();
-
                    // Checking if students are in the same program
-                   if (!s.sameProgram(s, student) && group.size() < maximumGroupSize) {
+                   if (!s.sameProgram(s, student) && group.size() < groupSize) {
                        groupIterator.add(s); // adds student to group
                        groupFound = true;
                        s.setGroupNum(s.getLabSection() + ".G" + (i + 1));
                        studentsIterator.remove(); // removes student from list
                        break;
-
                    } else {
-
-
-                       if(group.size() < maximumGroupSize){
-
+                       if(group.size() < groupSize){
                             // If only one student has matching program add student
                             int matchingPrograms = countMatchingPrograms(s, group);
                             if(matchingPrograms < 2) {
@@ -191,9 +201,7 @@ public class Main {
                                 break;
                             }
                        }
-
                    }
-
                }
                if(groupFound){
                    groupFound = false;
@@ -202,8 +210,6 @@ public class Main {
            }
        }
        groups.addAll(sortedGroups);
-
-
     }
 
     /**
@@ -222,7 +228,7 @@ public class Main {
         return count;
     }
 
-     /*
+     /**
      * Split the list of students by lab section
      *
      * @param students The list of students to be sorted
@@ -241,11 +247,39 @@ public class Main {
                 if (stud.getLabSection().equals(students.get(i).getLabSection())){
                     group.add(students.get(i));
                     students.remove(i);
+                    i--;
                 }
             }
         }
         return labSections;
+    }
 
+    /**
+     * Sort each student by their grade (A+,A,A-,...)
+     * Each group shall have a multiple of 4 students or
+     * a multiple of 4 + 3
+     *
+     * @param students The list of students to be sorted by grade
+     * @return A list of groups
+     */
+    public static ArrayList<ArrayList<Student>> sortGrades(ArrayList<Student> students){
+        ArrayList<ArrayList<Student>> grades = new ArrayList<>();
+        while (!students.isEmpty()) {
+            ArrayList<Student> group = new ArrayList<>();
+            grades.add(group);
+            Student stud = students.get(0);
+            group.add(stud);
+            students.remove(stud);
+            for (int i = 0; i < students.size(); i++){
+                if (stud.getLabSection().equals(students.get(i).getLabSection())){
+                    group.add(students.get(i));
+                    students.remove(i);
+                    i--;
+                }
+            }
+
+        }
+        return grades;
     }
 
     /**
@@ -278,7 +312,7 @@ public class Main {
         writer.append("\nThe number of groups with 4 students is " + groupsOf4.size() + " : " + groupsOf4);
         writer.append("\nThe number of groups with 3 students is " + groupsOf3.size() + " : " + groupsOf3);
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
-        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "\n");
+        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "%\n");
 
         /*
         //next check the team leader criteria
@@ -316,32 +350,10 @@ public class Main {
         int countSameLab = groups.size()-countDiffLabs; //the number of groups in which all students are registered in the same lab section
         writer.append("\nThe number of groups in which all students are registered in the same lab section is " + countSameLab);
         writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + countDiffLabs);
-        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size());
+        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size() + "%");
         writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString());
 
         writer.flush();
         writer.close();
     }
-
-    /* IN PROGRESS
-    /**
-     * Convert grades to letter grades without +/-
-     *
-     * A -> 80-100
-     * B -> 70-79
-     * C -> 60-69
-     * D -> 50-59
-     * F -> below 50
-     *
-     * @param students
-     * @return
-     */
-    /*public ArrayList<Student> convertLetterGrade(ArrayList<Student> students){
-        for (Student s : students){
-            if (s.getGrade() > 80){
-                s.setGrade("A");
-            }
-        }
-        return students;
-    }*/
 }
