@@ -302,7 +302,7 @@ public class Main {
     public static void optimizationSummary(String filename) throws IOException {
         FileWriter writer = new FileWriter(filename + " - optimization summary.txt");
 
-        //first check the group size criteria
+        //check the group size criteria
         //check the groups that have 4, 3 or an invalid number of students
         ArrayList<String> groupsOf4 = new ArrayList(); //the groups that have 4 students
         ArrayList<String> groupsOf3 = new ArrayList(); //the groups that have 3 students
@@ -344,44 +344,38 @@ public class Main {
         writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size()*100/groups.size() + "%");
         writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString() + "\n");
 
-        //next check the programs criteria
+        //check the programs criteria
         ArrayList<String> repeatPrograms = new ArrayList<>();
         ArrayList<String> uniquePrograms = new ArrayList<>();
         for (ArrayList<Student> group : groups){
             boolean hasRepeat = false;
             for (Student student : group){
                 if (countMatchingPrograms(student, group) > 0 && !hasRepeat) {
-                    System.out.println(group.get(0).getGroupNum());
-                    System.out.println(countMatchingPrograms(student,group));
                     hasRepeat = true;
                     repeatPrograms.add(student.getGroupNum());
                 }
             }
             if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
         }
-        System.out.println(uniquePrograms);
-        System.out.println(repeatPrograms);
         writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
         writer.append("\nThe number of groups that adhere do not to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
-        writer.append("\nThe percentage of groups that adhere to the programs criteria is " + uniquePrograms.size()*100/groups.size() + "%");
+        writer.append("\nThe percentage of groups that adhere to the programs criterion is " + uniquePrograms.size()*100/groups.size() + "%\n");
 
-        /*
         //next check the team leader criteria
-        int hasDefaultLeader = 0;
-        int hasBackupLeader = 0;
-        int hasNoLeader = 0;
+        ArrayList<String> hasDefaultLeader = new ArrayList<>();
+        ArrayList<String> hasBackupLeader = new ArrayList<>();
+        ArrayList<String> hasNoLeader = new ArrayList<>();
         for (ArrayList<Student> group : groups){
-            if (group.get(0).isDefaultLeader()) hasDefaultLeader++;
-            else if (group.get(0).isBackupLeader()) hasBackupLeader++;
-            else hasNoLeader++;
+            if (group.get(0).isDefaultLeader()) hasDefaultLeader.add(group.get(0).getGroupNum());
+            else if (group.get(0).isBackupLeader()) hasBackupLeader.add(group.get(0).getGroupNum());
+            else hasNoLeader.add(group.get(0).getGroupNum());
         }
-        writer.append("The number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader);
-        writer.append("The number of groups with a team leader from another SYSC program is " + hasBackupLeader);
-        writer.append("The number of groups with no team leader is " + hasNoLeader);
+        writer.append("\nThe number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader.size() + " : " + hasDefaultLeader);
+        writer.append("\nThe number of groups with a team leader from another SYSC program is " + hasBackupLeader.size() + " : " + hasBackupLeader);
+        writer.append("\nThe number of groups with no team leader is " + hasNoLeader.size() + " : " + hasNoLeader);
+        writer.append("\nThe percentage of groups that adhere tp the team leader criterion is " + hasDefaultLeader.size()*100/groups.size() + "%\n");
 
-        //check the mix of programs criteria
         //check the grade criteria
-        */
 
         writer.flush();
         writer.close();
