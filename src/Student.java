@@ -11,7 +11,7 @@ public class Student {
     private String grade;
     private String labSection;
     private String email;
-    private int groupNum; //the group that the student is sorted into
+    private String groupNum; //the group that the student is sorted into
 
     /**
      * Constructor for when we start using the optimization criteria
@@ -38,10 +38,7 @@ public class Student {
      * @return true if the students are enrolled in the same program
      */
     public boolean sameProgram(Student s1, Student s2){
-        if (s1.program.equals(s2.program)){
-            return true;
-        }
-        return false;
+        return (s1.program.equals(s2.program));
     }
 
     /**
@@ -128,7 +125,7 @@ public class Student {
      * Getter for groupNum attribute
      * @return The group that the student was sorted into
      */
-    public int getGroupNum() {
+    public String getGroupNum() {
         return groupNum;
     }
 
@@ -177,7 +174,7 @@ public class Student {
     /**
      * Setter for groupNum attribute
      */
-    public void setGroupNum(int groupNum) {
+    public void setGroupNum(String groupNum) {
         this.groupNum = groupNum;
     }
 }
