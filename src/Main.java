@@ -221,7 +221,7 @@ public class Main {
     private static int countMatchingPrograms(Student s, ArrayList<Student> group) {
         int count = 0;
         for (Student student : group) {
-            if (s.sameProgram(s, student)) {
+            if (s.sameProgram(s, student) && !s.equals(student)) {
                 count += 1;
             }
         }
@@ -271,13 +271,8 @@ public class Main {
             group.add(stud);
             students.remove(stud);
             for (int i = 0; i < students.size(); i++){
-                if (stud.getLabSection().equals(students.get(i).getLabSection())){
-                    group.add(students.get(i));
-                    students.remove(i);
-                    i--;
-                }
-            }
 
+            }
         }
         return grades;
     }
@@ -314,6 +309,47 @@ public class Main {
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
         writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size()*100/groups.size() + "%\n");
 
+        //check lab section criteria - each group should have students all from the same lab section
+        //for each group {count groups with all same lab section and which ones have mixed lab sections}
+        ArrayList<String> diffLabs = new ArrayList(); //the number of groups in which NOT all students are registered in the same lab section
+        ArrayList<String> sameLabs = new ArrayList(); //the number of groups in which all students are registered in the same lab section
+        for (ArrayList<Student> group : groups){
+            for (int i = 0; i < group.size()-1; i++){
+                for (int j = i + 1; j < group.size(); j++){
+                    if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())){
+                        diffLabs.add(group.get(0).getGroupNum());
+                        break;
+                    }
+                }
+            }
+            sameLabs.add(group.get(0).getGroupNum());
+        }
+        writer.append("\nThe number of groups in which all students are registered in the same lab section is " + sameLabs.size() + " : " + sameLabs);
+        writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + diffLabs.size() + " : " + diffLabs);
+        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size()*100/groups.size() + "%");
+        writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString() + "\n");
+
+        //next check the programs criteria
+        ArrayList<String> repeatPrograms = new ArrayList<>();
+        ArrayList<String> uniquePrograms = new ArrayList<>();
+        for (ArrayList<Student> group : groups){
+            boolean hasRepeat = false;
+            for (Student student : group){
+                if (countMatchingPrograms(student, group) > 0 && !hasRepeat) {
+                    System.out.println(group.get(0).getGroupNum());
+                    System.out.println(countMatchingPrograms(student,group));
+                    hasRepeat = true;
+                    repeatPrograms.add(student.getGroupNum());
+                }
+            }
+            if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
+        }
+        System.out.println(uniquePrograms);
+        System.out.println(repeatPrograms);
+        writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
+        writer.append("\nThe number of groups that adhere do not to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
+        writer.append("\nThe percentage of groups that adhere to the programs criteria is " + uniquePrograms.size()*100/groups.size() + "%");
+
         /*
         //next check the team leader criteria
         int hasDefaultLeader = 0;
@@ -331,27 +367,6 @@ public class Main {
         //check the mix of programs criteria
         //check the grade criteria
         */
-
-
-        //check lab section criteria - each group should have students all from the same lab section
-        //for each group {count groups with all same lab section and which ones have mixed lab sections}
-        int countDiffLabs = 0; //the number of groups in which NOT all students are registered in the same lab section
-        ArrayList<ArrayList> diffLabs = new ArrayList();
-        for (ArrayList<Student> group : groups){
-            for (int i = 0; i < group.size()-1; i++){
-                for (int j = i + 1; j < group.size(); j++){
-                    if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())){
-                        diffLabs.add(group);
-                        break;
-                    }
-                }
-            }
-        }
-        int countSameLab = groups.size()-countDiffLabs; //the number of groups in which all students are registered in the same lab section
-        writer.append("\nThe number of groups in which all students are registered in the same lab section is " + countSameLab);
-        writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + countDiffLabs);
-        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + countSameLab*100/groups.size() + "%");
-        writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString());
 
         writer.flush();
         writer.close();
