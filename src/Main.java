@@ -30,13 +30,10 @@ public class Main {
         groups = new ArrayList<>();
         maximumGroupSize = 4;
         minimumGroupSize = 3;
-        //sortPrograms(students);
         totalStudents = students.size();
-        //simpleSort(students);
         ArrayList<ArrayList<Student>> labSectionGroups = sortLabSections(students);
         for(ArrayList<Student> labSectionGroup: labSectionGroups){
             sortPrograms(labSectionGroup);
-
         }
         writeCSV();
         optimizationSummary(filename);
@@ -155,13 +152,31 @@ public class Main {
         }
         int numGroups = num3Groups + num4Groups;
 
-        // Creates groups
+        // Creates groups and adds a team leader
         ArrayList<ArrayList<Student>> sortedGroups = new ArrayList<ArrayList<Student>>();
         for(int i = 0; i < numGroups; i++){
            ArrayList<Student> group = new ArrayList<>();
-           group.add(labSectionStudents.get(0));
-           labSectionStudents.get(0).setGroupNum(labSectionStudents.get(0).getLabSection() + ".G" + (i + 1));
-           labSectionStudents.remove(0);
+           boolean foundLeader = false;
+           for (Student s : labSectionStudents){
+               if (s.isDefaultLeader()) {
+                   group.add(s);
+                   labSectionStudents.remove(s);
+                   foundLeader = true;
+                   break;
+               }
+           }
+           if (!foundLeader){
+               for (Student s : labSectionStudents){
+                   if (s.isBackupLeader()) {
+                       group.add(s);
+                       labSectionStudents.remove(s);
+                       foundLeader = true;
+                       break;
+                   }
+               }
+           }
+           if (!foundLeader) group.add(labSectionStudents.get(0));
+           group.get(0).setGroupNum(labSectionStudents.get(0).getLabSection() + ".G" + (i + 1));
            sortedGroups.add(group);
         }
 
