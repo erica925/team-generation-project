@@ -1,4 +1,3 @@
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,13 +5,11 @@ import java.lang.Math;
 import java.io.*;
 import java.util.ListIterator;
 import java.util.Scanner;
-import java.util.TreeSet;
 
 /**
  * @author Erica Oliver, Wintana Yosief
- * @version 1.2 - Nov 28, 2021
+ * @version 2 - Jan 19, 2022
  */
-
 public class Main {
     private static ArrayList<Student> students;
     private static double maximumGroupSize;
@@ -20,6 +17,12 @@ public class Main {
     private static ArrayList<ArrayList<Student>> groups;
     private static int totalStudents;
 
+    /**
+     * Main method where each of the sorting methods are invoked
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String args[]) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the name of the CSV file");
@@ -109,7 +112,8 @@ public class Main {
     }
 
     /**
-     * Just split the students into groups of 4
+     * Just split the students into groups of 4 in the
+     * order they appear in the inputted list
      *
      * @param students The list of students to be grouped
      */
@@ -185,7 +189,6 @@ public class Main {
                 group.add(students.get(0));
                 students.remove(0);
             }
-            //group.get(0).setGroupNum(group.get(0).getLabSection() + ".G" + (i + 1));
             sortedGroups.add(group);
         }
 
@@ -279,17 +282,12 @@ public class Main {
     }
 
     /**
-     * Sort each student by their grade (A+,A,A-,...)
-     * Each group should have a multiple of 4 students or
-     * a multiple of 4 + 3
-     *
-     * @param students The list of students to be sorted by grade
-     * @return A list of groups
+     * Splits the students into subgroups according to their grades
+     * @param students The list of students
+     * @return a list of groups containing students with all the same grade
      */
-    /*public static ArrayList<ArrayList<Student>> sortGrades(ArrayList<Student> students) {
+    public static ArrayList<ArrayList<Student>> sortGrades(ArrayList<Student> students) {
         ArrayList<ArrayList<Student>> gradeGroup = new ArrayList<>();
-
-        //create a group for each grade level
         ArrayList<Student> groupAp = new ArrayList<>();
         ArrayList<Student> groupA = new ArrayList<>();
         ArrayList<Student> groupAm = new ArrayList<>();
@@ -303,7 +301,7 @@ public class Main {
         ArrayList<Student> groupD = new ArrayList<>();
         ArrayList<Student> groupDm = new ArrayList<>();
         ArrayList<Student> groupF = new ArrayList<>();
-        //add each grade level to the list of groups
+
         gradeGroup.add(groupAp);
         gradeGroup.add(groupA);
         gradeGroup.add(groupAm);
@@ -317,90 +315,8 @@ public class Main {
         gradeGroup.add(groupD);
         gradeGroup.add(groupDm);
         gradeGroup.add(groupF);
-        //sort the students into their grade group
+
         for (Student s : students) {
-            if (s.getGrade().equals("A+")) groupAp.add(s);
-            else if (s.getGrade().equals("A")) groupA.add(s);
-            else if (s.getGrade().equals("A-")) groupAm.add(s);
-            else if (s.getGrade().equals("B+")) groupBp.add(s);
-            else if (s.getGrade().equals("B")) groupB.add(s);
-            else if (s.getGrade().equals("B-")) groupBm.add(s);
-            else if (s.getGrade().equals("C+")) groupCp.add(s);
-            else if (s.getGrade().equals("C")) groupC.add(s);
-            else if (s.getGrade().equals("C-")) groupCm.add(s);
-            else if (s.getGrade().equals("D+")) groupDp.add(s);
-            else if (s.getGrade().equals("D")) groupD.add(s);
-            else if (s.getGrade().equals("D-")) groupDm.add(s);
-            else if (s.getGrade().equals("F")) groupF.add(s);
-
-            //remove any empty groups
-            for (int x = 0; x < gradeGroup.size(); x++){
-                if (gradeGroup.get(x).isEmpty()){
-                    gradeGroup.remove(x);
-                }
-            }
-            System.out.println(gradeGroup);
-
-            //check that each grade group has a multiple of 4 students
-            //if not then get the required number of students from the next lower grade level
-            /*for (int i = 0; i < gradeGroup.size() - 1; i++) {
-                ArrayList<Student> g = gradeGroup.get(i);
-                if (g.size() % 4 != 0) {
-                    for (int x = 0; x < g.size() % 4; x++) {
-                        //if (!gradeGroup.get(i + 1).isEmpty()) {
-                            g.add(gradeGroup.get(x).get(0));
-                            gradeGroup.get(i + 1).remove(0);
-                            x++;
-                        //}
-                    }
-                }
-            }
-            //check that each group has a multiple of 4 students
-            for (int i = 0; i < gradeGroup.size() - 1; i++){
-                if (gradeGroup.get(i).size() % 4 != 0){
-                    if (i == gradeGroup.size()-1) break; //this is the last group sorry there's nowhere to get more students to even it out
-                    for (int j = 0; j < gradeGroup.get(i).size() % 4; j++){ //fill with students from the lower grade level
-                        gradeGroup.get(i).add(gradeGroup.get(i+1).get(0));
-                        gradeGroup.get(i+1).remove(0);
-                    }
-                }
-            }
-        }
-        return gradeGroup;
-    }*/
-
-
-    public static ArrayList<ArrayList<Student>> sortGrades(ArrayList<Student> students){
-        ArrayList<ArrayList<Student>> gradeGroup = new ArrayList<>();
-        ArrayList<Student> groupAp = new ArrayList<>();
-        ArrayList<Student> groupA = new ArrayList<>();
-        ArrayList<Student> groupAm = new ArrayList<>();
-        ArrayList<Student> groupBp = new ArrayList<>();
-        ArrayList<Student> groupB = new ArrayList<>();
-        ArrayList<Student> groupBm = new ArrayList<>();
-        ArrayList<Student> groupCp = new ArrayList<>();
-        ArrayList<Student> groupC = new ArrayList<>();
-        ArrayList<Student> groupCm = new ArrayList<>();
-        ArrayList<Student> groupDp = new ArrayList<>();
-        ArrayList<Student> groupD = new ArrayList<>();
-        ArrayList<Student> groupDm = new ArrayList<>();
-        ArrayList<Student> groupF = new ArrayList<>();
-
-        gradeGroup.add(groupAp);
-        gradeGroup.add(groupA);
-        gradeGroup.add(groupAm);
-        gradeGroup.add(groupBp);
-        gradeGroup.add(groupB);
-        gradeGroup.add(groupBm);
-        gradeGroup.add(groupCp);
-        gradeGroup.add(groupC);
-        gradeGroup.add(groupCm);
-        gradeGroup.add(groupDp);
-        gradeGroup.add(groupD);
-        gradeGroup.add(groupDm);
-        gradeGroup.add(groupF);
-
-        for (Student s : students){
             if (s.getGrade().equals("A+")) groupAp.add(s);
             else if (s.getGrade().equals("A")) groupA.add(s);
             else if (s.getGrade().equals("A-")) groupAm.add(s);
@@ -417,21 +333,43 @@ public class Main {
         }
 
         ListIterator<ArrayList<Student>> groupIterator = gradeGroup.listIterator();
-        while (groupIterator.hasNext()){
-            if (groupIterator.next().isEmpty()){
+        while (groupIterator.hasNext()) {
+            if (groupIterator.next().isEmpty()) {
                 groupIterator.remove();
             }
         }
 
-        //check that each group has a multiple of 4 students
-        for (int i = 0; i < gradeGroup.size() - 1; i++){
+        //move some students (3 times the number of groups of 3 needed) to the first grade level
+        int numGroupsOf3 = getNumGroupsOf3(students.size());
+        int numStudents = numGroupsOf3 * 3; //this is the number of students
+        // needed to create the necessary number of groups of 3
+        if (numGroupsOf3 != 0) {
+            while (gradeGroup.get(0).size() < numStudents) {
+                //move a student from the next grade level to the first one
+                gradeGroup.get(0).add(gradeGroup.get(1).get(0));
+                gradeGroup.get(1).remove(0);
+                if (gradeGroup.get(1).isEmpty()) gradeGroup.remove(1);
+            }
+            while (gradeGroup.get(0).size() > numStudents) {
+                //remove excess students to next grade level
+                gradeGroup.get(1).add(gradeGroup.get(0).get(0));
+                gradeGroup.get(0).remove(0);
+            }
+        }
+
+        // Check that each grade level has a multiple of 4 students
+        // If groups of 3 are needed then start from the second grade level
+        int i = 0;
+        if (numGroupsOf3 != 0) i = 1;
+        for (; i < gradeGroup.size() - 1; i++) {
             if (gradeGroup.get(i).isEmpty()) gradeGroup.remove(i);
-            if (gradeGroup.get(i).size() % 4 != 0){ //need to add more students
-                if (i == gradeGroup.size() - 1) break; //this is the last group sorry there's nowhere to get more students to even it out
-                for (int x = 0; x < gradeGroup.get(i).size() % 4; x++){ //fill with students from the lower grade level
+            if (gradeGroup.get(i).size() % 4 != 0) { //need to add more students
+                for (int x = 0; x < gradeGroup.get(i).size() % 4; x++) { //x is the number of students needed
+                    if (i == gradeGroup.size() - 1) break; //this is the last group
+                    //fill with students from the lower grade level
                     gradeGroup.get(i).add(gradeGroup.get(i + 1).get(0));
                     gradeGroup.get(i + 1).remove(0);
-                    if (gradeGroup.get(i + 1).isEmpty()){
+                    if (gradeGroup.get(i + 1).isEmpty()) {
                         gradeGroup.remove(i + 1);
                     }
                 }
@@ -443,21 +381,34 @@ public class Main {
     /**
      * Assign group numbers to the finished groups
      */
-    public static void assignGroupNumbers(){
-        for (int i = 0; i < groups.size(); i++){
+    public static void assignGroupNumbers() {
+        for (int i = 0; i < groups.size(); i++) {
             ArrayList<Student> g = groups.get(i);
-            for (int j = 0; j < g.size(); j++){
+            for (int j = 0; j < g.size(); j++) {
                 g.get(j).setGroupNum(g.get(j).getLabSection() + ".G" + (i + 1));
             }
         }
     }
 
     /**
+     * Checks how many groups of 3 are needed since we ideally want groups of 4
+     * and only create groups of 3 when necessary
+     *
+     * @param size The number of students in the section
+     * @return the number of groups of 3 that are necessary
+     */
+    public static int getNumGroupsOf3(int size) {
+        if (size % 4 == 0) return 0;
+        if (size % 4 == 1) return 3;
+        if (size % 4 == 2) return 2;
+        if (size % 4 == 3) return 1;
+        return -1;
+    }
+
+    /**
      * Print an optimization summary of the formed groups
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
-     * <p>
-     * IN PROGRESS
      */
     public static void optimizationSummary(String filename) throws IOException {
         FileWriter writer = new FileWriter(filename + " - optimization summary.txt");
@@ -472,17 +423,12 @@ public class Main {
             else if (group.size() == 3) groupsOf3.add(group.get(0).getGroupNum());
             else groupsOfInvalid.add(group.get(0).getGroupNum());
         }
-        //check how many groups of 3 should be expected based on the number of students registered
-        int x = -1;
-        if (totalStudents % 4 == 0) x = 0;
-        else if (totalStudents % 4 == 1) x = 3;
-        else if (totalStudents % 4 == 2) x = 2;
-        else if (totalStudents % 4 == 3) x = 1;
-        writer.append("\nSince there are " + totalStudents + " students, we should at least expect " + x + " group(s) of 3");
+        int x = getNumGroupsOf3(totalStudents);
+        writer.append("\nSince there are " + totalStudents + " students, we should expect at least " + x + " group(s) of 3");
         writer.append("\nThe number of groups with 4 students is " + groupsOf4.size() + " : " + groupsOf4);
         writer.append("\nThe number of groups with 3 students is " + groupsOf3.size() + " : " + groupsOf3);
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
-        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + groupsOf4.size() * 100 / groups.size() + "%\n");
+        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + (groupsOf4.size() + groupsOf3.size()) * 100 / groups.size() + "%\n");
 
         //check lab section criteria - each group should have students all from the same lab section
         //for each group {count groups with all same lab section and which ones have mixed lab sections}
@@ -501,8 +447,7 @@ public class Main {
         }
         writer.append("\nThe number of groups in which all students are registered in the same lab section is " + sameLabs.size() + " : " + sameLabs);
         writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + diffLabs.size() + " : " + diffLabs);
-        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size() * 100 / groups.size() + "%");
-        writer.append("\nThe groups that do not adhere to the lab section criterion are: " + diffLabs.toString() + "\n");
+        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size() * 100 / groups.size() + "%\n");
 
         //check the programs criteria
         ArrayList<String> repeatPrograms = new ArrayList<>();
@@ -533,16 +478,16 @@ public class Main {
         writer.append("\nThe number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader.size() + " : " + hasDefaultLeader);
         writer.append("\nThe number of groups with a team leader from another SYSC program is " + hasBackupLeader.size() + " : " + hasBackupLeader);
         writer.append("\nThe number of groups with no team leader is " + hasNoLeader.size() + " : " + hasNoLeader);
-        writer.append("\nThe percentage of groups that adhere tp the team leader criterion is " + hasDefaultLeader.size() * 100 / groups.size() + "%\n");
+        writer.append("\nThe percentage of groups that adhere to the team leader criterion is " + hasDefaultLeader.size() * 100 / groups.size() + "%\n");
 
         //check the grade criteria
-        ArrayList<String> sameGrade = new ArrayList<>();
+        /*ArrayList<String> sameGrade = new ArrayList<>();
         ArrayList<String> diffGrades = new ArrayList<>();
-        for (ArrayList<Student> group : groups){
+        for (ArrayList<Student> group : groups) {
             Student s = group.get(0);
             boolean hasDiffGrade = false;
-            for (Student student : group){
-                if (!s.getGrade().equals(student.getGrade())){
+            for (Student student : group) {
+                if (!s.getGrade().equals(student.getGrade())) {
                     diffGrades.add(s.getGroupNum());
                     hasDiffGrade = true;
                 }
@@ -551,18 +496,39 @@ public class Main {
         }
         writer.append("\nThe number of groups with all the same grades is " + sameGrade.size() + " : " + sameGrade);
         writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGrades);
-        writer.append("\nThe percentage of groups that adhere to the group size criterion is " + sameGrade.size()*100/groups.size() + "%\n");
+        writer.append("\nThe percentage of groups that adhere to the grade criterion is " + sameGrade.size() * 100 / groups.size() + "%\n");
+        */
+
+        //check grade criteria - version 2
+        ArrayList<String> similarGrade = new ArrayList<>();
+        ArrayList<String> diffGrades = new ArrayList<>();
+        for (ArrayList<Student> group : groups) {
+            Student s = group.get(0);
+            boolean hasDiffGrade = false;
+            for (Student student : group) {
+                if (!s.areGradesSimilar(student)) {
+                    diffGrades.add(s.getGroupNum());
+                    hasDiffGrade = true;
+                }
+            }
+            if (!hasDiffGrade) similarGrade.add(s.getGroupNum());
+        }
+        writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGrade);
+        writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGrades);
+        writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
 
         //check how many groups adhere to all criteria
         ArrayList<String> intersection = new ArrayList<>();
         intersection.addAll(groupsOf4);
+        intersection.addAll(groupsOf3);
         intersection.retainAll(sameLabs);
         intersection.retainAll(uniquePrograms);
         intersection.retainAll(hasDefaultLeader);
-        intersection.retainAll(sameGrade);
+        //intersection.retainAll(sameGrade);
+        intersection.retainAll(similarGrade);
 
         writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " : " + intersection);
-        writer.append("\nThe percentage of groups that adhere to all criteria is " + intersection.size()*100/groups.size() + "%\n");
+        writer.append("\nThe percentage of groups that adhere to all criteria is " + intersection.size() * 100 / groups.size() + "%\n");
 
 
         writer.flush();
