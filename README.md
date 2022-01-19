@@ -1,7 +1,9 @@
 # team-generation-project
 
 To run the program:
-- Run the jar file in the command prompt (java -jar team_generation_project.jar)
+- Download the jar file and open command prompt
+- Extract the readme and test.csv files from the jar file (jar xf team_generation_project.jar)
+- Run the jar file (java -jar team_generation_project.jar)
 - Type the name of the input file when prompted (a sample file is given called "test.csv")
 - Verify the output files containing the groups and the optimization summary
 
