@@ -1,11 +1,9 @@
 # team-generation-project
 
-- open project in itellij (or other IDE)
-- run the main class
-- type the name of the input file when prompted (a sample file is given called "students.csv")
-- verify the output file called "groups.csv"
-
-
+To run the program:
+- Run the jar file in the command prompt (java -jar team_generation_project.jar)
+- Type the name of the input file when prompted (a sample file is given called "test.csv")
+- Verify the output files containing the groups and the optimization summary
 
 Input file specifications:
 - The file must be of type csv - you can convert an Excel sheet to csv

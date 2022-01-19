@@ -1,17 +1,18 @@
 /**
  * The student class represents a single student with all of its attributes
  * @author Erica Oliver
- * @version 1.2 - Nov 14, 2021
+ * @version 1.3 - Jan 19, 2022
  */
 
 public class Student {
-    private String name;
-    private String studID;
-    private String program;
-    private String grade;
-    private String labSection;
-    private String email;
+    private final String name;
+    private final String studID;
+    private final String program;
+    private final String grade;
+    private final String labSection;
+    private final String email;
     private String groupNum; //the group that the student is sorted into
+    private int gradeInt; //the grade represented as an integer where A+ is 0 and F is 12
 
     /**
      * Constructor for when we start using the optimization criteria
@@ -29,6 +30,7 @@ public class Student {
         this.grade = grade;
         this.labSection = labSection;
         this.email = email;
+        this.gradeToInt();
     }
 
     /**
@@ -74,32 +76,8 @@ public class Student {
     }
 
     /**
-     * Getter for Name attribute
-     * @return The student's name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Getter for Student ID attribute
-     * @return The student's student ID
-     */
-    public String getStudID() {
-        return studID;
-    }
-
-    /**
-     * Getter for Program attribute
-     * @return The student's program
-     */
-    public String getProgram() {
-        return program;
-    }
-
-    /**
-     * Getter for Grade attribute
-     * @return The student's grade
+     * Getter for grade attribute
+     * @return The student's grade in string form
      */
     public String getGrade() {
         return grade;
@@ -114,14 +92,6 @@ public class Student {
     }
 
     /**
-     * Getter for Email attribute
-     * @return The student's email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
      * Getter for groupNum attribute
      * @return The group that the student was sorted into
      */
@@ -130,51 +100,56 @@ public class Student {
     }
 
     /**
-     * Setter for Name attribute
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Setter for Student ID attribute
-     */
-    public void setStudID(String studID) {
-        this.studID = studID;
-    }
-
-    /**
-     * Setter for Program attribute
-     */
-    public void setProgram(String program) {
-        this.program = program;
-    }
-
-    /**
-     * Setter for Grade attribute
-     */
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    /**
-     * Setter for labSection attribute
-     */
-    public void setLabSection(String labSection) {
-        this.labSection = labSection;
-    }
-
-    /**
-     * Setter for Email attribute
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
      * Setter for groupNum attribute
      */
     public void setGroupNum(String groupNum) {
         this.groupNum = groupNum;
+    }
+
+    /**
+     * Getter for gradeInt attribute
+     * @return The student's grade in integer form
+     */
+    public int getGradeInt() {
+        return gradeInt;
+    }
+
+    /**
+     * Convert letter grades (A+, A, ..., D-, F) to
+     * integers (0, 1, ..., 11, 12) respectively, so
+     * they can be easily compared when analysing the
+     * optimization of the final groups
+     */
+    public void gradeToInt(){
+        if (grade.equals("A+")) gradeInt = 0;
+        else if (grade.equals("A")) gradeInt = 1;
+        else if (grade.equals("A-")) gradeInt = 2;
+        else if (grade.equals("B+")) gradeInt = 3;
+        else if (grade.equals("B")) gradeInt = 4;
+        else if (grade.equals("B-")) gradeInt = 5;
+        else if (grade.equals("C+")) gradeInt = 6;
+        else if (grade.equals("C")) gradeInt = 7;
+        else if (grade.equals("C-")) gradeInt = 8;
+        else if (grade.equals("D+")) gradeInt = 9;
+        else if (grade.equals("D")) gradeInt = 10;
+        else if (grade.equals("D-")) gradeInt = 11;
+        else if (grade.equals("F")) gradeInt = 12;
+    }
+
+    /**
+     * Compare the grades of two students and if their grades are
+     * within 2 grades level of each other then they are similar
+     *
+     * For example if s1 has a grade of A- (which is 2) then it
+     * is similar to A+, A, B+, and B
+     *
+     * @param s2 The student to be compared to the current student
+     * @return true if the grades are similar
+     */
+    public boolean areGradesSimilar(Student s2){
+        if (Math.abs(this.getGradeInt() - s2.getGradeInt()) <= 2) {
+            return true;
+        }
+        return false;
     }
 }
