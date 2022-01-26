@@ -1,10 +1,8 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.Math;
 import java.io.*;
-import java.util.ListIterator;
-import java.util.Scanner;
 
 /**
  * @author Erica Oliver, Wintana Yosief
@@ -445,13 +443,18 @@ public class Main {
 
         //check the programs criteria
         ArrayList<String> repeatPrograms = new ArrayList<>();
+        Set<String> repeatMore2Programs = new HashSet<>();
         ArrayList<String> uniquePrograms = new ArrayList<>();
         for (ArrayList<Student> group : groups) {
             boolean hasRepeat = false;
             for (Student student : group) {
+                if(countMatchingPrograms(student, group) > 1){
+                    repeatMore2Programs.add(student.getGroupNum());
+                }
                 if (countMatchingPrograms(student, group) > 0 && !hasRepeat) {
                     hasRepeat = true;
                     repeatPrograms.add(student.getGroupNum());
+
                 }
             }
             if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
@@ -459,6 +462,7 @@ public class Main {
         writer.append("\nTo meet the programs criteria, the all students in the same group should be enrolled in different engineering streams.");
         writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
         writer.append("\nThe number of groups that do not adhere to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
+        writer.append("\nThe number of groups with more than two students with the same program is " + (repeatMore2Programs.size()) + " : " + repeatMore2Programs);
         writer.append("\nThe percentage of groups that adhere to the programs criterion is " + uniquePrograms.size() * 100 / groups.size() + "%\n");
 
         //next check the team leader criteria
