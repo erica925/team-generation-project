@@ -22,17 +22,6 @@ public class Main {
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
 
-    public Main() {
-        groups = new ArrayList<>();
-        teamLeaderFlag = false;
-        programsFlag = false;
-        gradeFlag = false;
-        labSectionFlag = false;
-        totalStudents = 0;
-
-
-    }
-
 
     /**
      * Main method where each of the sorting methods are invoked
@@ -67,6 +56,9 @@ public class Main {
      * The main sorting method where other sorting methods are called
      */
     public static void sort() {
+
+        groups = new ArrayList<>();
+        totalStudents = students.size();
         ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
         allStudents.add(students);
 
@@ -172,7 +164,7 @@ public class Main {
                 // next line
                 line = bufferedReader.readLine();
             }
-            totalStudents = students.size();
+
         } else {
             System.out.println("Invalid header name");
             GUIMain.invalidFileHeaders();
@@ -493,8 +485,12 @@ public class Main {
      * from the GUI
      * @param value
      */
-    public void setMaximumGroupSize(int value){
+    public static void setMaximumGroupSize(int value){
         maximumGroupSize = value;
+    }
+
+    public static void setMinimumGroupSize(){
+        minimumGroupSize = maximumGroupSize - 1;
     }
 
     /**
@@ -502,7 +498,7 @@ public class Main {
      * from GUI
      * @param value
      */
-    public void setLabSectionFlag(boolean value){
+    public static void setLabSectionFlag(boolean value){
         labSectionFlag = value;
     }
 
@@ -510,7 +506,7 @@ public class Main {
      * Sets the grade flag value
      * @param value
      */
-    public void setGradeFlag(boolean value){
+    public static void setGradeFlag(boolean value){
         gradeFlag = value;
     }
 
@@ -518,7 +514,7 @@ public class Main {
      * Sets the programs flag value
      * @param value
      */
-    public void setProgramsFlag(boolean value){
+    public static void setProgramsFlag(boolean value){
         programsFlag = value;
     }
 
@@ -526,7 +522,7 @@ public class Main {
      * Sets the team leader flag value
      * @param value
      */
-    public void setTeamLeaderFlag(boolean value){
+    public static void setTeamLeaderFlag(boolean value){
         teamLeaderFlag = value;
     }
 

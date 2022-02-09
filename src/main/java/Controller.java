@@ -31,7 +31,7 @@ public class Controller implements Initializable {
     private Spinner<Integer> maxGroupSizeSpinner;
 
     private File chosenFile;
-    private Main model;
+
 
 
     @Override
@@ -39,7 +39,6 @@ public class Controller implements Initializable {
      * Initializes maximum group size spinner and connects Model to Controller
      */
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        model = new Main();
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10);
         valueFactory.setValue(2); // initial value of spinner
@@ -69,48 +68,35 @@ public class Controller implements Initializable {
      */
     public void submitCriteria(ActionEvent e) throws IOException {
 
-        boolean labSection = false;
-        boolean grades = false;
-        boolean programs = false;
-        boolean teamLeader = false;
-
-
         if(chosenFile == null) {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;
         }
 
         if(checkbox1.isSelected()){
-
-            labSection = true;
-            model.setLabSectionFlag(true); // sets lab section flag in model
-
+            Main.setLabSectionFlag(true); // sets lab section flag in model
         }
 
         if(checkbox2.isSelected()){
-
-            grades = true;
-            model.setGradeFlag(true); // sets grade flag in model
-
+            Main.setGradeFlag(true); // sets grade flag in model
         }
 
         if(checkbox3.isSelected()){
-
-            programs = true;
-            model.setProgramsFlag(true); // sets program flag in model
-
+            Main.setProgramsFlag(true); // sets program flag in model
         }
 
         if(checkbox4.isSelected()){
-
-            teamLeader = true;
-            model.setTeamLeaderFlag(true); // sets team leader flag in model
-
+            Main.setTeamLeaderFlag(true); // sets team leader flag in model
         }
 
         int maxGroupSize = maxGroupSizeSpinner.getValue(); // gets the group size from spinner
-        model.setMaximumGroupSize(maxGroupSize); // sets the size in model
+        Main.setMaximumGroupSize(maxGroupSize); // sets the size in model
+        Main.setMinimumGroupSize(); // sets the minimum size in model
         Main.readCSV(chosenFile.getName()); // reads the CSV file
+        Main.sort(); // sorts students
+        Main.assignGroupNumbers();
+        Main.writeCSV(chosenFile.getName());
+        Main.optimizationSummary(chosenFile.getName());
 
     }
 
