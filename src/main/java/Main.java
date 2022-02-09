@@ -23,6 +23,18 @@ public class Main {
     private boolean gradeFlag;
     private boolean labSectionFlag;
 
+    public Main() {
+        groups = new ArrayList<>();
+        teamLeaderFlag = false;
+        programsFlag = false;
+        gradeFlag = false;
+        labSectionFlag = false;
+        totalStudents = 0;
+
+
+    }
+
+
     /**
      * Main method where each of the sorting methods are invoked
      *
@@ -67,6 +79,7 @@ public class Main {
     public static void readCSV(String filename) throws IOException {
         //List<Student> students = new ArrayList<>(); // the list of students
         students = new ArrayList<>();
+
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
         // reads the first line (headers of CSV file)
@@ -86,8 +99,11 @@ public class Main {
                 // next line
                 line = bufferedReader.readLine();
             }
+            totalStudents = students.size();
         } else {
             System.out.println("Invalid header name");
+            GUIMain.invalidFileHeaders();
+
         }
     }
 
@@ -250,6 +266,7 @@ public class Main {
         return count;
     }
 
+
     /**
      * Split the list of students by lab section
      *
@@ -275,6 +292,8 @@ public class Main {
         }
         return labSections;
     }
+
+
 
     /**
      * Splits the students into subgroups according to their grades
@@ -395,6 +414,49 @@ public class Main {
         if (size % maximumGroupSize == 0) return 0;
         else return (maximumGroupSize - (size % maximumGroupSize));
     }
+
+    /**
+     * Sets the maximum group size variable to the spinner value
+     * from the GUI
+     * @param value
+     */
+    public void setMaximumGroupSize(int value){
+        maximumGroupSize = value;
+    }
+
+    /**
+     * Sets the lab section flag value
+     * from GUI
+     * @param value
+     */
+    public void setLabSectionFlag(boolean value){
+        labSectionFlag = value;
+    }
+
+    /**
+     * Sets the grade flag value
+     * @param value
+     */
+    public void setGradeFlag(boolean value){
+        gradeFlag = value;
+    }
+
+    /**
+     * Sets the programs flag value
+     * @param value
+     */
+    public void setProgramsFlag(boolean value){
+        programsFlag = value;
+    }
+
+    /**
+     * Sets the team leader flag value
+     * @param value
+     */
+    public void setTeamLeaderFlag(boolean value){
+        teamLeaderFlag = value;
+    }
+
 
     /**
      * Print an optimization summary of the formed groups
