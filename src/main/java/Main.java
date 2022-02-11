@@ -139,7 +139,7 @@ public class Main {
      * @param filename The filename inputted by the user
      * @throws IOException throws IOException
      */
-    public static void readCSV(String filename) throws IOException {
+    public static boolean readCSV(String filename) throws IOException {
         if (!filename.endsWith(".csv")) {
             System.out.println("Invalid file type, must end with '.csv'"); //change to popup warning in gui
         }
@@ -169,8 +169,10 @@ public class Main {
         } else {
             System.out.println("Invalid header name");
             GUIMain.invalidFileHeaders();
+            return false;
 
         }
+        return true;
     }
 
     /**

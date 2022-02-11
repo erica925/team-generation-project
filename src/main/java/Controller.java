@@ -93,7 +93,13 @@ public class Controller implements Initializable {
         int maxGroupSize = maxGroupSizeSpinner.getValue(); // gets the group size from spinner
         Main.setMaximumGroupSize(maxGroupSize); // sets the size in model
         Main.setMinimumGroupSize(); // sets the minimum size in model
-        Main.readCSV(chosenFile.getName()); // reads the CSV file
+
+        boolean insertSuccess = Main.readCSV(chosenFile.getName()); // reads the CSV file
+
+        if(!insertSuccess){
+            return;
+        }
+
         Main.sort(); // sorts students
         Main.assignGroupNumbers();
         Main.writeCSV(chosenFile.getName());
