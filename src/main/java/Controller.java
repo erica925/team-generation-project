@@ -6,6 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,6 +98,9 @@ public class Controller implements Initializable {
         Main.assignGroupNumbers();
         Main.writeCSV(chosenFile.getName());
         Main.optimizationSummary(chosenFile.getName());
+
+        Stage stage = (Stage) submitButton.getScene().getWindow();
+        stage.close();
 
     }
 

@@ -59,6 +59,7 @@ public class Main {
 
         groups = new ArrayList<>();
         totalStudents = students.size();
+
         ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
         allStudents.add(students);
 
