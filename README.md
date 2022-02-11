@@ -25,10 +25,9 @@ Input file specifications:
 Output files:
 - 
 The program will output two files:
-- "filename_groups.csv" : filename is the name of your input file. 
-The list of groups where the first student in each group is 
+- "filename_groups.csv" : The list of groups where the first student in each group is 
 the team leader and each group has been given a group number in the form "Lx.Gy" where 
-x is the lab section and y is the group number.
+x is the lab section and y is the group number. filename is the name of your input file.
 - "filename - optimization summary.txt" : For each of the optimization criteria, the group number
 of the groups that do and do not adhere are listed, and the percentage of groups that adhere is calculated.
 At the end, all groups that adhere to all the criteria are listed and this percentage is calculated. 
