@@ -7,7 +7,7 @@ and program enrollment).
 To run the program:
 -
 - Download the jar file and open command prompt 
-- Run the jar file (java -jar team_generation_project.jar)
+- Run the jar file (java -jar team-generation-project.jar)
 - A window will open with checkboxes for each of the optimization criteria. Select each 
 of the criteria you wish to use, select the group size, and select your input file.
 - Verify the output files containing the groups and the optimization summary
