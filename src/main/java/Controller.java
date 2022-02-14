@@ -1,3 +1,5 @@
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +31,7 @@ public class Controller implements Initializable {
     @FXML
     private Button insertButton;
     @FXML
-    private Spinner<Integer> maxGroupSizeSpinner;
+    private Spinner<Integer> idealGroupSizeSpinner;
 
     private File chosenFile;
 
@@ -43,7 +45,7 @@ public class Controller implements Initializable {
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10);
         valueFactory.setValue(2); // initial value of spinner
-        maxGroupSizeSpinner.setValueFactory(valueFactory);
+        idealGroupSizeSpinner.setValueFactory(valueFactory);
 
     }
 
@@ -90,8 +92,8 @@ public class Controller implements Initializable {
             Main.setTeamLeaderFlag(true); // sets team leader flag in model
         }
 
-        int maxGroupSize = maxGroupSizeSpinner.getValue(); // gets the group size from spinner
-        Main.setMaximumGroupSize(maxGroupSize); // sets the size in model
+        int idealGroupSize = idealGroupSizeSpinner.getValue(); // gets the group size from spinner
+        Main.setMaximumGroupSize(idealGroupSize); // sets the size in model
         Main.setMinimumGroupSize(); // sets the minimum size in model
 
         boolean insertSuccess = Main.readCSV(chosenFile.getName()); // reads the CSV file
