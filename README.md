@@ -20,7 +20,9 @@ Input file specifications:
 - The columns must be "Student Name,Student ID,Program,Grade,Lab Section,Email" 
 (be careful with spacing)
 - The grades must be given in letter form
-- For any unused criteria...
+- For any unused criteria, you must still include each column and you can fill 
+each cell with the same value (ex. assign all students "A" for grade if you do 
+not have their individual grades)
 
 Output files:
 - 
