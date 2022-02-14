@@ -5,10 +5,8 @@ set of optimization criteria (group size, lab section, grade in a prerequisite c
 and program enrollment). 
 
 To run the program:
-- 
-- Download the jar file and open command prompt
-- Extract from the jar file (jar xf team_generation_project.jar) the readme file, 
-and the sample input file called "test.csv" which shows the required format 
+-
+- Download the jar file and open command prompt 
 - Run the jar file (java -jar team_generation_project.jar)
 - A window will open with checkboxes for each of the optimization criteria. Select each 
 of the criteria you wish to use, select the group size, and select your input file.
@@ -23,6 +21,7 @@ Input file specifications:
 - For any unused criteria, you must still include each column and you can fill 
 each cell with the same value (ex. assign all students "A" for grade if you do 
 not have their individual grades)
+- See "students.csv" and "test.csv" for examples of formatting
 
 Output files:
 - 
