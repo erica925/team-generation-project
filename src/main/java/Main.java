@@ -1,3 +1,5 @@
+package main.java;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -53,6 +55,18 @@ public class Main {
         optimizationSummary(filename + " 2");
     }
 
+    public static void begin(String filename) throws IOException {
+        sort();
+        assignGroupNumbers();
+        writeCSV(filename);
+        optimizationSummary(filename);
+
+        sort2();
+        assignGroupNumbers();
+        writeCSV(filename + " 2");
+        optimizationSummary(filename + " 2");
+    }
+
     /**
      * The main sorting method where other sorting methods are called
      */
@@ -62,7 +76,7 @@ public class Main {
         groups = new ArrayList<>();
         totalStudents = students.size();
 
-        ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
+        //ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
         allStudents.add(students);
 
         ArrayList<Group> labSectionGroups = new ArrayList<>();
@@ -305,7 +319,7 @@ public class Main {
      * @param filename The filename inputted by the user
      * @throws IOException throws IOException
      */
-    private static boolean readCSV(String filename) throws IOException {
+    public static boolean readCSV(String filename) throws IOException {
         if (!filename.endsWith(".csv")) {
             System.out.println("Invalid file type, must end with '.csv'");
         }
@@ -346,7 +360,7 @@ public class Main {
     private static void writeCSV(String filename) throws IOException {
         String name = filename.replace(".csv", "");
         FileWriter writer = new FileWriter(name + "_groups.csv");
-        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n");
+        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,main.java.Group Number\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
@@ -649,6 +663,9 @@ public class Main {
         maximumGroupSize = value;
     }
 
+    /**
+     * Set the minimum group size to the maximum - 1
+     */
     public static void setMinimumGroupSize(){
         minimumGroupSize = maximumGroupSize - 1;
     }

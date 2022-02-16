@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,7 +22,7 @@ public class Group extends ArrayList<Student>{
     /**
      * Calculates the difference between the highest and lowest grades in the group
      * where 0 = A+ and 12 = F so lower scores are more optimal.
-     * @return
+     * @return the groups grade score
      */
     public int calculateGradeScore(){
         for (Student s : this){
@@ -70,8 +72,7 @@ public class Group extends ArrayList<Student>{
      * @return true if the group has a team leader assigned to it
      */
     public boolean hasTeamLeader(){
-        if (this.teamLeader.isDefaultLeader() || this.teamLeader.isBackupLeader()) return true;
-        return false;
+        return this.teamLeader.isDefaultLeader() || this.teamLeader.isBackupLeader();
     }
 
     /**

@@ -1,4 +1,4 @@
-
+package main.java;
 
 /**
  * The student class represents a single student with all of its attributes
