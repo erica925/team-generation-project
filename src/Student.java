@@ -17,11 +17,11 @@ public class Student {
     /**
      * Constructor for when we start using the optimization criteria
      *
-     * @param name The student's name
-     * @param studID The student's ID number
+     * @param name    The student's name
+     * @param studID  The student's ID number
      * @param program The student's program enrollment
-     * @param grade The student's grade from a prerequisite course
-     * @param email The student's email address
+     * @param grade   The student's grade from a prerequisite course
+     * @param email   The student's email address
      */
     public Student(String name, String studID, String program, String grade, String labSection, String email) {
         this.name = name;
@@ -34,20 +34,20 @@ public class Student {
     }
 
     /**
-     *
      * @param s1 A student
      * @param s2 A student
      * @return true if the students are enrolled in the same program
      */
-    public boolean sameProgram(Student s1, Student s2){
+    public boolean sameProgram(Student s1, Student s2) {
         return (s1.program.equals(s2.program));
     }
 
     /**
      * Team leaders should be enrolled in either Software or Computer Systems Engineering
+     *
      * @return true if the student can be a team leader
      */
-    public boolean isDefaultLeader(){
+    public boolean isDefaultLeader() {
         if (program.equals("Software Engineering") ||
                 program.equals("Computer Systems Engineering")) {
             return true;
@@ -58,9 +58,10 @@ public class Student {
     /**
      * If no Software or Computer Systems students can be found, the team leader
      * should come from one of the other SYSC programs (Communications or Biomedical Engineering)
+     *
      * @return true is the student can be a team leader
      */
-    public boolean isBackupLeader(){
+    public boolean isBackupLeader() {
         if (program.equals("Biomedical Engineering") ||
                 program.equals("Communications Engineering")) {
             return true;
@@ -71,12 +72,22 @@ public class Student {
     /**
      * @return a string representation of the student
      */
-    public String csvRepresentation(){
+    public String csvRepresentation() {
         return name + "," + studID + "," + program + "," + grade + "," + labSection + "," + email + "," + groupNum + "\n";
     }
 
     /**
+     * Getter for program attribute
+     *
+     * @return The student's program
+     */
+    public String getProgram() {
+        return program;
+    }
+
+    /**
      * Getter for grade attribute
+     *
      * @return The student's grade in string form
      */
     public String getGrade() {
@@ -85,6 +96,7 @@ public class Student {
 
     /**
      * Getter for labSection attribute
+     *
      * @return The student's lab section
      */
     public String getLabSection() {
@@ -93,6 +105,7 @@ public class Student {
 
     /**
      * Getter for groupNum attribute
+     *
      * @return The group that the student was sorted into
      */
     public String getGroupNum() {
@@ -108,6 +121,7 @@ public class Student {
 
     /**
      * Getter for gradeInt attribute
+     *
      * @return The student's grade in integer form
      */
     public int getGradeInt() {
@@ -120,7 +134,7 @@ public class Student {
      * they can be easily compared when analysing the
      * optimization of the final groups
      */
-    public void gradeToInt(){
+    private void gradeToInt() {
         if (grade.equals("A+")) gradeInt = 0;
         else if (grade.equals("A")) gradeInt = 1;
         else if (grade.equals("A-")) gradeInt = 2;
@@ -146,7 +160,7 @@ public class Student {
      * @param s2 The student to be compared to the current student
      * @return true if the grades are similar
      */
-    public boolean areGradesSimilar(Student s2){
+    public boolean areGradesSimilar(Student s2) {
         if (Math.abs(this.getGradeInt() - s2.getGradeInt()) <= 2) {
             return true;
         }
