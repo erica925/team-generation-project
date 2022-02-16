@@ -56,7 +56,7 @@ public class Main {
     /**
      * The main sorting method where other sorting methods are called
      */
-    public static void sort() {
+    private static void sort() {
         ArrayList<Group> allStudents = new ArrayList<>();
         allStudents.add(students);
 
@@ -138,7 +138,7 @@ public class Main {
      *
      * Reminder that the priority of the criteria is: team leader, grades, programs
      */
-    public static void sort2(){
+    private static void sort2(){
         for (int i = 0; i < groups.size()-1; i++){
             Group group1 = groups.get(i);
             Group group2 = groups.get(i+1);
@@ -300,7 +300,7 @@ public class Main {
      * @param filename The filename inputted by the user
      * @throws IOException throws IOException
      */
-    public static void readCSV(String filename) throws IOException {
+    private static void readCSV(String filename) throws IOException {
         if (!filename.endsWith(".csv")) {
             System.out.println("Invalid file type, must end with '.csv'");
         }
@@ -335,7 +335,7 @@ public class Main {
      *
      * @throws IOException throws IOException
      */
-    public static void writeCSV(String filename) throws IOException {
+    private static void writeCSV(String filename) throws IOException {
         String name = filename.replace(".csv", "");
         FileWriter writer = new FileWriter(name + "_groups.csv");
         writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n");
@@ -355,7 +355,7 @@ public class Main {
      *
      * @param students The list of students to be grouped
      */
-    public static void simpleSort(Group students) {
+    private static void simpleSort(Group students) {
         for (int i = 0; i <= getNumGroupsOfMinSize(students.size()); i++) {
             Group group = new Group();
             groups.add(group);
@@ -385,7 +385,7 @@ public class Main {
      *
      * @param students The list of students to be sorted
      */
-    public static ArrayList<Group> getTeamLeaders(Group students){
+    private static ArrayList<Group> getTeamLeaders(Group students){
         // Get the number of groups that will be the maximum and minimum sizes
         int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
         int numGroupsOfMaxSize = (students.size() - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
@@ -437,7 +437,7 @@ public class Main {
      * @param groups The pre-made groups to be filled
      * @param students The list of students to be sorted
      */
-    public static void sortPrograms(ArrayList<Group> groups, Group students) {
+    private static void sortPrograms(ArrayList<Group> groups, Group students) {
         // Get the number of groups that will be the maximum and minimum sizes
         int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size() + groups.size()*groups.get(0).size()); //groups may or may not have been assigned a team leader
         int numGroupsOfMaxSize = groups.size() - numGroupsOfMinSize;
@@ -492,7 +492,7 @@ public class Main {
      *
      * @param students The list of students to be sorted
      */
-    public static ArrayList<Group> sortLabSections(Group students) {
+    private static ArrayList<Group> sortLabSections(Group students) {
         ArrayList<Group> labSections = new ArrayList<Group>();
         while (!students.isEmpty()) {
             Group group = new Group();
@@ -517,7 +517,7 @@ public class Main {
      * @param students The list of students
      * @return a list of groups containing students with all the same grade
      */
-    public static ArrayList<Group> sortGrades(Group students) {
+    private static ArrayList<Group> sortGrades(Group students) {
         ArrayList<Group> gradeGroup = new ArrayList<>();
         Group groupAp = new Group();
         Group groupA = new Group();
@@ -611,7 +611,7 @@ public class Main {
     /**
      * Assign group numbers to the finished groups
      */
-    public static void assignGroupNumbers() {
+    private static void assignGroupNumbers() {
         for (int i = 0; i < groups.size(); i++) {
             Group g = groups.get(i);
             for (int j = 0; j < g.size(); j++) {
@@ -627,7 +627,7 @@ public class Main {
      * @param size The number of students in the section
      * @return the number of groups of minGroupSize that are necessary
      */
-    public static int getNumGroupsOfMinSize(int size) {
+    private static int getNumGroupsOfMinSize(int size) {
         if (size % maximumGroupSize == 0) return 0;
         else return (maximumGroupSize - (size % maximumGroupSize));
     }
@@ -637,7 +637,7 @@ public class Main {
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
      */
-    public static void optimizationSummary(String filename) throws IOException {
+    private static void optimizationSummary(String filename) throws IOException {
         String name = filename.replace(".csv", "");
         FileWriter writer = new FileWriter(name + "_optimization_summary.txt");
         writer.append("Optimization Summary: \n");

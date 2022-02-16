@@ -9,8 +9,8 @@ public class Group extends ArrayList<Student>{
     private Student teamLeader;
 
     // grades range from 0 to 12 representing A+ to F
-    int highestGrade;
-    int lowestGrade;
+    private int highestGrade;
+    private int lowestGrade;
 
     public Group(){
         highestGrade = 12;
