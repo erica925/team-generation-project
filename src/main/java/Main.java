@@ -807,23 +807,32 @@ public class Main {
         if (gradeFlag) {
             //check grade criteria
             ArrayList<String> similarGrade = new ArrayList<>();
+            ArrayList<String> similarGradeWithScore = new ArrayList<>();
             ArrayList<String> diffGrades = new ArrayList<>();
+            ArrayList<String> diffGradesWithScore = new ArrayList<>();
             for (Group group : groups) {
                 Student s = group.get(0);
                 boolean hasDiffGrade = false;
                 for (Student student : group) {
                     if (!s.areGradesSimilar(student)) {
-                        diffGrades.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
+                        diffGrades.add(s.getGroupNum());
+                        diffGradesWithScore.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
                         hasDiffGrade = true;
                     }
                 }
-                if (!hasDiffGrade) similarGrade.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
+                if (!hasDiffGrade) {
+                    similarGradeWithScore.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
+                    similarGrade.add(s.getGroupNum());
+                }
             }
+            System.out.println(intersection);
             intersection.retainAll(similarGrade);
+            System.out.println(similarGrade);
+            System.out.println(intersection);
             writer.append("\nTo meet the grade criteria, each student in a group's grades should be within two grade levels (A+,A,A-, for example)");
             writer.append("\nNext to each group is a score. This is the difference between the highest and lowest grades in the group. Lower scores are more optimal");
-            writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGrade);
-            writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGrades);
+            writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGradeWithScore);
+            writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGradesWithScore);
             writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
         }
 
