@@ -4,6 +4,7 @@ This program sorts a group of students into groups for project-based labs given 
 set of optimization criteria (group size, lab section, grade in a prerequisite course, 
 and program enrollment). 
 
+
 To run the program:
 -
 - Download the jar file and open command prompt 
@@ -12,6 +13,16 @@ To run the program:
 - A window will open with checkboxes for each of the optimization criteria. Select each 
 of the criteria you wish to use, select the group size, and select your input file.
 - Verify the output files containing the groups and the optimization summary
+
+If you prefer to create the jar file from the source code:
+-
+- Download the dependencies, in the lib folder
+- Add your input file to the same folder as the dependencies
+- Create a text file named "Manifest" with the following contents followed by a new line:
+    Main-Class: TeamGenerationApp
+- Create the jar file using the following command: 
+   jar cfm team-generation-project.jar Manifest.txt *.class *.dll com javafx javafx.base javafx.controls javafx.fxml javafx.graphics javafx.media javafx.swing javafx.web main      test.csv
+- Run the jar file (java -jar team-generation-project.jar)
 
 Input file specifications:
 - 
