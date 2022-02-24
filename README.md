@@ -16,9 +16,9 @@ of the criteria you wish to use, select the group size, and select your input fi
 
 If you prefer to create the jar file from the source code:
 -
-- Download the src/main/java folder
+- Download the src/main/java folder and Manifest file and put in the same directory
 - Compile the java files using the following command: javac *.java
-- Download the dependencies, in the lib folder and put in the same folder as the java files
+- Download the dependencies in the lib folder and put in the same folder as the java files
 - Add your input file to the same folder as the dependencies
 - Create a text file named "Manifest" with the following contents followed by a new line:
     Main-Class: TeamGenerationApp
