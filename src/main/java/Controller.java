@@ -1,5 +1,3 @@
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,13 +40,10 @@ public class Controller implements Initializable {
      * Initializes maximum group size spinner and connects Model to Controller
      */
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 10);
         valueFactory.setValue(2); // initial value of spinner
         idealGroupSizeSpinner.setValueFactory(valueFactory);
-
     }
-
 
     /**
      * Handles the event when a user click's the insert file button
@@ -61,7 +56,6 @@ public class Controller implements Initializable {
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extensionFilter);
         chosenFile = fileChooser.showOpenDialog(insertButton.getScene().getWindow());
-
     }
 
     /**
@@ -70,24 +64,19 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void submitCriteria(ActionEvent e) throws IOException {
-
         if(chosenFile == null) {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;
         }
-
         if(checkbox1.isSelected()){
             Main.setLabSectionFlag(true); // sets lab section flag in model
         }
-
         if(checkbox2.isSelected()){
             Main.setGradeFlag(true); // sets grade flag in model
         }
-
         if(checkbox3.isSelected()){
             Main.setProgramsFlag(true); // sets program flag in model
         }
-
         if(checkbox4.isSelected()){
             Main.setTeamLeaderFlag(true); // sets team leader flag in model
         }
@@ -97,21 +86,17 @@ public class Controller implements Initializable {
         Main.setMinimumGroupSize(); // sets the minimum size in model
 
         boolean insertSuccess = Main.readCSV(chosenFile.getName()); // reads the CSV file
-
         if(!insertSuccess){
             return;
         }
 
-        Main.sort(); // sorts students
-        Main.assignGroupNumbers();
-        Main.writeCSV(chosenFile.getName());
-        Main.optimizationSummary(chosenFile.getName());
+        //Main.sort(); // sorts students
+        //Main.assignGroupNumbers();
+        //Main.writeCSV(chosenFile.getName());
+        //Main.optimizationSummary(chosenFile.getName());
+        Main.begin(chosenFile.getName());
 
         Stage stage = (Stage) submitButton.getScene().getWindow();
         stage.close();
-
     }
-
-
-
 }

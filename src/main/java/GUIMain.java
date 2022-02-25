@@ -1,35 +1,24 @@
-
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-
 public class GUIMain extends Application {
-
 
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
-
         Parent root = FXMLLoader.load(getClass().getResource("main/resources/GUI.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Team Generation Program");
-
         stage.show();
-
     }
 
     /**
@@ -51,8 +40,4 @@ public class GUIMain extends Application {
         alert.setContentText("No file selected");
         alert.show();
     }
-
-
-
-
 }
