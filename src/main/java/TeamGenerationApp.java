@@ -1,5 +1,3 @@
-package main.java;
-
 /**
  * Team Generation App Class
  * @version February 13, 2022

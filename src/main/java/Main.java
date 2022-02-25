@@ -1,5 +1,3 @@
-package main.java;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -51,8 +49,8 @@ public class Main {
 
         sort2();
         assignGroupNumbers();
-        writeCSV(filename + " 2");
-        optimizationSummary(filename + " 2");
+        writeCSV(filename + "2");
+        optimizationSummary(filename + "2");
     }
 
     public static void begin(String filename) throws IOException {
