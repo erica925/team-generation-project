@@ -20,8 +20,6 @@ If you prefer to create the jar file from the source code:
 - Compile the java files using the following command: javac *.java
 - Download the dependencies in the lib folder and put in the same folder as the java files
 - Add your input file to the same folder as the dependencies
-- Create a text file named "Manifest" with the following contents followed by a new line:
-    Main-Class: TeamGenerationApp
 - Create the jar file using the following command: 
    jar cfm team-generation-project.jar Manifest.txt *.class *.dll com javafx javafx.base javafx.controls javafx.fxml javafx.graphics javafx.media javafx.swing javafx.web main
 - Run the jar file (java -jar team-generation-project.jar)
