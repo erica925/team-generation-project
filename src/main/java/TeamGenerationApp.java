@@ -4,6 +4,7 @@
  * @author Wintana Yosief
  */
 public class TeamGenerationApp {
+
     /**
      * Calls the main in GUIMain (for the jar file)
      * @param args

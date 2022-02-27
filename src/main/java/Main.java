@@ -1,28 +1,23 @@
-
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.lang.Math;
 import java.io.*;
-
 
 /**
  * @author Erica Oliver, Wintana Yosief
- * @version 3 - Feb 02, 2022
+ * @version 4 - Feb 16, 2022
  */
 public class Main {
-    private static ArrayList<Student> students;
+    private static Group students;
     private static int maximumGroupSize;
     private static int minimumGroupSize;
-    private static ArrayList<ArrayList<Student>> groups;
+    private static ArrayList<Group> groups;
     private static int totalStudents;
 
     private static boolean teamLeaderFlag;
     private static boolean programsFlag;
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
-
 
     /**
      * Main method where each of the sorting methods are invoked
@@ -40,10 +35,10 @@ public class Main {
         labSectionFlag = true;
         gradeFlag = true;
         teamLeaderFlag = true;
-        programsFlag = false;
+        programsFlag = true;
 
         groups = new ArrayList<>(); //final groups
-        maximumGroupSize = 4; //from user input
+        maximumGroupSize = 4;
         minimumGroupSize = maximumGroupSize - 1;
         totalStudents = students.size();
 
@@ -51,51 +46,68 @@ public class Main {
         assignGroupNumbers();
         writeCSV(filename);
         optimizationSummary(filename);
+
+        sort2();
+        assignGroupNumbers();
+        writeCSV(filename + "2");
+        optimizationSummary(filename + "2");
+    }
+
+    public static void begin(String filename) throws IOException {
+        sort();
+        assignGroupNumbers();
+        writeCSV(filename);
+        optimizationSummary(filename);
+
+        sort2();
+        assignGroupNumbers();
+        writeCSV(filename + " 2");
+        optimizationSummary(filename + " 2");
     }
 
     /**
      * The main sorting method where other sorting methods are called
      */
-    public static void sort() {
+    private static void sort() {
+        ArrayList<Group> allStudents = new ArrayList<>();
 
         groups = new ArrayList<>();
         totalStudents = students.size();
 
-        ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
+        //ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
         allStudents.add(students);
 
-        ArrayList<ArrayList<Student>> labSectionGroups = new ArrayList<>();
+        ArrayList<Group> labSectionGroups = new ArrayList<>();
         // sort by lab section
         if (labSectionFlag) {
-            for (ArrayList<Student> labSectionGroup : allStudents) {
+            for (Group labSectionGroup : allStudents) {
                 labSectionGroups.addAll(sortLabSections(labSectionGroup));
             }
         } else labSectionGroups = allStudents;
 
-        ArrayList<ArrayList<Student>> gradeGroups = new ArrayList<>();
+        ArrayList<Group> gradeGroups = new ArrayList<>();
         // sort by grade
         if (gradeFlag) {
-            for (ArrayList<Student> labSectionGroup : labSectionGroups) {
+            for (Group labSectionGroup : labSectionGroups) {
                 gradeGroups.addAll(sortGrades(labSectionGroup));
             }
         } else gradeGroups = labSectionGroups;
 
-
         if (teamLeaderFlag && programsFlag) {
-            for (ArrayList<Student> gradeGroup : gradeGroups) {
-                ArrayList<ArrayList<Student>> teamLeaderGroups = getTeamLeaders(gradeGroup);
+            for (Group gradeGroup : gradeGroups) {
+                ArrayList<Group> teamLeaderGroups = getTeamLeaders(gradeGroup);
                 groups.addAll(teamLeaderGroups);
                 sortPrograms(teamLeaderGroups, gradeGroup);
             }
         }
         else if (teamLeaderFlag) {
-            for (ArrayList<Student> gradeGroup : gradeGroups) {
-                ArrayList<ArrayList<Student>> teamLeaderGroups = getTeamLeaders(gradeGroup);
+            for (Group gradeGroup : gradeGroups) {
+                ArrayList<Group> teamLeaderGroups = getTeamLeaders(gradeGroup);
                 groups.addAll(teamLeaderGroups);
 
                 //fill with students from any program
                 int i = getNumGroupsOfMinSize(teamLeaderGroups.size() + gradeGroup.size());
-                for (ArrayList<Student> group : teamLeaderGroups) {
+                for (Group group : teamLeaderGroups) {
                     if (i > 0) {
                         for (int j = 1; j < minimumGroupSize; j++) {
                             group.add(gradeGroup.get(0));
@@ -112,13 +124,13 @@ public class Main {
             }
         }
         else if (programsFlag) {
-            for (ArrayList<Student> gradeGroup : gradeGroups) {
+            for (Group gradeGroup : gradeGroups) {
                 int numGroupsOfMinSize = getNumGroupsOfMinSize(gradeGroup.size());
                 int numGroupsOfMaxSize = (gradeGroup.size() - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
                 int numGroups = numGroupsOfMinSize + numGroupsOfMaxSize;
-                ArrayList<ArrayList<Student>> emptyGroups = new ArrayList<>();
+                ArrayList<Group> emptyGroups = new ArrayList<>();
                 for (int i = 0; i < numGroups; i++){
-                    ArrayList<Student> a = new ArrayList<>();
+                    Group a = new Group();
                     a.add(gradeGroup.get(0));
                     gradeGroup.remove(0);
                     emptyGroups.add(a);
@@ -128,8 +140,173 @@ public class Main {
             }
         }
         else {
-            for (ArrayList<Student> gradeGroup : gradeGroups) {
+            for (Group gradeGroup : gradeGroups) {
                 simpleSort(gradeGroup);
+            }
+        }
+    }
+
+    /**
+     * Checks all the groups created by sort() to see if they can be optimized better.
+     * Swaps students from adjacent groups then checks if the swap was beneficial.
+     *
+     * The sizes of the groups do not change
+     * The adjacent groups must be in the same lab section
+     *
+     * Reminder that the priority of the criteria is: team leader, grades, programs
+     */
+    private static void sort2(){
+        for (int i = 0; i < groups.size()-1; i++){
+            Group group1 = groups.get(i);
+            Group group2 = groups.get(i+1);
+
+            //the two groups must be the same lab section
+            if (group1.get(0).getLabSection().equals(group2.get(0).getLabSection())) { // do not swap from different lab sections
+                // check team leader
+                if (!group1.hasTeamLeader()) { // else move on to grades
+                    for (int j = 1; j < group2.size(); j++) {
+                        if (group2.get(j).isDefaultLeader() || group2.get(j).isBackupLeader()) { // swap
+                            Student temp = group2.get(j);
+                            group2.set(j, group1.getTeamLeader());
+                            group1.setTeamLeader(temp);
+                        }
+                    }
+                }
+
+                // check grade score
+                // If the difference between the highest and lowest grades of group1 is > 2,
+                // get the student with the lowest grade. Then find a student in group2
+                // that fits better (ie. find the a student whose grade is within 2 grade levels
+                // of the highest grade in group1.
+                boolean stop = false;
+                while (group1.calculateGradeScore() > 2 && !stop) {
+                    int group1initialGradeScore = group1.calculateGradeScore();
+                    int group2initialGradeScore = group2.calculateGradeScore();
+
+                    // get the lowest grade in group1 excluding the team leader
+                    int group1lowestGrade = 0;
+                    Student lowestStudent1 = null;
+                    for (int n = 1; n < group1.size(); n++){
+                        if (group1.get(n).getGradeInt() > group1lowestGrade) {
+                            group1lowestGrade = group1.get(n).getGradeInt();
+                            lowestStudent1 = group1.get(n);
+                        }
+                    }
+                    int group1Index = group1.indexOf(lowestStudent1);
+
+                    // get the highest grade in group2 excluding the team leader
+                    int group2highestGrade = 12;
+                    Student highestStudent2 = null;
+                    for (int n = 1; n < group2.size(); n++){
+                        if (group2.get(n).getGradeInt() < group2highestGrade) {
+                            group2highestGrade = group2.get(n).getGradeInt();
+                            highestStudent2 = group2.get(n);
+                        }
+                    }
+                    int group2Index = group2.indexOf(highestStudent2);
+
+                    if (Math.abs(group2highestGrade - group1.getHighestGrade()) > group1.calculateGradeScore() ||
+                            group1lowestGrade >= group2highestGrade) {
+                        //group1 grade score cannot be improved so move on to checking the program score
+                        stop = true;
+                        break;
+                    } else {
+                        //swap
+                        Student temp = group1.get(group1Index);
+                        group1.set(group1Index, group2.get(group2Index));
+                        group2.set(group2Index, temp);
+
+                        // check if the two groups benefited from the swap
+                        if (!(group1initialGradeScore < group1.calculateGradeScore() &&
+                                group2initialGradeScore < group2.calculateGradeScore())) {
+                            // the swap was not beneficial so swap the students back
+                            temp = group1.get(group1Index);
+                            group1.set(group1Index, group2.get(group2Index));
+                            group2.set(group2Index, temp);
+                        }
+                    }
+                }
+                stop = false;
+
+                // check program score
+                while (group1.calculateProgramsScore() > 0 && !stop) {
+                    int group1initialProgramScore = group1.calculateProgramsScore();
+                    int group2initialProgramScore = group2.calculateProgramsScore();
+                    ArrayList<String> allGroup1programs = new ArrayList<>();
+
+                    // find which student from group1 should be swapped
+
+                    // 1. get the list of programs in group1
+                    for (Student s : group1) {
+                        allGroup1programs.add(s.getProgram());
+                    }
+
+                    // 2. get the repeated program
+                    String program = ""; // the repeated program
+                    int max = 0;
+                    for (String s : allGroup1programs) {
+                        if (Collections.frequency(allGroup1programs, s) > max) {
+                            max = Collections.frequency(allGroup1programs, s);
+                            program = s;
+                        }
+                    }
+
+                    // 3. choose the student to be swapped - this will be the student with
+                    // the lowest grade in the repeated program who is not the team leader
+                    int lowestGrade = 0; // 0 is actually an A+
+                    Student studentToSwap1 = null;
+                    for (Student student : group1) {
+                        if ((group1.getTeamLeader() != student) && (student.getGradeInt() > lowestGrade) && student.getProgram().equals(program)){
+                            lowestGrade = student.getGradeInt();
+                            studentToSwap1 = student;
+                        }
+                    }
+
+                    // 4. get the index of the student to be swapped
+                    int index1 = group1.indexOf(studentToSwap1);
+
+
+                    // find which student from group2 should be swapped
+
+                    // 1. find the student with the highest grade that is not the
+                    // team leader and is a different program to those already in group1
+                    Student studentToSwap2 = null;
+                    int highestGrade = 12; // 12 is an F
+                    for (Student student : group2) {
+                        if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
+                            highestGrade = student.getGradeInt();
+                            studentToSwap2 = student;
+                        }
+                    }
+                    if (studentToSwap2 == null) {
+                        stop = true;
+                        break;
+                    }
+
+                    // 3. get the index of the student to be swapped
+                    int index2 = group2.indexOf(studentToSwap2);
+
+                    int grade1initial = group1.calculateGradeScore();
+                    int grade2initial = group2.calculateGradeScore();
+
+                    // swap the two students
+                    Student temp = group1.get(index1);
+                    group1.set(index1, group2.get(index2));
+                    group2.set(index2, temp);
+
+                    // check to see if either of the grade or the program scores decreased
+                    // and swap back if necessary
+                    if (grade1initial < group1.calculateGradeScore() ||
+                            grade2initial < group2.calculateGradeScore() ||
+                            group1initialProgramScore < group1.calculateProgramsScore() ||
+                            group2initialProgramScore < group2.calculateProgramsScore()) {
+                        // the swap was not beneficial so swap the students back
+                        temp = group1.get(index1);
+                        group1.set(index1, group2.get(index2));
+                        group2.set(index2, temp);
+                        stop = true;
+                    }
+                }
             }
         }
     }
@@ -142,11 +319,10 @@ public class Main {
      */
     public static boolean readCSV(String filename) throws IOException {
         if (!filename.endsWith(".csv")) {
-            System.out.println("Invalid file type, must end with '.csv'"); //change to popup warning in gui
+            System.out.println("Invalid file type, must end with '.csv'");
         }
 
-        students = new ArrayList<>();
-
+        students = new Group();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
         // reads the first line (headers of CSV file)
@@ -155,7 +331,7 @@ public class Main {
         // reads the first student
         String line = bufferedReader.readLine();
 
-        // the header of the CSV file must be "Student Name, Student ID, Program, Grade, Lab Section, Email"
+        // the header of the CSV file must be "Student Name,Student ID,Program,Grade,Lab Section,Email"
         if (header.contains("Student Name,Student ID,Program,Grade,Lab Section,Email")) {
             while (line != null) {
                 // gets the student's info
@@ -166,12 +342,10 @@ public class Main {
                 // next line
                 line = bufferedReader.readLine();
             }
-
         } else {
             System.out.println("Invalid header name");
             GUIMain.invalidFileHeaders();
             return false;
-
         }
         return true;
     }
@@ -181,10 +355,11 @@ public class Main {
      *
      * @throws IOException throws IOException
      */
-    public static void writeCSV(String filename) throws IOException {
-        FileWriter writer = new FileWriter(filename + "_groups.csv");
-        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n");
-        for (ArrayList<Student> group : groups) {
+    private static void writeCSV(String filename) throws IOException {
+        String name = filename.replace(".csv", "");
+        FileWriter writer = new FileWriter(name + "_groups.csv");
+        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,main.java.Group Number\n");
+        for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
             }
@@ -200,11 +375,22 @@ public class Main {
      *
      * @param students The list of students to be grouped
      */
-    public static void simpleSort(ArrayList<Student> students) {
-        for (int x = 0; x <= Math.ceil(students.size() / maximumGroupSize); x++) {
-            ArrayList group = new ArrayList<>();
+    private static void simpleSort(Group students) {
+        for (int i = 0; i <= getNumGroupsOfMinSize(students.size()); i++) {
+            Group group = new Group();
             groups.add(group);
-            for (int n = 1; n <= maximumGroupSize; n++) {
+            for (int j = 0; j < minimumGroupSize; j++) {
+                group.add(students.get(0));
+                students.remove(0);
+                if (students.size() == 0) {
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < (students.size() / maximumGroupSize); i++) {
+            Group group = new Group();
+            groups.add(group);
+            for (int j = 0; j < maximumGroupSize; j++) {
                 group.add(students.get(0));
                 students.remove(0);
                 if (students.size() == 0) {
@@ -219,20 +405,21 @@ public class Main {
      *
      * @param students The list of students to be sorted
      */
-    public static ArrayList<ArrayList<Student>> getTeamLeaders(ArrayList<Student> students){
+    private static ArrayList<Group> getTeamLeaders(Group students){
         // Get the number of groups that will be the maximum and minimum sizes
         int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
         int numGroupsOfMaxSize = (students.size() - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
         int numGroups = numGroupsOfMinSize + numGroupsOfMaxSize; // the total number of groups
 
         // Creates groups and adds a team leader
-        ArrayList<ArrayList<Student>> sortedGroups = new ArrayList<ArrayList<Student>>();
+        ArrayList<Group> sortedGroups = new ArrayList<Group>();
         for (int i = 0; i < numGroups; i++) {
-            ArrayList<Student> group = new ArrayList<>();
+            Group group = new Group();
             boolean foundLeader = false;
             for (Student s : students) {
                 if (s.isDefaultLeader()) {
                     group.add(s);
+                    group.setTeamLeader(s);
                     students.remove(s);
                     foundLeader = true;
                     break;
@@ -242,6 +429,7 @@ public class Main {
                 for (Student s : students) {
                     if (s.isBackupLeader()) {
                         group.add(s);
+                        group.setTeamLeader(s);
                         students.remove(s);
                         foundLeader = true;
                         break;
@@ -250,6 +438,7 @@ public class Main {
             }
             if (!foundLeader) {
                 group.add(students.get(0));
+                group.setTeamLeader(students.get(0));
                 students.remove(0);
             }
             sortedGroups.add(group);
@@ -268,11 +457,10 @@ public class Main {
      * @param groups The pre-made groups to be filled
      * @param students The list of students to be sorted
      */
-    public static void sortPrograms(ArrayList<ArrayList<Student>> groups, ArrayList<Student> students) {
+    private static void sortPrograms(ArrayList<Group> groups, Group students) {
         // Get the number of groups that will be the maximum and minimum sizes
         int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size() + groups.size()*groups.get(0).size()); //groups may or may not have been assigned a team leader
         int numGroupsOfMaxSize = groups.size() - numGroupsOfMinSize;
-        //int numGroups = numGroupsOfMinSize + numGroupsOfMaxSize; // the total number of groups
 
         ListIterator<Student> studentsIterator = students.listIterator();
         boolean groupFound = false;
@@ -285,7 +473,7 @@ public class Main {
                 if (i < numGroupsOfMaxSize) groupSize = maximumGroupSize;
                 else groupSize = minimumGroupSize;
 
-                ArrayList<Student> group = groups.get(i);
+                Group group = groups.get(i);
                 ListIterator<Student> groupIterator = group.listIterator();
                 // Iterating over each student in a single group
                 while (groupIterator.hasNext()) {
@@ -300,7 +488,7 @@ public class Main {
                     } else {
                         if (group.size() < groupSize) {
                             // If only one student has matching program add student
-                            int matchingPrograms = countMatchingPrograms(s, group);
+                            int matchingPrograms = group.countMatchingPrograms(s);
                             if (matchingPrograms < 2) {
                                 groupIterator.add(s); // adds student to group
                                 groupFound = true;
@@ -320,32 +508,14 @@ public class Main {
     }
 
     /**
-     * Counts how many students have matching programs with the given Student
-     *
-     * @param s     The student
-     * @param group The group
-     * @return
-     */
-    private static int countMatchingPrograms(Student s, ArrayList<Student> group) {
-        int count = 0;
-        for (Student student : group) {
-            if (s.sameProgram(s, student) && !s.equals(student)) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-
-    /**
      * Split the list of students by lab section
      *
      * @param students The list of students to be sorted
      */
-    public static ArrayList<ArrayList<Student>> sortLabSections(ArrayList<Student> students) {
-        ArrayList<ArrayList<Student>> labSections = new ArrayList<ArrayList<Student>>();
+    private static ArrayList<Group> sortLabSections(Group students) {
+        ArrayList<Group> labSections = new ArrayList<Group>();
         while (!students.isEmpty()) {
-            ArrayList<Student> group = new ArrayList<>();
+            Group group = new Group();
             labSections.add(group);
             //compare the lab section of the first student in the list to every other student
             Student stud = students.get(0);
@@ -362,28 +532,26 @@ public class Main {
         return labSections;
     }
 
-
-
     /**
      * Splits the students into subgroups according to their grades
      * @param students The list of students
      * @return a list of groups containing students with all the same grade
      */
-    public static ArrayList<ArrayList<Student>> sortGrades(ArrayList<Student> students) {
-        ArrayList<ArrayList<Student>> gradeGroup = new ArrayList<>();
-        ArrayList<Student> groupAp = new ArrayList<>();
-        ArrayList<Student> groupA = new ArrayList<>();
-        ArrayList<Student> groupAm = new ArrayList<>();
-        ArrayList<Student> groupBp = new ArrayList<>();
-        ArrayList<Student> groupB = new ArrayList<>();
-        ArrayList<Student> groupBm = new ArrayList<>();
-        ArrayList<Student> groupCp = new ArrayList<>();
-        ArrayList<Student> groupC = new ArrayList<>();
-        ArrayList<Student> groupCm = new ArrayList<>();
-        ArrayList<Student> groupDp = new ArrayList<>();
-        ArrayList<Student> groupD = new ArrayList<>();
-        ArrayList<Student> groupDm = new ArrayList<>();
-        ArrayList<Student> groupF = new ArrayList<>();
+    private static ArrayList<Group> sortGrades(Group students) {
+        ArrayList<Group> gradeGroup = new ArrayList<>();
+        Group groupAp = new Group();
+        Group groupA = new Group();
+        Group groupAm = new Group();
+        Group groupBp = new Group();
+        Group groupB = new Group();
+        Group groupBm = new Group();
+        Group groupCp = new Group();
+        Group groupC = new Group();
+        Group groupCm = new Group();
+        Group groupDp = new Group();
+        Group groupD = new Group();
+        Group groupDm = new Group();
+        Group groupF = new Group();
 
         gradeGroup.add(groupAp);
         gradeGroup.add(groupA);
@@ -415,7 +583,7 @@ public class Main {
             else if (s.getGrade().equals("F")) groupF.add(s);
         }
 
-        ListIterator<ArrayList<Student>> groupIterator = gradeGroup.listIterator();
+        ListIterator<Group> groupIterator = gradeGroup.listIterator();
         while (groupIterator.hasNext()) {
             if (groupIterator.next().isEmpty()) {
                 groupIterator.remove();
@@ -463,9 +631,9 @@ public class Main {
     /**
      * Assign group numbers to the finished groups
      */
-    public static void assignGroupNumbers() {
+    private static void assignGroupNumbers() {
         for (int i = 0; i < groups.size(); i++) {
-            ArrayList<Student> g = groups.get(i);
+            Group g = groups.get(i);
             for (int j = 0; j < g.size(); j++) {
                 g.get(j).setGroupNum(g.get(j).getLabSection() + ".G" + (i + 1));
             }
@@ -479,7 +647,7 @@ public class Main {
      * @param size The number of students in the section
      * @return the number of groups of minGroupSize that are necessary
      */
-    public static int getNumGroupsOfMinSize(int size) {
+    private static int getNumGroupsOfMinSize(int size) {
         if (size % maximumGroupSize == 0) return 0;
         else return (maximumGroupSize - (size % maximumGroupSize));
     }
@@ -493,6 +661,9 @@ public class Main {
         maximumGroupSize = value;
     }
 
+    /**
+     * Set the minimum group size to the maximum - 1
+     */
     public static void setMinimumGroupSize(){
         minimumGroupSize = maximumGroupSize - 1;
     }
@@ -536,20 +707,26 @@ public class Main {
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
      */
-    public static void optimizationSummary(String filename) throws IOException {
-        FileWriter writer = new FileWriter(filename + "_optimization_summary.txt");
+    private static void optimizationSummary(String filename) throws IOException {
+        String name = filename.replace(".csv", "");
+        FileWriter writer = new FileWriter(name + "_optimization_summary.txt");
         writer.append("Optimization Summary: \n");
+
+        //used for checking how many groups adhere to all criteria
+        ArrayList<String> intersection = new ArrayList<>();
 
         //check the group size criteria
         //check the groups that have the maximum, minimum, or an invalid number of students
         ArrayList<String> groupsOfMaxSize = new ArrayList<>(); //the groups that have the maximum number of students
         ArrayList<String> groupsOfMinSize = new ArrayList<>(); //the groups that have the minimum number of students
         ArrayList<String> groupsOfInvalid = new ArrayList<>(); // the groups that have an invalid number of students
-        for (ArrayList<Student> group : groups) {
+        for (Group group : groups) {
             if (group.size() == maximumGroupSize) groupsOfMaxSize.add(group.get(0).getGroupNum());
             else if (group.size() == minimumGroupSize) groupsOfMinSize.add(group.get(0).getGroupNum());
             else groupsOfInvalid.add(group.get(0).getGroupNum());
         }
+        intersection.addAll(groupsOfMaxSize);
+        intersection.addAll(groupsOfMinSize);
         int numGroupsOfMinSize = getNumGroupsOfMinSize(totalStudents);
         writer.append("\nTo meet the group size criteria, students should be sorted into groups of " + maximumGroupSize + " or " + minimumGroupSize + ". Any other group size is invalid");
         writer.append("\nSince there are " + totalStudents + " students, we should expect at least " + numGroupsOfMinSize + " group(s) of " + minimumGroupSize);
@@ -558,96 +735,107 @@ public class Main {
         writer.append("\nThe number of groups with an invalid number of students is " + groupsOfInvalid.size() + " : " + groupsOfInvalid);
         writer.append("\nThe percentage of groups that adhere to the group size criterion is " + (groupsOfMaxSize.size() + groupsOfMinSize.size()) * 100 / groups.size() + "%\n");
 
-        //check lab section criteria - each group should have students all from the same lab section
-        //for each group {count groups with all same lab section and which ones have mixed lab sections}
-        ArrayList<String> diffLabs = new ArrayList(); //the number of groups in which NOT all students are registered in the same lab section
-        ArrayList<String> sameLabs = new ArrayList(); //the number of groups in which all students are registered in the same lab section
-        for (ArrayList<Student> group : groups) {
-            for (int i = 0; i < group.size() - 1; i++) {
-                for (int j = i + 1; j < group.size(); j++) {
-                    if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())) {
-                        diffLabs.add(group.get(0).getGroupNum());
-                        break;
+        if (labSectionFlag) {
+            //check lab section criteria - each group should have students all from the same lab section
+            //for each group {count groups with all same lab section and which ones have mixed lab sections}
+            ArrayList<String> diffLabs = new ArrayList(); //the number of groups in which NOT all students are registered in the same lab section
+            ArrayList<String> sameLabs = new ArrayList(); //the number of groups in which all students are registered in the same lab section
+            for (Group group : groups) {
+                for (int i = 0; i < group.size() - 1; i++) {
+                    for (int j = i + 1; j < group.size(); j++) {
+                        if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())) {
+                            diffLabs.add(group.get(0).getGroupNum());
+                            break;
+                        }
                     }
                 }
+                sameLabs.add(group.get(0).getGroupNum());
             }
-            sameLabs.add(group.get(0).getGroupNum());
+            intersection.retainAll(sameLabs);
+            writer.append("\nTo meet the lab section criteria, all students in the same group should be registered in the same lab section.");
+            writer.append("\nThe number of groups in which all students are registered in the same lab section is " + sameLabs.size() + " : " + sameLabs);
+            writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + diffLabs.size() + " : " + diffLabs);
+            writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size() * 100 / groups.size() + "%\n");
         }
-        writer.append("\nTo meet the lab section criteria, all students in the same group should be registered in the same lab section.");
-        writer.append("\nThe number of groups in which all students are registered in the same lab section is " + sameLabs.size() + " : " + sameLabs);
-        writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + diffLabs.size() + " : " + diffLabs);
-        writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size() * 100 / groups.size() + "%\n");
 
-        //check the programs criteria
-        ArrayList<String> repeatPrograms = new ArrayList<>();
-        Set<String> repeatMore2Programs = new HashSet<>();
-        ArrayList<String> uniquePrograms = new ArrayList<>();
-        for (ArrayList<Student> group : groups) {
-            boolean hasRepeat = false;
-            for (Student student : group) {
-                if(countMatchingPrograms(student, group) > 1){
-                    repeatMore2Programs.add(student.getGroupNum());
+        if (programsFlag) {
+            //check the programs criteria
+            ArrayList<String> repeatPrograms = new ArrayList<>();
+            Set<String> repeatMore2Programs = new HashSet<>();
+            ArrayList<String> uniquePrograms = new ArrayList<>();
+            for (Group group : groups) {
+                boolean hasRepeat = false;
+                for (Student student : group) {
+                    if (group.countMatchingPrograms(student) > 1) {
+                        repeatMore2Programs.add(student.getGroupNum());
+                    }
+                    if (group.countMatchingPrograms(student) > 0 && !hasRepeat) {
+                        hasRepeat = true;
+                        repeatPrograms.add(student.getGroupNum());
+                    }
                 }
-                if (countMatchingPrograms(student, group) > 0 && !hasRepeat) {
-                    hasRepeat = true;
-                    repeatPrograms.add(student.getGroupNum());
+                if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
+            }
+            intersection.retainAll(uniquePrograms);
+            writer.append("\nTo meet the programs criteria, the all students in the same group should be enrolled in different engineering streams.");
+            writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
+            writer.append("\nThe number of groups that do not adhere to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
+            writer.append("\nThe number of groups with more than two students with the same program is " + (repeatMore2Programs.size()) + " : " + repeatMore2Programs);
+            writer.append("\nThe percentage of groups that adhere to the programs criterion is " + uniquePrograms.size() * 100 / groups.size() + "%\n");
+        }
 
+        if (teamLeaderFlag) {
+            //next check the team leader criteria
+            ArrayList<String> hasDefaultLeader = new ArrayList<>();
+            ArrayList<String> hasBackupLeader = new ArrayList<>();
+            ArrayList<String> hasNoLeader = new ArrayList<>();
+            for (Group group : groups) {
+                if (group.getTeamLeader().isDefaultLeader()) hasDefaultLeader.add(group.getTeamLeader().getGroupNum());
+                else if (group.getTeamLeader().isBackupLeader()) hasBackupLeader.add(group.getTeamLeader().getGroupNum());
+                else hasNoLeader.add(group.getTeamLeader().getGroupNum());
+            }
+            intersection.retainAll(hasDefaultLeader);
+            writer.append("\nTo meet the team leader criteria, groups should have one student in software or computer systems engineering.");
+            writer.append("\nThe number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader.size() + " : " + hasDefaultLeader);
+            writer.append("\nThe number of groups with a team leader from another SYSC program is " + hasBackupLeader.size() + " : " + hasBackupLeader);
+            writer.append("\nThe number of groups with no team leader is " + hasNoLeader.size() + " : " + hasNoLeader);
+            writer.append("\nThe percentage of groups that adhere to the team leader criterion is " + hasDefaultLeader.size() * 100 / groups.size() + "%\n");
+        }
+
+        if (gradeFlag) {
+            //check grade criteria
+            ArrayList<String> similarGrade = new ArrayList<>();
+            ArrayList<String> similarGradeWithScore = new ArrayList<>();
+            ArrayList<String> diffGrades = new ArrayList<>();
+            ArrayList<String> diffGradesWithScore = new ArrayList<>();
+            for (Group group : groups) {
+                Student s = group.get(0);
+                boolean hasDiffGrade = false;
+                for (Student student : group) {
+                    if (!s.areGradesSimilar(student)) {
+                        diffGrades.add(s.getGroupNum());
+                        diffGradesWithScore.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
+                        hasDiffGrade = true;
+                    }
+                }
+                if (!hasDiffGrade) {
+                    similarGradeWithScore.add("(" + s.getGroupNum() + "," + group.calculateGradeScore() + ")");
+                    similarGrade.add(s.getGroupNum());
                 }
             }
-            if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
+            System.out.println(intersection);
+            intersection.retainAll(similarGrade);
+            System.out.println(similarGrade);
+            System.out.println(intersection);
+            writer.append("\nTo meet the grade criteria, each student in a group's grades should be within two grade levels (A+,A,A-, for example)");
+            writer.append("\nNext to each group is a score. This is the difference between the highest and lowest grades in the group. Lower scores are more optimal");
+            writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGradeWithScore);
+            writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGradesWithScore);
+            writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
         }
-        writer.append("\nTo meet the programs criteria, the all students in the same group should be enrolled in different engineering streams.");
-        writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
-        writer.append("\nThe number of groups that do not adhere to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
-        writer.append("\nThe number of groups with more than two students with the same program is " + (repeatMore2Programs.size()) + " : " + repeatMore2Programs);
-        writer.append("\nThe percentage of groups that adhere to the programs criterion is " + uniquePrograms.size() * 100 / groups.size() + "%\n");
-
-        //next check the team leader criteria
-        ArrayList<String> hasDefaultLeader = new ArrayList<>();
-        ArrayList<String> hasBackupLeader = new ArrayList<>();
-        ArrayList<String> hasNoLeader = new ArrayList<>();
-        for (ArrayList<Student> group : groups) {
-            if (group.get(0).isDefaultLeader()) hasDefaultLeader.add(group.get(0).getGroupNum());
-            else if (group.get(0).isBackupLeader()) hasBackupLeader.add(group.get(0).getGroupNum());
-            else hasNoLeader.add(group.get(0).getGroupNum());
-        }
-        writer.append("\nTo meet the team leader criteria, groups should have one student in software or computer systems engineering.");
-        writer.append("\nThe number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader.size() + " : " + hasDefaultLeader);
-        writer.append("\nThe number of groups with a team leader from another SYSC program is " + hasBackupLeader.size() + " : " + hasBackupLeader);
-        writer.append("\nThe number of groups with no team leader is " + hasNoLeader.size() + " : " + hasNoLeader);
-        writer.append("\nThe percentage of groups that adhere to the team leader criterion is " + hasDefaultLeader.size() * 100 / groups.size() + "%\n");
-
-        //check grade criteria
-        ArrayList<String> similarGrade = new ArrayList<>();
-        ArrayList<String> diffGrades = new ArrayList<>();
-        for (ArrayList<Student> group : groups) {
-            Student s = group.get(0);
-            boolean hasDiffGrade = false;
-            for (Student student : group) {
-                if (!s.areGradesSimilar(student)) {
-                    diffGrades.add(s.getGroupNum());
-                    hasDiffGrade = true;
-                }
-            }
-            if (!hasDiffGrade) similarGrade.add(s.getGroupNum());
-        }
-        writer.append("\nTo meet the grade criteria, each student in a group's grades should be within two grade levels (A+,A,A-, for example)");
-        writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGrade);
-        writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGrades);
-        writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
-
-        //check how many groups adhere to all criteria
-        ArrayList<String> intersection = new ArrayList<>();
-        intersection.addAll(groupsOfMaxSize);
-        intersection.addAll(groupsOfMinSize);
-        intersection.retainAll(sameLabs);
-        intersection.retainAll(uniquePrograms);
-        intersection.retainAll(hasDefaultLeader);
-        intersection.retainAll(similarGrade);
 
         writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " : " + intersection);
         writer.append("\nThe percentage of groups that adhere to all criteria is " + intersection.size() * 100 / groups.size() + "%");
-
 
         writer.flush();
         writer.close();
