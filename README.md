@@ -18,7 +18,7 @@ If you prefer to create the jar file from the source code:
 -
 - Download the project as a ZIP file and extract it
 - Compile the java files using the following command: java --module-path "Path to your javafx sdk lib folder" --add-modules javafx.controls,javafx.fxml *.java
-- Copy Manifest.txt, the input file and all the dll files from the javafx sdk bin folder to the same directory as your compiled java files
+- Copy Manifest.txt, the input file, the jar files from the java sdk lib folder, and all the dll files from the javafx sdk bin folder to the same directory as your compiled java files
 - Create a new folder called "main/resources" and copy the GUI.fxml file from src/main/resources and place it in the new folder
 - Create the jar file using the following command: jar cfm team-generation-project.jar Manifest.txt *.class *.dll main *.jar
 - Run the jar file using the following command: java --module-path C:\Users\winta\IdeaProjects\team-generation-project-main\team-generation-project-main\javafx-sdk-17.0.2\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media -jar team-generation-project.jar
