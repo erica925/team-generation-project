@@ -22,6 +22,9 @@ If you prefer to create the jar file from the source code:
 - Create a new folder called "main/resources" and copy the GUI.fxml file from src/main/resources and place it in the new folder
 - Create the jar file using the following command: jar cfm team-generation-project.jar Manifest.txt *.class *.dll main *.jar
 - Run the jar file using the following command: java --module-path "path to the java sdk lib folder" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media -jar team-generation-project.jar
+- A window will open with checkboxes for each of the optimization criteria. Select each 
+of the criteria you wish to use, select the group size, and select your input file.
+- Verify the output files containing the groups and the optimization summary
 
 Input file specifications:
 - 
@@ -32,14 +35,15 @@ Input file specifications:
 - For any unused criteria, you must still include each column and you can fill 
 each cell with the same value (ex. assign all students "A" for grade if you do 
 not have their individual grades)
-- See "students.csv" and "test.csv" for examples of formatting
+- See "students.csv" or "test.csv" for examples of formatting
 
 Output files:
 - 
-The program will output two files:
+The program will output four files:
 - "filename_groups.csv" : The list of groups where the first student in each group is 
 the team leader and each group has been given a group number in the form "Lx.Gy" where 
 x is the lab section and y is the group number. filename is the name of your input file.
-- "filename - optimization summary.txt" : For each of the optimization criteria, the group number
+- "filename_optimization_summary.txt" : For each of the optimization criteria, the group number
 of the groups that do and do not adhere are listed, and the percentage of groups that adhere is calculated.
 At the end, all groups that adhere to all the criteria are listed and this percentage is calculated. 
+- "filename2_groups.csv" and "filename 2_optimization_summary" : these contain the same as described above but after a second pass has been done to attempt to improve the optimization of the groups - mainly for testing purposes to see if the second pass made any changes. 
