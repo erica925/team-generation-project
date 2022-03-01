@@ -7,6 +7,7 @@ and program enrollment).
 
 To run the program:
 -
+- You must have a java version installed that can run code compiled with jdk 15 (else please follow the instructions to compile and package the project yourself)
 - Download the jar file and open command prompt 
 - Add your input file to the same folder as the jar file
 - Run the jar file (java -jar team-generation-project.jar)
