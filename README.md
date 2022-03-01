@@ -2,7 +2,14 @@
 
 This program sorts a group of students into groups for project-based labs given a 
 set of optimization criteria (group size, lab section, grade in a prerequisite course, 
-and program enrollment). 
+and program enrollment). The user specifies the size of the groups and whether each of 
+the following optimization criteria will be used: Lab Section, Grade, Mix of Programs, Team Lader from SYSC
+
+The lab section criterion will ensure that each group has students all enrolled in the same lab section
+The grade criterion will ensure that students in the same group have similar grades
+The mix of programs criterion will ensure that the students in a group are all enrolled in a different program
+The team leader criterion will ensure that each group is assigned a team leader who is enrolled in one of the 
+programs offered by the Department of Systems and Computer engineering
 
 
 To run the program:
