@@ -6,8 +6,6 @@ import java.util.Collections;
  * @version 1 - Feb 16, 2022
  */
 public class Group extends ArrayList<Student>{
-    private Student teamLeader;
-
     // grades range from 0 to 12 representing A+ to F
     private int highestGrade;
     private int lowestGrade;
@@ -70,14 +68,13 @@ public class Group extends ArrayList<Student>{
      * @return true if the group has a team leader assigned to it
      */
     public boolean hasTeamLeader(){
-        return this.teamLeader.isDefaultLeader() || this.teamLeader.isBackupLeader();
+        return this.get(0).isDefaultLeader() || this.get(0).isBackupLeader();
     }
 
     /**
      * @param student The student assigned as the team's leader
      */
     public void setTeamLeader(Student student){
-        teamLeader = student;
         this.set(0, student);
     }
 
@@ -85,7 +82,7 @@ public class Group extends ArrayList<Student>{
      * @return the group's leader
      */
     public Student getTeamLeader() {
-        return teamLeader;
+        return this.get(0);
     }
 
     /**

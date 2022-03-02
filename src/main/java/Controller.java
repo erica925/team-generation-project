@@ -13,7 +13,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller for communications between GUI and Main
+ *
+ * @author Wintana Yosief
+ * @version March 1, 2022
+ */
 public class Controller implements Initializable {
 
     @FXML
@@ -30,10 +35,7 @@ public class Controller implements Initializable {
     private Button insertButton;
     @FXML
     private Spinner<Integer> idealGroupSizeSpinner;
-
     private File chosenFile;
-
-
 
     @Override
     /**
@@ -51,6 +53,8 @@ public class Controller implements Initializable {
      */
     public void insertFile(ActionEvent e){
         FileChooser fileChooser = new FileChooser(); // creates a file chooser to choose a file
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setInitialDirectory(defaultDirectory);
 
         // sets a filter to allow *.csv files only
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
@@ -90,12 +94,7 @@ public class Controller implements Initializable {
             return;
         }
 
-        //Main.sort(); // sorts students
-        //Main.assignGroupNumbers();
-        //Main.writeCSV(chosenFile.getName());
-        //Main.optimizationSummary(chosenFile.getName());
         Main.begin(chosenFile.getName());
-
         Stage stage = (Stage) submitButton.getScene().getWindow();
         stage.close();
     }

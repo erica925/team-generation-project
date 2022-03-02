@@ -12,5 +12,4 @@ public class TeamGenerationApp {
     public static void main(String[] args) {
         GUIMain.main(args);
     }
-
 }

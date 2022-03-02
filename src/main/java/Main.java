@@ -19,40 +19,6 @@ public class Main {
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
 
-    /**
-     * Main method where each of the sorting methods are invoked
-     *
-     * @param args args
-     * @throws IOException throws IOException
-     */
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the CSV file");
-        String filename = scanner.nextLine();
-        readCSV(filename);
-
-        //set flags
-        labSectionFlag = true;
-        gradeFlag = true;
-        teamLeaderFlag = true;
-        programsFlag = true;
-
-        groups = new ArrayList<>(); //final groups
-        maximumGroupSize = 4;
-        minimumGroupSize = maximumGroupSize - 1;
-        totalStudents = students.size();
-
-        sort();
-        assignGroupNumbers();
-        writeCSV(filename);
-        optimizationSummary(filename);
-
-        sort2();
-        assignGroupNumbers();
-        writeCSV(filename + "2");
-        optimizationSummary(filename + "2");
-    }
-
     public static void begin(String filename) throws IOException {
         sort();
         assignGroupNumbers();
@@ -74,7 +40,6 @@ public class Main {
         groups = new ArrayList<>();
         totalStudents = students.size();
 
-        //ArrayList<ArrayList<Student>> allStudents = new ArrayList<>();
         allStudents.add(students);
 
         ArrayList<Group> labSectionGroups = new ArrayList<>();
@@ -583,12 +548,7 @@ public class Main {
             else if (s.getGrade().equals("F")) groupF.add(s);
         }
 
-        ListIterator<Group> groupIterator = gradeGroup.listIterator();
-        while (groupIterator.hasNext()) {
-            if (groupIterator.next().isEmpty()) {
-                groupIterator.remove();
-            }
-        }
+        gradeGroup.removeIf(ArrayList::isEmpty);
 
         //move some students to the first grade level (number of students to be sorted into the smaller groups)
         int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
@@ -823,10 +783,7 @@ public class Main {
                     similarGrade.add(s.getGroupNum());
                 }
             }
-            System.out.println(intersection);
             intersection.retainAll(similarGrade);
-            System.out.println(similarGrade);
-            System.out.println(intersection);
             writer.append("\nTo meet the grade criteria, each student in a group's grades should be within two grade levels (A+,A,A-, for example)");
             writer.append("\nNext to each group is a score. This is the difference between the highest and lowest grades in the group. Lower scores are more optimal");
             writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGradeWithScore);
@@ -834,7 +791,7 @@ public class Main {
             writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
         }
 
-        writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " : " + intersection);
+        writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " out of " + groups.size() + " : " + intersection);
         writer.append("\nThe percentage of groups that adhere to all criteria is " + intersection.size() * 100 / groups.size() + "%");
 
         writer.flush();
