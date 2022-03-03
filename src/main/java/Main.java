@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
@@ -9,6 +10,7 @@ import java.io.*;
  */
 public class Main {
     private static Group students;
+    private static Group withdrawnStudents;
     private static int maximumGroupSize;
     private static int minimumGroupSize;
     private static ArrayList<Group> groups;
@@ -19,16 +21,38 @@ public class Main {
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
 
-    public static void begin(String filename) throws IOException {
+    //public static void begin(String filename) throws IOException {
+    public static void beginSort() throws IOException {
         sort();
         assignGroupNumbers();
-        writeCSV(filename);
-        optimizationSummary(filename);
+        //writeCSV();
+        //optimizationSummary();
 
         sort2();
         assignGroupNumbers();
-        writeCSV(filename + " 2");
-        optimizationSummary(filename + " 2");
+        writeCSV();
+        optimizationSummary();
+        //writeCSV(filename + " 2");
+        //optimizationSummary(filename + " 2");
+    }
+
+    public static void beginModify() throws IOException {
+        // remove withdrawn students
+        for (Student student : withdrawnStudents) {
+            breakline:
+            for (Group group : groups) {
+                for (Student stud : group) {
+                    if ((stud.getName().equals(student.getName())) && stud.getStudID().equals(student.getStudID())) {
+                        group.remove(stud); //
+                        break breakline;
+                    }
+                }
+            }
+        }
+        // remove full groups
+
+        // for each group, find
+        .
     }
 
     /**
@@ -280,13 +304,10 @@ public class Main {
      * Reads a CSV file into an ArrayList of students
      *
      * @param filename The filename inputted by the user
+     * @return true if reading was successful
      * @throws IOException throws IOException
      */
     public static boolean readCSV(String filename) throws IOException {
-        if (!filename.endsWith(".csv")) {
-            System.out.println("Invalid file type, must end with '.csv'");
-        }
-
         students = new Group();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
@@ -309,9 +330,678 @@ public class Main {
             }
         } else {
             System.out.println("Invalid header name");
-            GUIMain.invalidFileHeaders();
+            GUIMain.invalidFileHeaders("");
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Read the chosen CSV file(s) into a list for the sorting use case
+     * Any number of files may be chosen but each one must have at least
+     * student names and ID numbers
+     *
+     * @param filenames the files containing the students to be sorted
+     * @return true if reading was successful
+     * @throws IOException
+     */
+    public static boolean readCSV_sort(List<String> filenames) throws IOException {
+        students = new Group();
+        for (String filename : filenames) {
+            if (students.isEmpty()) { // for the first file or if only one file is given
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+                // get the position of each attribute
+                String line = bufferedReader.readLine(); // header
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine(); // first student
+                while (line != null) {
+                    // gets the student's info
+                    String[] student = line.split(",");
+
+                    String name, id, program, grade, lab, email;
+                    if (nameIndex == -1) name = "";
+                    else name = student[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = student[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = student[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = student[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = student[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = student[emailIndex];
+
+                    // adds info
+                    students.add(new Student(name, id, program, grade, lab, email));
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+
+            // for merging the next files
+            else {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+                // get the position of each attribute
+                String line = bufferedReader.readLine();
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine();
+                while (line != null) {
+                    // gets the student's info
+                    String[] stud = line.split(",");
+                    String name = "", id = "", program = "", grade = "", lab = "", email = "";
+                    if (nameIndex == -1) name = "";
+                    else name = stud[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = stud[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = stud[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = stud[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = stud[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = stud[emailIndex];
+
+
+                    // find the student that matches the current line then add the new information
+                    for (Student student : students) {
+                        if (student.getName().equals(name) && student.getStudID().equals(id)){
+                            if (!email.equals("")) {
+                                student.setEmail(email);
+                            }
+                            if (!program.equals("") && (programsFlag || teamLeaderFlag)) {
+                                student.setProgram(program);
+                            }
+                            if (!grade.equals("") && gradeFlag) {
+                                student.setGrade(grade);
+                            }
+                            if (!lab.equals("") && labSectionFlag) {
+                                student.setLabSection(lab);
+                            }
+                            break;
+                        }
+                    }
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+        }
+
+        // once all files are read, check that all the necessary information was provided
+        boolean infoMissing = false;
+        String criteriaSelected = "";
+        if (gradeFlag) criteriaSelected.concat(",grade");
+        if (teamLeaderFlag || programsFlag) criteriaSelected.concat(",program");
+        if (labSectionFlag) criteriaSelected.concat(",lab section");
+        for (Student student : students) {
+            if (student.getName().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getStudID().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getEmail().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getGrade().equals("") && gradeFlag) {
+                infoMissing = true;
+            }
+            if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
+                infoMissing = true;
+            }
+            if (student.getLabSection().equals("") && labSectionFlag) {
+                infoMissing = true;
+            }
+        }
+        if (infoMissing) {
+            GUIMain.infoMissing(criteriaSelected);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Read the chosen CSV file(s) into a list for the modify use case
+     * The chosen files must include a list of groups previously created
+     * by the sorting use case, a list of newly registered students, and
+     * a list of withdrawn students
+     *
+     * @param newStudentsFilenames the files containing new students to be sorted
+     * @param withdrawnStudentsFilenames the files containing the students to be removed
+     * @param groupsFilenames the files containing the groups to be modified
+     * @return true if reading was successful
+     * @throws IOException
+     */
+    public static boolean readCSV_modify(List<String> newStudentsFilenames, List<String> withdrawnStudentsFilenames,List<String> groupsFilenames) throws IOException {
+        // read groups ***********************************************************
+        groups = new ArrayList<>();
+        for (String filename : groupsFilenames) {
+            if (groups.isEmpty()) { // for the first file or if only one file is given
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+
+                // get the position of each attribute
+                String line = bufferedReader.readLine(); // header
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine(); // first student
+
+                while (line != null) {
+                    // empty lines signify the start of a new group
+                    if (line.isBlank()) {
+                        groups.add(new Group());
+                        line = bufferedReader.readLine();
+                    }
+
+                    // add students to the last group in the list
+                    Group currentGroup = groups.get(groups.size()-1);
+
+                    // gets the student's info
+                    String[] student = line.split(",");
+
+                    String name, id, program, grade, lab, email;
+                    if (nameIndex == -1) name = "";
+                    else name = student[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = student[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = student[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = student[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = student[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = student[emailIndex];
+
+                    // adds info
+                    currentGroup.add(new Student(name, id, program, grade, lab, email));
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+
+            // for merging the next files
+            else {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+                // get the position of each attribute
+                String line = bufferedReader.readLine();
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine();
+                while (line != null) {
+                    // gets the student's info
+                    String[] stud = line.split(",");
+                    String name = "", id = "", program = "", grade = "", lab = "", email = "";
+                    if (nameIndex == -1) name = "";
+                    else name = stud[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = stud[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = stud[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = stud[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = stud[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = stud[emailIndex];
+
+
+                    // find the student that matches the current line then add the new information
+                    breakline:
+                    for (Group group : groups) {
+                        for (Student student : group) {
+                            if (student.getName().equals(name) && student.getStudID().equals(id)) {
+                                if (!email.equals("")) {
+                                    student.setEmail(email);
+                                }
+                                if (!program.equals("") && (programsFlag || teamLeaderFlag)) {
+                                    student.setProgram(program);
+                                }
+                                if (!grade.equals("") && gradeFlag) {
+                                    student.setGrade(grade);
+                                }
+                                if (!lab.equals("") && labSectionFlag) {
+                                    student.setLabSection(lab);
+                                }
+                                break breakline;
+                            }
+                        }
+                    }
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+        }
+
+        // once all group files are read, check that all the necessary information was provided
+        boolean infoMissing = false;
+        String criteriaSelected = "";
+        if (gradeFlag) criteriaSelected.concat(",grade");
+        if (teamLeaderFlag || programsFlag) criteriaSelected.concat(",program");
+        if (labSectionFlag) criteriaSelected.concat(",lab section");
+        for (Group group : groups) {
+            for (Student student : group) {
+                if (student.getName().equals("")) {
+                    infoMissing = true;
+                }
+                if (student.getStudID().equals("")) {
+                    infoMissing = true;
+                }
+                if (student.getEmail().equals("")) {
+                    infoMissing = true;
+                }
+                if (student.getGrade().equals("") && gradeFlag) {
+                    infoMissing = true;
+                }
+                if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
+                    infoMissing = true;
+                }
+                if (student.getLabSection().equals("") && labSectionFlag) {
+                    infoMissing = true;
+                }
+            }
+            if (infoMissing) {
+                GUIMain.infoMissing(criteriaSelected);
+                return false;
+            }
+        }
+
+        // read withdrawn students ***********************************************************
+        withdrawnStudents = new Group();
+        for (String filename : withdrawnStudentsFilenames) {
+            if (withdrawnStudents.isEmpty()) { // for the first file or if only one file is given
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+
+                // get the position of each attribute
+                String line = bufferedReader.readLine(); // header
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine(); // first student
+                while (line != null) {
+                    // gets the student's info
+                    String[] student = line.split(",");
+
+                    String name, id, program, grade, lab, email;
+                    if (nameIndex == -1) name = "";
+                    else name = student[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = student[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = student[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = student[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = student[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = student[emailIndex];
+
+                    // adds info
+                    withdrawnStudents.add(new Student(name, id, program, grade, lab, email));
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+
+            // for merging the next files
+            else {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+                // get the position of each attribute
+                String line = bufferedReader.readLine();
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine();
+                while (line != null) {
+                    // gets the student's info
+                    String[] stud = line.split(",");
+                    String name = "", id = "", program = "", grade = "", lab = "", email = "";
+                    if (nameIndex == -1) name = "";
+                    else name = stud[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = stud[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = stud[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = stud[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = stud[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = stud[emailIndex];
+
+
+                    // find the student that matches the current line then add the new information
+                    for (Student student : withdrawnStudents) {
+                        if (student.getName().equals(name) && student.getStudID().equals(id)){
+                            if (!email.equals("")) {
+                                student.setEmail(email);
+                            }
+                            if (!program.equals("") && (programsFlag || teamLeaderFlag)) {
+                                student.setProgram(program);
+                            }
+                            if (!grade.equals("") && gradeFlag) {
+                                student.setGrade(grade);
+                            }
+                            if (!lab.equals("") && labSectionFlag) {
+                                student.setLabSection(lab);
+                            }
+                            break;
+                        }
+                    }
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+        }
+
+        // once all files are read, check that all the necessary information was provided
+        infoMissing = false;
+        for (Student student : withdrawnStudents) {
+            if (student.getName().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getStudID().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getEmail().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getGrade().equals("") && gradeFlag) {
+                infoMissing = true;
+            }
+            if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
+                infoMissing = true;
+            }
+            if (student.getLabSection().equals("") && labSectionFlag) {
+                infoMissing = true;
+            }
+        }
+        if (infoMissing) {
+            GUIMain.infoMissing(criteriaSelected);
+            return false;
+        }
+
+        // read new students ***********************************************************
+        students = new Group();
+        for (String filename : newStudentsFilenames) {
+            if (students.isEmpty()) { // for the first file or if only one file is given
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+
+                // get the position of each attribute
+                String line = bufferedReader.readLine(); // header
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine(); // first student
+                while (line != null) {
+                    // gets the student's info
+                    String[] student = line.split(",");
+
+                    String name, id, program, grade, lab, email;
+                    if (nameIndex == -1) name = "";
+                    else name = student[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = student[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = student[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = student[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = student[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = student[emailIndex];
+
+                    // adds info
+                    students.add(new Student(name, id, program, grade, lab, email));
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+
+            // for merging the next files
+            else {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+                // get the position of each attribute
+                String line = bufferedReader.readLine();
+                String[] header = line.split(",");
+                int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
+                for (int i = 0; i < header.length; i++) {
+                    if (header[i].equals("Student Name")) {
+                        nameIndex = i;
+                    }
+                    if (header[i].equals("Student ID")) {
+                        idIndex = i;
+                    }
+                    if (header[i].equals("Email")) {
+                        emailIndex = i;
+                    }
+                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                        labIndex = i;
+                    }
+                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                        programIndex = i;
+                    }
+                    if (header[i].equals("Grade") && gradeFlag) {
+                        gradeIndex = i;
+                    }
+                }
+
+                line = bufferedReader.readLine();
+                while (line != null) {
+                    // gets the student's info
+                    String[] stud = line.split(",");
+                    String name = "", id = "", program = "", grade = "", lab = "", email = "";
+                    if (nameIndex == -1) name = "";
+                    else name = stud[nameIndex];
+                    if (idIndex == -1) id = "";
+                    else id = stud[idIndex];
+                    if (programIndex == -1) program = "";
+                    else program = stud[programIndex];
+                    if (gradeIndex == -1) grade = "";
+                    else grade = stud[gradeIndex];
+                    if (labIndex == -1) lab = "";
+                    else lab = stud[labIndex];
+                    if (emailIndex == -1) email = "";
+                    else email = stud[emailIndex];
+
+
+                    // find the student that matches the current line then add the new information
+                    for (Student student : students) {
+                        if (student.getName().equals(name) && student.getStudID().equals(id)){
+                            if (!email.equals("")) {
+                                student.setEmail(email);
+                            }
+                            if (!program.equals("") && (programsFlag || teamLeaderFlag)) {
+                                student.setProgram(program);
+                            }
+                            if (!grade.equals("") && gradeFlag) {
+                                student.setGrade(grade);
+                            }
+                            if (!lab.equals("") && labSectionFlag) {
+                                student.setLabSection(lab);
+                            }
+                            break;
+                        }
+                    }
+                    // next line
+                    line = bufferedReader.readLine();
+                }
+            }
+        }
+
+        // once all files are read, check that all the necessary information was provided
+        infoMissing = false;
+        for (Student student : students) {
+            if (student.getName().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getStudID().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getEmail().equals("")) {
+                infoMissing = true;
+            }
+            if (student.getGrade().equals("") && gradeFlag) {
+                infoMissing = true;
+            }
+            if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
+                infoMissing = true;
+            }
+            if (student.getLabSection().equals("") && labSectionFlag) {
+                infoMissing = true;
+            }
+        }
+        if (infoMissing) {
+            GUIMain.infoMissing(criteriaSelected);
+            return false;
+        }
+
         return true;
     }
 
@@ -320,10 +1010,12 @@ public class Main {
      *
      * @throws IOException throws IOException
      */
-    private static void writeCSV(String filename) throws IOException {
-        String name = filename.replace(".csv", "");
-        FileWriter writer = new FileWriter(name + "_groups.csv");
-        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,main.java.Group Number\n");
+    //private static void writeCSV(String filename) throws IOException {
+    private static void writeCSV() throws IOException {
+        //String name = filename.replace(".csv", "");
+        //FileWriter writer = new FileWriter(name + "_groups.csv");
+        FileWriter writer = new FileWriter("groups.csv");
+        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
@@ -667,9 +1359,11 @@ public class Main {
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
      */
-    private static void optimizationSummary(String filename) throws IOException {
-        String name = filename.replace(".csv", "");
-        FileWriter writer = new FileWriter(name + "_optimization_summary.txt");
+    //private static void optimizationSummary(String filename) throws IOException {
+    private static void optimizationSummary() throws IOException {
+        //String name = filename.replace(".csv", "");
+        //FileWriter writer = new FileWriter(name + "_optimization_summary.txt");
+        FileWriter writer = new FileWriter("optimization_summary.txt");
         writer.append("Optimization Summary: \n");
 
         //used for checking how many groups adhere to all criteria

@@ -25,9 +25,9 @@ public class GUIMain extends Application {
      * Displays a message to user stating that the headers
      * in the CSV file are invalid.
      */
-    public static void invalidFileHeaders(){
+    public static void invalidFileHeaders(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Invalid header name(s)");
+        alert.setContentText("Invalid header name, must contain " + message);
         alert.show();
     }
 
@@ -38,6 +38,17 @@ public class GUIMain extends Application {
     public static void noFileSelected() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("No file selected");
+        alert.show();
+    }
+
+    /**
+     * Displays a warning message to user stating that
+     * there is some information missing
+     */
+    public static void infoMissing(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText("Information missing, make sure that all students have each of the " +
+                "following attributes name,student id,email address" + message);
         alert.show();
     }
 }

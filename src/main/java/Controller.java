@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -29,13 +31,24 @@ public class Controller implements Initializable {
     private CheckBox checkbox3;
     @FXML
     private CheckBox checkbox4;
+    //@FXML
+    //private Button submitButton;
     @FXML
-    private Button submitButton;
+    private Button sortButton;
+    @FXML
+    private Button modifyButton;
     @FXML
     private Button insertButton;
     @FXML
     private Spinner<Integer> idealGroupSizeSpinner;
-    private File chosenFile;
+
+    private List<File> newStudentsChosenFiles;
+    private List<File> withdrawnStudentsChosenFiles;
+    private List<File> groupsChosenFiles;
+
+    private List<String> newStudentsChosenFileNames;
+    private List<String> withdrawnStudentsChosenFileNames;
+    private List<String> groupsChosenFileNames;
 
     @Override
     /**
@@ -48,10 +61,10 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Handles the event when a user click's the insert file button
+     * Handles the event when a user clicks the insert file button
      * @param e The event
      */
-    public void insertFile(ActionEvent e){
+    /*public void insertFile(ActionEvent e){
         FileChooser fileChooser = new FileChooser(); // creates a file chooser to choose a file
         File defaultDirectory = new File(System.getProperty("user.dir"));
         fileChooser.setInitialDirectory(defaultDirectory);
@@ -59,16 +72,80 @@ public class Controller implements Initializable {
         // sets a filter to allow *.csv files only
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extensionFilter);
-        chosenFile = fileChooser.showOpenDialog(insertButton.getScene().getWindow());
+        chosenFiles = fileChooser.showOpenMultipleDialog(insertButton.getScene().getWindow());
+
+        chosenFileNames = new ArrayList<>();
+        for (File file : chosenFiles) {
+            chosenFileNames.add(file.getName());
+        }
+    }*/
+
+    /**
+     * Handles the event when a user clicks the new students button
+     * @param e The event
+     */
+    public void insertNewStudentsFile(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser(); // creates a file chooser to choose a file
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setInitialDirectory(defaultDirectory);
+
+        // sets a filter to allow *.csv files only
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        newStudentsChosenFiles = fileChooser.showOpenMultipleDialog(insertButton.getScene().getWindow());
+
+        newStudentsChosenFileNames = new ArrayList<>();
+        for (File file : newStudentsChosenFiles) {
+            newStudentsChosenFileNames.add(file.getName());
+        }
+    }
+
+    /**
+     * Handles the event when a user clicks the withdrawn students button
+     * @param e The event
+     */
+    public void insertWithdrawnStudentsFile(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser(); // creates a file chooser to choose a file
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setInitialDirectory(defaultDirectory);
+
+        // sets a filter to allow *.csv files only
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        withdrawnStudentsChosenFiles = fileChooser.showOpenMultipleDialog(insertButton.getScene().getWindow());
+
+        withdrawnStudentsChosenFileNames = new ArrayList<>();
+        for (File file : withdrawnStudentsChosenFiles) {
+            withdrawnStudentsChosenFileNames.add(file.getName());
+        }
+    }
+
+    /**
+     * Handles the event when a user clicks the groups button
+     * @param e The event
+     */
+    public void insertGroupsFile(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser(); // creates a file chooser to choose a file
+        File defaultDirectory = new File(System.getProperty("user.dir"));
+        fileChooser.setInitialDirectory(defaultDirectory);
+
+        // sets a filter to allow *.csv files only
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        groupsChosenFiles = fileChooser.showOpenMultipleDialog(insertButton.getScene().getWindow());
+
+        groupsChosenFileNames = new ArrayList<>();
+        for (File file : groupsChosenFiles) {
+            groupsChosenFileNames.add(file.getName());
+        }
     }
 
     /**
      * Handles the event when the user clicks the submit criteria button
-     * @param e The event
      * @throws IOException
      */
-    public void submitCriteria(ActionEvent e) throws IOException {
-        if(chosenFile == null) {
+    /*public void submitCriteria() throws IOException {
+        if(chosenFiles == null) {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;
         }
@@ -89,13 +166,100 @@ public class Controller implements Initializable {
         Main.setMaximumGroupSize(idealGroupSize); // sets the size in model
         Main.setMinimumGroupSize(); // sets the minimum size in model
 
-        boolean insertSuccess = Main.readCSV(chosenFile.getName()); // reads the CSV file
+        //boolean insertSuccess = Main.readCSV(chosenFiles.getName()); // reads the CSV file
+        boolean insertSuccess = Main.readCSV_sort(newStudentsChosenFileNames); // reads the CSV file
         if(!insertSuccess){
             return;
         }
 
-        Main.begin(chosenFile.getName());
-        Stage stage = (Stage) submitButton.getScene().getWindow();
+        //Main.begin(chosenFiles.getName());
+        Main.begin();
+        System.out.println("hello"); // for testing
+        //Stage stage = (Stage) submitButton.getScene().getWindow();
+        Stage stage = (Stage) sortButton.getScene().getWindow();
+        stage.close();
+    }*/
+
+    /**
+     * Handles the event when the user clicks the sort students button
+     * @param e The event
+     * @throws IOException
+     */
+    public void sortStudents(ActionEvent e) throws IOException {
+        //submitCriteria();
+        if(newStudentsChosenFiles == null) {
+            GUIMain.noFileSelected(); // pop warning message displays to user
+            return;
+        }
+        if(checkbox1.isSelected()){
+            Main.setLabSectionFlag(true); // sets lab section flag in model
+        }
+        if(checkbox2.isSelected()){
+            Main.setGradeFlag(true); // sets grade flag in model
+        }
+        if(checkbox3.isSelected()){
+            Main.setProgramsFlag(true); // sets program flag in model
+        }
+        if(checkbox4.isSelected()){
+            Main.setTeamLeaderFlag(true); // sets team leader flag in model
+        }
+
+        int idealGroupSize = idealGroupSizeSpinner.getValue(); // gets the group size from spinner
+        Main.setMaximumGroupSize(idealGroupSize); // sets the size in model
+        Main.setMinimumGroupSize(); // sets the minimum size in model
+
+        //boolean insertSuccess = Main.readCSV(chosenFiles.getName()); // reads the CSV file
+        boolean insertSuccess = Main.readCSV_sort(newStudentsChosenFileNames); // reads the CSV file
+        if(!insertSuccess){
+            return;
+        }
+
+        //Main.begin(chosenFiles.getName());
+        Main.beginSort();
+        //Stage stage = (Stage) submitButton.getScene().getWindow();
+        Stage stage = (Stage) sortButton.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Handles the event when the user clicks the modify groups button
+     * @param e The event
+     * @throws IOException
+     */
+    public void modifyGroups(ActionEvent e) throws IOException {
+        //submitCriteria();
+        if(newStudentsChosenFiles == null || withdrawnStudentsChosenFiles == null || groupsChosenFiles == null) {
+            GUIMain.noFileSelected(); // pop warning message displays to user
+            return;
+        }
+        if(checkbox1.isSelected()){
+            Main.setLabSectionFlag(true); // sets lab section flag in model
+        }
+        if(checkbox2.isSelected()){
+            Main.setGradeFlag(true); // sets grade flag in model
+        }
+        if(checkbox3.isSelected()){
+            Main.setProgramsFlag(true); // sets program flag in model
+        }
+        if(checkbox4.isSelected()){
+            Main.setTeamLeaderFlag(true); // sets team leader flag in model
+        }
+
+        int idealGroupSize = idealGroupSizeSpinner.getValue(); // gets the group size from spinner
+        Main.setMaximumGroupSize(idealGroupSize); // sets the size in model
+        Main.setMinimumGroupSize(); // sets the minimum size in model
+
+        //boolean insertSuccess = Main.readCSV(chosenFiles.getName()); // reads the CSV file
+        boolean insertSuccess = Main.readCSV_modify(newStudentsChosenFileNames, withdrawnStudentsChosenFileNames, groupsChosenFileNames); // reads the CSV file
+        if(!insertSuccess){
+            System.out.println("controller??"); // for testing
+            return;
+        }
+
+        //Main.begin(chosenFiles.getName());
+        Main.beginModify();
+        //Stage stage = (Stage) submitButton.getScene().getWindow();
+        Stage stage = (Stage) modifyButton.getScene().getWindow();
         stage.close();
     }
 }
