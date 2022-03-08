@@ -9,24 +9,27 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <CheckBox fx:id="checkbox1" layoutX="200.0" layoutY="284.0" mnemonicParsing="false" />
-      <CheckBox fx:id="checkbox4" layoutX="200.0" layoutY="398.0" mnemonicParsing="false" />
-      <CheckBox fx:id="checkbox3" layoutX="200.0" layoutY="360.0" mnemonicParsing="false" />
-      <CheckBox fx:id="checkbox2" layoutX="200.0" layoutY="325.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox1" layoutX="210.0" layoutY="284.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox4" layoutX="210.0" layoutY="398.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox3" layoutX="210.0" layoutY="360.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox2" layoutX="210.0" layoutY="325.0" mnemonicParsing="false" />
       <Spinner fx:id="idealGroupSizeSpinner" layoutX="200.0" layoutY="147.0" prefHeight="27.0" prefWidth="70.0" />
       <Label layoutX="37.0" layoutY="90.0" text="Optimization Criteria:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="34.0" layoutY="152.0" text="Ideal Group Size:" />
-      <Label layoutX="37.0" layoutY="211.0" text="Check the boxes if the following" />
-      <Label layoutX="37.0" layoutY="228.0" text="criteria are to be used:" />
+      <Label layoutX="35.0" layoutY="152.0" text="Ideal Group Size:" />
+      <Label layoutX="35.0" layoutY="211.0" text="Check the boxes if the following" />
+      <Label layoutX="35.0" layoutY="228.0" text="criteria are to be used:" />
       <Label layoutX="35.0" layoutY="284.0" text="Lab Section:" />
-      <Label layoutX="34.0" layoutY="325.0" text="Grades:" />
-      <Label layoutX="33.0" layoutY="360.0" text="Mix of programs:" />
-      <Label layoutX="32.0" layoutY="398.0" text="Team Leader from SYSC:" />
-      <Button fx:id="submitButton" layoutX="180.0" layoutY="475.0" mnemonicParsing="false" onAction="#submitCriteria" text="Submit Criteria" />
-      <Button fx:id="insertButton" layoutX="77.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertFile" text="Insert File" />
+      <Label layoutX="35.0" layoutY="325.0" text="Grades:" />
+      <Label layoutX="35.0" layoutY="360.0" text="Mix of programs:" />
+      <Label layoutX="35.0" layoutY="398.0" text="Team Leader from SYSC:" />
+      <Button fx:id="sortButton" layoutX="35.0" layoutY="475.0" mnemonicParsing="false" onAction="#sortStudents" text="Sort Students" />
+      <Button fx:id="modifyButton" layoutX="200.0" layoutY="475.0" mnemonicParsing="false" onAction="#modifyGroups" text="Modify Groups" />
+      <Button fx:id="insertNewStudentsButton" layoutX="35.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertNewStudentsFile" text="New Students" />
+      <Button fx:id="insertWithdrawnStudentsButton" layoutX="170.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertWithdrawnStudentsFile" text="Withdrawn Students" />
+      <Button fx:id="insertGroupsButton" layoutX="350.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertGroupsFile" text="Groups" />
    </children>
 </AnchorPane>
