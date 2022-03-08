@@ -1,12 +1,11 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
 /**
  * @author Erica Oliver, Wintana Yosief
- * @version 4 - Feb 16, 2022
+ * @version March 04, 2022
  */
 public class Main {
     private static Group students;
@@ -21,21 +20,25 @@ public class Main {
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
 
-    //public static void begin(String filename) throws IOException {
+    /**
+     * The sorting use case where students are sorted into groups
+     * @throws IOException
+     */
     public static void beginSort() throws IOException {
         sort();
-        assignGroupNumbers();
-        //writeCSV();
-        //optimizationSummary();
-
         sort2();
         assignGroupNumbers();
         writeCSV();
         optimizationSummary();
-        //writeCSV(filename + " 2");
-        //optimizationSummary(filename + " 2");
     }
 
+    /**
+     * The modify use case where some pre-made groups are given with some new and withdrawn students
+     * Removes the withdrawn students and adds the new students to the groups
+     * Outputs the new groups on top with the unaffected groups at the bottom
+     *
+     * @throws IOException
+     */
     public static void beginModify() throws IOException {
         // remove withdrawn students
         for (Student student : withdrawnStudents) {
@@ -43,16 +46,72 @@ public class Main {
             for (Group group : groups) {
                 for (Student stud : group) {
                     if ((stud.getName().equals(student.getName())) && stud.getStudID().equals(student.getStudID())) {
-                        group.remove(stud); //
+                        group.remove(stud);
                         break breakline;
                     }
                 }
             }
         }
-        // remove full groups
 
-        // for each group, find
-        .
+        ArrayList<Group> groupsNotAffected = new ArrayList<>();
+        // remove full groups
+        ListIterator<Group> groupsIterator = groups.listIterator();
+        while (groupsIterator.hasNext()) {
+            Group group = groupsIterator.next();
+            if (group.size() == maximumGroupSize) {
+                groupsNotAffected.add(group);
+                groupsIterator.remove();
+            }
+        }
+
+        // fill each group with a new student
+        for (Group group : groups) {
+            while (!students.isEmpty() && group.size() < maximumGroupSize){
+                ListIterator<Student> studentsIterator = students.listIterator();
+                while (studentsIterator.hasNext()) {
+                    Student student = studentsIterator.next();
+                    boolean tl = false;
+                    // if the student does not fit with the current group, break
+                    if (labSectionFlag && student.getLabSection().equals(group.get(0).getLabSection())) break;
+                    if (teamLeaderFlag && group.get(0).isDefaultLeader() || !student.isDefaultLeader()) tl = true;
+                    for (Student stud : group) {
+                        if (gradeFlag && !student.areGradesSimilar(stud)) break;
+                        if (programsFlag && student.sameProgram(stud)) break;
+                    }
+
+                    // if the student is a team leader, add it to the first position
+                    if (tl) group.add(0, student);
+                    // else, add student to the end of the group
+                    else group.add(student);
+                    studentsIterator.remove();
+                }
+            }
+        }
+
+        // remove full groups
+        groupsIterator = groups.listIterator();
+        while (groupsIterator.hasNext()) {
+            Group group = groupsIterator.next();
+            if (group.size() == maximumGroupSize || group.size() == minimumGroupSize) {
+                groupsNotAffected.add(group);
+                groupsIterator.remove();
+            }
+        }
+
+        // if there are still students left to be added or groups that are too small, re-sort them
+        // add the groups to the "students" field
+        for (Group group : groups) {
+            students.addAll(group);
+        }
+        sort();
+        sort2();
+
+        // add the other groups back
+        groups.addAll(groupsNotAffected);
+
+        assignGroupNumbers();
+        writeCSV();
+        optimizationSummary();
     }
 
     /**
@@ -474,10 +533,6 @@ public class Main {
 
         // once all files are read, check that all the necessary information was provided
         boolean infoMissing = false;
-        String criteriaSelected = "";
-        if (gradeFlag) criteriaSelected.concat(",grade");
-        if (teamLeaderFlag || programsFlag) criteriaSelected.concat(",program");
-        if (labSectionFlag) criteriaSelected.concat(",lab section");
         for (Student student : students) {
             if (student.getName().equals("")) {
                 infoMissing = true;
@@ -499,7 +554,7 @@ public class Main {
             }
         }
         if (infoMissing) {
-            GUIMain.infoMissing(criteriaSelected);
+            GUIMain.infoMissing();
             return false;
         }
         return true;
@@ -521,41 +576,48 @@ public class Main {
         // read groups ***********************************************************
         groups = new ArrayList<>();
         for (String filename : groupsFilenames) {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+            String line = bufferedReader.readLine(); // header
+            String[] header = line.split(",");
             if (groups.isEmpty()) { // for the first file or if only one file is given
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-
                 // get the position of each attribute
-                String line = bufferedReader.readLine(); // header
-                String[] header = line.split(",");
                 int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
                 for (int i = 0; i < header.length; i++) {
                     if (header[i].equals("Student Name")) {
                         nameIndex = i;
                     }
-                    if (header[i].equals("Student ID")) {
+                    else if (header[i].equals("Student ID")) {
                         idIndex = i;
                     }
-                    if (header[i].equals("Email")) {
+                    else if (header[i].equals("Email")) {
                         emailIndex = i;
                     }
-                    if (header[i].equals("Lab Section") && labSectionFlag) {
+                    else if (header[i].equals("Lab Section") && labSectionFlag) {
                         labIndex = i;
                     }
-                    if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
+                    else if (header[i].equals("Program") && (programsFlag || teamLeaderFlag)) {
                         programIndex = i;
                     }
-                    if (header[i].equals("Grade") && gradeFlag) {
+                    else if (header[i].equals("Grade") && gradeFlag) {
                         gradeIndex = i;
                     }
                 }
 
                 line = bufferedReader.readLine(); // first student
+                groups.add(new Group());
 
+                breakline:
                 while (line != null) {
-                    // empty lines signify the start of a new group
-                    if (line.isBlank()) {
-                        groups.add(new Group());
+                    // blank lines signify the start of a new group
+                    // in case there are multiple blank lines, especially at the end of the file
+                    while (line.isBlank()) {
                         line = bufferedReader.readLine();
+                        if (line == null) {
+                            break breakline;
+                        }
+                        if (!groups.get(groups.size()-1).isEmpty()) {
+                            groups.add(new Group());
+                        }
                     }
 
                     // add students to the last group in the list
@@ -587,10 +649,7 @@ public class Main {
 
             // for merging the next files
             else {
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
                 // get the position of each attribute
-                String line = bufferedReader.readLine();
-                String[] header = line.split(",");
                 int nameIndex = -1, idIndex = -1, emailIndex = -1, gradeIndex = -1, programIndex = -1, labIndex = -1;
                 for (int i = 0; i < header.length; i++) {
                     if (header[i].equals("Student Name")) {
@@ -687,7 +746,7 @@ public class Main {
                 }
             }
             if (infoMissing) {
-                GUIMain.infoMissing(criteriaSelected);
+                GUIMain.infoMissing();
                 return false;
             }
         }
@@ -843,7 +902,7 @@ public class Main {
             }
         }
         if (infoMissing) {
-            GUIMain.infoMissing(criteriaSelected);
+            GUIMain.infoMissing();
             return false;
         }
 
@@ -879,7 +938,7 @@ public class Main {
                 }
 
                 line = bufferedReader.readLine(); // first student
-                while (line != null) {
+                while (line != null && !line.isBlank()) { //
                     // gets the student's info
                     String[] student = line.split(",");
 
@@ -998,7 +1057,7 @@ public class Main {
             }
         }
         if (infoMissing) {
-            GUIMain.infoMissing(criteriaSelected);
+            GUIMain.infoMissing();
             return false;
         }
 
@@ -1010,12 +1069,9 @@ public class Main {
      *
      * @throws IOException throws IOException
      */
-    //private static void writeCSV(String filename) throws IOException {
     private static void writeCSV() throws IOException {
-        //String name = filename.replace(".csv", "");
-        //FileWriter writer = new FileWriter(name + "_groups.csv");
         FileWriter writer = new FileWriter("groups.csv");
-        writer.append("Name,Student ID,Program,Grade,Lab Section,Email Address,Group Number\n\n");
+        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
@@ -1136,7 +1192,7 @@ public class Main {
                 while (groupIterator.hasNext()) {
                     Student student = groupIterator.next();
                     // Checking if students are in the same program
-                    if (!s.sameProgram(s, student) && group.size() < groupSize) {
+                    if (!s.sameProgram(student) && group.size() < groupSize) {
                         groupIterator.add(s); // adds student to group
                         groupFound = true;
                         s.setGroupNum(s.getLabSection() + ".G" + (i + 1));
@@ -1243,7 +1299,7 @@ public class Main {
         gradeGroup.removeIf(ArrayList::isEmpty);
 
         //move some students to the first grade level (number of students to be sorted into the smaller groups)
-        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
+        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size()); //FIXME issue with smaller numbers of students
         int numStudents = numGroupsOfMinSize * minimumGroupSize;
         if (numGroupsOfMinSize != 0) {
             while (gradeGroup.get(0).size() < numStudents) {
@@ -1359,10 +1415,7 @@ public class Main {
      * This is used to compare algorithms/methods of creating the groups
      * to see which adheres best to the requirements
      */
-    //private static void optimizationSummary(String filename) throws IOException {
     private static void optimizationSummary() throws IOException {
-        //String name = filename.replace(".csv", "");
-        //FileWriter writer = new FileWriter(name + "_optimization_summary.txt");
         FileWriter writer = new FileWriter("optimization_summary.txt");
         writer.append("Optimization Summary: \n");
 

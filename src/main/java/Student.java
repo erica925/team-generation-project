@@ -34,12 +34,11 @@ public class Student {
     }
 
     /**
-     * @param s1 A student
      * @param s2 A student
      * @return true if the students are enrolled in the same program
      */
-    public boolean sameProgram(Student s1, Student s2) {
-        return (s1.program.equals(s2.program));
+    public boolean sameProgram(Student s2) {
+        return (this.program.equals(s2.program));
     }
 
     /**

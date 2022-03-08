@@ -45,10 +45,9 @@ public class GUIMain extends Application {
      * Displays a warning message to user stating that
      * there is some information missing
      */
-    public static void infoMissing(String message) {
+    public static void infoMissing() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText("Information missing, make sure that all students have each of the " +
-                "following attributes name,student id,email address" + message);
+        alert.setContentText("Information missing from one of the files");
         alert.show();
     }
 }
