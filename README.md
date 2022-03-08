@@ -47,11 +47,11 @@ not have their individual grades)
 
 Output files:
 - 
-The program will output four files:
-- "filename_groups.csv" : The list of groups where the first student in each group is 
+The program will output two files:
+- "groups.csv" : The list of groups where the first student in each group is 
 the team leader and each group has been given a group number in the form "Lx.Gy" where 
-x is the lab section and y is the group number. filename is the name of your input file.
-- "filename_optimization_summary.txt" : For each of the optimization criteria, the group number
+x is the lab section and y is the group number.
+- "optimization_summary.txt" : For each of the optimization criteria, the group number
 of the groups that do and do not adhere are listed, and the percentage of groups that adhere is calculated.
 At the end, all groups that adhere to all the criteria are listed and this percentage is calculated. 
-- "filename2_groups.csv" and "filename 2_optimization_summary" : these contain the same as described above but after a second pass has been done to attempt to improve the optimization of the groups - mainly for testing purposes to see if the second pass made any changes. 
+
