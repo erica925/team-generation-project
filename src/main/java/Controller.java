@@ -78,7 +78,7 @@ public class Controller implements Initializable {
 
         newStudentsChosenFileNames = new ArrayList<>();
         for (File file : newStudentsChosenFiles) {
-            newStudentsChosenFileNames.add(file.getName());
+            newStudentsChosenFileNames.add(file.getPath());
         }
     }
 
@@ -98,7 +98,7 @@ public class Controller implements Initializable {
 
         withdrawnStudentsChosenFileNames = new ArrayList<>();
         for (File file : withdrawnStudentsChosenFiles) {
-            withdrawnStudentsChosenFileNames.add(file.getName());
+            withdrawnStudentsChosenFileNames.add(file.getPath());
         }
     }
 
@@ -118,7 +118,7 @@ public class Controller implements Initializable {
 
         groupsChosenFileNames = new ArrayList<>();
         for (File file : groupsChosenFiles) {
-            groupsChosenFileNames.add(file.getName());
+            groupsChosenFileNames.add(file.getPath());
         }
     }
 
