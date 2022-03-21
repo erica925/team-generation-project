@@ -32,7 +32,7 @@ public class Controller implements Initializable {
     @FXML
     private CheckBox checkbox4;
     @FXML
-    private Button sortButton;
+    private Button createButton;
     @FXML
     private Button modifyButton;
     @FXML
@@ -149,20 +149,20 @@ public class Controller implements Initializable {
      * @param e The event
      * @throws IOException
      */
-    public void sortStudents(ActionEvent e) throws IOException {
+    public void createGroups(ActionEvent e) throws IOException {
         if(newStudentsChosenFiles == null) {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;
         }
         submitCriteria();
 
-        boolean insertSuccess = Main.readCSV_sort(newStudentsChosenFileNames); // reads the CSV file
+        boolean insertSuccess = Main.readCSVCreate(newStudentsChosenFileNames); // reads the CSV file
         if(!insertSuccess){
             return;
         }
 
-        Main.beginSort();
-        Stage stage = (Stage) sortButton.getScene().getWindow();
+        Main.beginCreate();
+        Stage stage = (Stage) createButton.getScene().getWindow();
         stage.close();
     }
 
@@ -178,7 +178,7 @@ public class Controller implements Initializable {
         }
         submitCriteria();
 
-        boolean insertSuccess = Main.readCSV_modify(newStudentsChosenFileNames, withdrawnStudentsChosenFileNames, groupsChosenFileNames); // reads the CSV file
+        boolean insertSuccess = Main.readCSVModify(newStudentsChosenFileNames, withdrawnStudentsChosenFileNames, groupsChosenFileNames); // reads the CSV file
         if(!insertSuccess){
             return;
         }
