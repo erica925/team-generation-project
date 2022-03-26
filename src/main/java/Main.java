@@ -1089,7 +1089,8 @@ public class Main {
      * @param students The list of students to be grouped
      */
     private static void simpleSort(Group students) {
-        for (int i = 0; i <= getNumGroupsOfMinSize(students.size()); i++) {
+        int numMinGroups = getNumGroupsOfMinSize(students.size());
+        for (int i = 0; i < numMinGroups; i++) {
             Group group = new Group();
             groups.add(group);
             for (int j = 0; j < minimumGroupSize; j++) {
@@ -1100,7 +1101,8 @@ public class Main {
                 }
             }
         }
-        for (int i = 0; i < (students.size() / maximumGroupSize); i++) {
+        int numGroups = students.size() / maximumGroupSize;
+        for (int i = 0; i < numGroups; i++) {
             Group group = new Group();
             groups.add(group);
             for (int j = 0; j < maximumGroupSize; j++) {
@@ -1294,6 +1296,7 @@ public class Main {
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
             else if (s.getGrade().equals("F")) groupF.add(s);
+
         }
 
         gradeGroup.removeIf(ArrayList::isEmpty);
