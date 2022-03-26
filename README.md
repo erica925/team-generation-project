@@ -3,7 +3,7 @@
 This program sorts a group of students into groups for project-based labs given a 
 set of optimization criteria (group size, lab section, grade in a prerequisite course, 
 and program enrollment). The user specifies the size of the groups and whether each of 
-the following optimization criteria will be used: Lab Section, Grade, Mix of Programs, Team Lader from SYSC
+the following optimization criteria will be used: Lab Section, Grade, Mix of Programs, Team Lader from SYSC department
 
 The lab section criterion will ensure that each group has students all enrolled in the same lab section
 The grade criterion will ensure that students in the same group have similar grades
@@ -11,6 +11,12 @@ The mix of programs criterion will ensure that the students in a group are all e
 The team leader criterion will ensure that each group is assigned a team leader who is enrolled in one of the 
 programs offered by the Department of Systems and Computer engineering
 
+The program can either create groups from a list of students or modify a list of pre-existing groups.
+To create groups, click the "New Students" button to chose your file(s), select the criteria, and click the
+"Create groups" button. To modify groups, click the "New Students" button to select the file with newly registered 
+students, click the "Withdrawn Students" button to select the file of students that have withdrawn from the 
+course, click the "Groups" button to select the file of pre-existing groups, select the optimization criteria,
+then click the "Modify Groups" button to modify the groups. Both use cases output the same files. 
 
 To run the program:
 -
@@ -19,7 +25,7 @@ To run the program:
 - Add your input file to the same folder as the jar file
 - Run the jar file (java -jar team-generation-project.jar)
 - A window will open with checkboxes for each of the optimization criteria. Select each 
-of the criteria you wish to use, select the group size, and select your input file.
+of the criteria you wish to use, select the group size, and select your input file(s).
 - Verify the output files containing the groups and the optimization summary
 
 If you prefer to create the jar file from the source code:
@@ -38,12 +44,11 @@ Input file specifications:
 - 
 - The file must be of type csv - you can convert an Excel sheet to csv
 - The columns must be "Student Name,Student ID,Program,Grade,Lab Section,Email" 
-(be careful with spacing)
 - The grades must be given in letter form
-- For any unused criteria, you must still include each column and you can fill 
-each cell with the same value (ex. assign all students "A" for grade if you do 
-not have their individual grades)
+- For any unused criteria, you may omit the column
 - See "students.csv" or "test.csv" for examples of formatting
+- Multiple files may be chosen (they will be merged by the program), just be sure that 
+each file includes the students names and ID numbers
 
 Output files:
 - 

@@ -26,7 +26,7 @@
       <Label layoutX="35.0" layoutY="325.0" text="Grades:" />
       <Label layoutX="35.0" layoutY="360.0" text="Mix of programs:" />
       <Label layoutX="35.0" layoutY="398.0" text="Team Leader from SYSC:" />
-      <Button fx:id="sortButton" layoutX="35.0" layoutY="475.0" mnemonicParsing="false" onAction="#sortStudents" text="Sort Students" />
+      <Button fx:id="createButton" layoutX="35.0" layoutY="475.0" mnemonicParsing="false" onAction="#createGroups" text="Create Groups" />
       <Button fx:id="modifyButton" layoutX="200.0" layoutY="475.0" mnemonicParsing="false" onAction="#modifyGroups" text="Modify Groups" />
       <Button fx:id="insertNewStudentsButton" layoutX="35.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertNewStudentsFile" text="New Students" />
       <Button fx:id="insertWithdrawnStudentsButton" layoutX="170.0" layoutY="42.0" mnemonicParsing="false" onAction="#insertWithdrawnStudentsFile" text="Withdrawn Students" />

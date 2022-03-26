@@ -24,7 +24,8 @@ public class Main {
      * The sorting use case where students are sorted into groups
      * @throws IOException
      */
-    public static void beginSort() throws IOException {
+    public static void beginCreate() throws IOException {
+    //public static void beginSort() throws IOException {
         sort();
         sort2();
         assignGroupNumbers();
@@ -360,42 +361,6 @@ public class Main {
     }
 
     /**
-     * Reads a CSV file into an ArrayList of students
-     *
-     * @param filename The filename inputted by the user
-     * @return true if reading was successful
-     * @throws IOException throws IOException
-     */
-    public static boolean readCSV(String filename) throws IOException {
-        students = new Group();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-
-        // reads the first line (headers of CSV file)
-        String header = bufferedReader.readLine();
-
-        // reads the first student
-        String line = bufferedReader.readLine();
-
-        // the header of the CSV file must be "Student Name,Student ID,Program,Grade,Lab Section,Email"
-        if (header.contains("Student Name,Student ID,Program,Grade,Lab Section,Email")) {
-            while (line != null) {
-                // gets the student's info
-                String[] student = line.split(",");
-
-                // adds info
-                students.add(new Student(student[0], student[1], student[2], student[3], student[4], student[5]));
-                // next line
-                line = bufferedReader.readLine();
-            }
-        } else {
-            System.out.println("Invalid header name");
-            GUIMain.invalidFileHeaders("");
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Read the chosen CSV file(s) into a list for the sorting use case
      * Any number of files may be chosen but each one must have at least
      * student names and ID numbers
@@ -404,7 +369,7 @@ public class Main {
      * @return true if reading was successful
      * @throws IOException
      */
-    public static boolean readCSV_sort(List<String> filenames) throws IOException {
+    public static boolean readCSVCreate(List<String> filenames) throws IOException {
         students = new Group();
         for (String filename : filenames) {
             if (students.isEmpty()) { // for the first file or if only one file is given
@@ -572,7 +537,7 @@ public class Main {
      * @return true if reading was successful
      * @throws IOException
      */
-    public static boolean readCSV_modify(List<String> newStudentsFilenames, List<String> withdrawnStudentsFilenames,List<String> groupsFilenames) throws IOException {
+    public static boolean readCSVModify(List<String> newStudentsFilenames, List<String> withdrawnStudentsFilenames,List<String> groupsFilenames) throws IOException {
         // read groups ***********************************************************
         groups = new ArrayList<>();
         for (String filename : groupsFilenames) {
@@ -1412,7 +1377,6 @@ public class Main {
         teamLeaderFlag = value;
     }
 
-
     /**
      * Print an optimization summary of the formed groups
      * This is used to compare algorithms/methods of creating the groups
@@ -1438,7 +1402,7 @@ public class Main {
         intersection.addAll(groupsOfMaxSize);
         intersection.addAll(groupsOfMinSize);
         int numGroupsOfMinSize = getNumGroupsOfMinSize(totalStudents);
-        writer.append("\nTo meet the group size criteria, students should be sorted into groups of " + maximumGroupSize + " or " + minimumGroupSize + ". Any other group size is invalid");
+        writer.append("\nTo meet the group size criteria, students must be sorted into groups of " + maximumGroupSize + " or " + minimumGroupSize + ". Any other group size is invalid");
         writer.append("\nSince there are " + totalStudents + " students, we should expect at least " + numGroupsOfMinSize + " group(s) of " + minimumGroupSize);
         writer.append("\nThe number of groups with " + maximumGroupSize + " students is " + groupsOfMaxSize.size() + " : " + groupsOfMaxSize);
         writer.append("\nThe number of groups with " + minimumGroupSize + " students is " + groupsOfMinSize.size() + " : " + groupsOfMinSize);
@@ -1462,7 +1426,7 @@ public class Main {
                 sameLabs.add(group.get(0).getGroupNum());
             }
             intersection.retainAll(sameLabs);
-            writer.append("\nTo meet the lab section criteria, all students in the same group should be registered in the same lab section.");
+            writer.append("\nTo meet the lab section criteria, all students in the same group must be registered in the same lab section.");
             writer.append("\nThe number of groups in which all students are registered in the same lab section is " + sameLabs.size() + " : " + sameLabs);
             writer.append("\nThe number of groups in which not all students are registered in the same lab section is " + diffLabs.size() + " : " + diffLabs);
             writer.append("\nThe percentage of groups that adhere to the lab section criterion is " + sameLabs.size() * 100 / groups.size() + "%\n");
@@ -1487,7 +1451,7 @@ public class Main {
                 if (!hasRepeat) uniquePrograms.add(group.get(0).getGroupNum());
             }
             intersection.retainAll(uniquePrograms);
-            writer.append("\nTo meet the programs criteria, the all students in the same group should be enrolled in different engineering streams.");
+            writer.append("\nTo meet the programs criteria, the all students in the same group must be enrolled in different engineering streams.");
             writer.append("\nThe number of groups that adhere to the programs criteria is " + (uniquePrograms.size()) + " : " + uniquePrograms);
             writer.append("\nThe number of groups that do not adhere to the programs criteria is " + (repeatPrograms.size()) + " : " + repeatPrograms);
             writer.append("\nThe number of groups with more than two students with the same program is " + (repeatMore2Programs.size()) + " : " + repeatMore2Programs);
@@ -1505,10 +1469,12 @@ public class Main {
                 else hasNoLeader.add(group.getTeamLeader().getGroupNum());
             }
             intersection.retainAll(hasDefaultLeader);
-            writer.append("\nTo meet the team leader criteria, groups should have one student in software or computer systems engineering.");
+            writer.append("\nTo meet the team leader criteria, groups must have one student in software or computer systems engineering.");
+            writer.append("\nGroups may be assigned a backup team leader from either communications or biomedical engineering, is no default team leader is available");
             writer.append("\nThe number of groups with a team leader from software or computer systems engineering is " + hasDefaultLeader.size() + " : " + hasDefaultLeader);
             writer.append("\nThe number of groups with a team leader from another SYSC program is " + hasBackupLeader.size() + " : " + hasBackupLeader);
             writer.append("\nThe number of groups with no team leader is " + hasNoLeader.size() + " : " + hasNoLeader);
+            writer.append("\nThe percentage of groups that have only a backup team leader is " + hasBackupLeader.size() * 100 / groups.size() + "%");
             writer.append("\nThe percentage of groups that adhere to the team leader criterion is " + hasDefaultLeader.size() * 100 / groups.size() + "%\n");
         }
 
