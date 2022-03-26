@@ -31,7 +31,6 @@ public class Group extends ArrayList<Student>{
         return (lowestGrade - highestGrade);
     }
 
-
     /**
      * Assigns a score based on how well the group fits the programs criteria.
      * A score of 0 means all students in the group are in different programs.
