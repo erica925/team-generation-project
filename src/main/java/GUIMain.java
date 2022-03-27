@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+
+
+
 public class GUIMain extends Application {
 
     public static void main(String[] args) {
@@ -13,7 +16,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main/resources/GUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);

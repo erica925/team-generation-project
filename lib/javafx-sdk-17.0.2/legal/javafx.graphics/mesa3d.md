@@ -82,7 +82,7 @@ include/GL/glxext.h
 include/GL/wglxext.h :
 
 
- Copyright (c) 2013 - 2018 The Khronos Group Inc.
+ Copyright (c) 2013 - 2018 The Khronos Controller.Group Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and/or associated documentation files (the
@@ -108,7 +108,7 @@ include/GL/wglxext.h :
 ----
 include/KHR/khrplatform.h :
 
- Copyright (c) 2008 - 2018 The Khronos Group Inc.
+ Copyright (c) 2008 - 2018 The Khronos Controller.Group Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a
  copy of this software and/or associated documentation files (the

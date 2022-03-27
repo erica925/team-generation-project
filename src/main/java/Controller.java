@@ -187,4 +187,5 @@ public class Controller implements Initializable {
         Stage stage = (Stage) modifyButton.getScene().getWindow();
         stage.close();
     }
+
 }

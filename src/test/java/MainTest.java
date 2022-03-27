@@ -14,6 +14,11 @@ public class MainTest {
 
     @Test
     public void testReadCSV_Sort() throws IOException {
+        Main.setLabSectionFlag(true);
+        Main.setGradeFlag(true);
+        Main.setProgramsFlag(true);
+        Main.setTeamLeaderFlag(true);
+
         // insert a valid file
         filenames.add("test.csv");
         assertTrue(Main.readCSVCreate(filenames));
@@ -24,6 +29,9 @@ public class MainTest {
         filenames.add("test files/test_merge_1.csv");
         filenames.add("test files/test_merge_2.csv");
         assertTrue(Main.readCSVCreate(filenames));
+        Main.setMaximumGroupSize(3);
+        Main.setMinimumGroupSize();
+        Main.beginCreate();
 
         filenames.clear();
 
@@ -32,6 +40,11 @@ public class MainTest {
 
     @Test
     public void testReadCSV_Modify() throws IOException {
+        Main.setLabSectionFlag(true);
+        Main.setGradeFlag(true);
+        Main.setProgramsFlag(true);
+        Main.setTeamLeaderFlag(true);
+
         // insert a file with new students
         newStudentsFilenames.add("test files/test_modify_new_students.csv");
 
@@ -52,6 +65,9 @@ public class MainTest {
         withdrawnStudentsFilenames.add("test_modify_withdrawn_2.csv");
 
         assertTrue(Main.readCSVModify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
+        Main.setMaximumGroupSize(4);
+        Main.setMinimumGroupSize();
+        Main.beginModify();
 
         newStudentsFilenames.clear();
         withdrawnStudentsFilenames.clear();
@@ -63,7 +79,6 @@ public class MainTest {
     public void testSortLabSection() throws IOException {
 
         Main.setLabSectionFlag(true);
-
         Main.setGradeFlag(false);
         Main.setTeamLeaderFlag(false);
         Main.setProgramsFlag(false);
@@ -206,7 +221,7 @@ public class MainTest {
         Main.setTeamLeaderFlag(true);
 
         filenames.add("student_list.csv");
-        Main.setMaximumGroupSize(4);
+        Main.setMaximumGroupSize(6);
         Main.setMinimumGroupSize();
         Main.readCSVCreate(filenames);
         Main.beginCreate();

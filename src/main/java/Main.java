@@ -103,11 +103,31 @@ public class Main {
 
         // if there are still students left to be added or groups that are too small, re-sort them
         // add the groups to the "students" field
-        for (Group group : groups) {
-            students.addAll(group);
+       // for (Controller.Group group : groups) {
+            //students.addAll(group);
+        //}
+
+        if(!students.isEmpty()) {
+            for (Group group : groups) {
+                if (group.size() < maximumGroupSize) {
+                    Student s = students.get(0);
+                    group.add(s);
+                }
+            }
         }
-        sort();
-        sort2();
+
+        groupsIterator = groups.listIterator();
+        while (groupsIterator.hasNext()) {
+            Group group = groupsIterator.next();
+            if (group.size() == maximumGroupSize || group.size() == minimumGroupSize) {
+                groupsNotAffected.add(group);
+                groupsIterator.remove();
+            }
+        }
+
+
+        //sort();
+        //sort2();
 
         // add the other groups back
         groups.addAll(groupsNotAffected);
@@ -1038,7 +1058,7 @@ public class Main {
      */
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
-        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
+        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Controller.Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
