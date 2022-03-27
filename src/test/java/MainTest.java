@@ -16,14 +16,14 @@ public class MainTest {
     public void testReadCSV_Sort() throws IOException {
         // insert a valid file
         filenames.add("test.csv");
-        assertTrue(Main.readCSV_sort(filenames));
+        assertTrue(Main.readCSVCreate(filenames));
 
         filenames.remove("test.csv");
 
         // insert two files and merge
         filenames.add("test files/test_merge_1.csv");
         filenames.add("test files/test_merge_2.csv");
-        assertTrue(Main.readCSV_sort(filenames));
+        assertTrue(Main.readCSVCreate(filenames));
 
         filenames.clear();
 
@@ -41,17 +41,17 @@ public class MainTest {
         // insert a file with groups
         groupsFilenames.add("test files/test_modify_groups.csv");
 
-        assertTrue(Main.readCSV_modify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
+        assertTrue(Main.readCSVModify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
 
         // insert another file with new students
         newStudentsFilenames.add("test_modify_new_students_2.csv");
 
-        assertTrue(Main.readCSV_modify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
+        assertTrue(Main.readCSVModify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
 
         // insert another file with withdrawn students
         withdrawnStudentsFilenames.add("test_modify_withdrawn_2.csv");
 
-        assertTrue(Main.readCSV_modify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
+        assertTrue(Main.readCSVModify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
 
         newStudentsFilenames.clear();
         withdrawnStudentsFilenames.clear();
@@ -69,10 +69,10 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
 
@@ -86,10 +86,10 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
 
@@ -103,10 +103,10 @@ public class MainTest {
         Main.setProgramsFlag(true);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
     }
@@ -119,10 +119,10 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
     }
@@ -135,10 +135,10 @@ public class MainTest {
         Main.setProgramsFlag(true);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
     }
@@ -152,10 +152,10 @@ public class MainTest {
         Main.setTeamLeaderFlag(true);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
 
@@ -171,10 +171,10 @@ public class MainTest {
         Main.setTeamLeaderFlag(true);
 
         filenames.add("test.csv");
-        Main.readCSV_sort(filenames);
+        Main.readCSVCreate(filenames);
         Main.setMaximumGroupSize(5);
         Main.setMinimumGroupSize();
-        Main.beginSort();
+        Main.beginCreate();
 
         filenames.clear();
     }
@@ -191,8 +191,25 @@ public class MainTest {
         filenames.add("test files/test_merge_2.csv");
         Main.setMaximumGroupSize(5);
         Main.setMinimumGroupSize();
-        Main.readCSV_sort(filenames);
-        Main.beginSort();
+        Main.readCSVCreate(filenames);
+        Main.beginCreate();
+
+        filenames.clear();
+    }
+
+    @Test
+    public void testSort4() throws IOException {
+
+        Main.setLabSectionFlag(false);
+        Main.setGradeFlag(true);
+        Main.setProgramsFlag(true);
+        Main.setTeamLeaderFlag(true);
+
+        filenames.add("student_list.csv");
+        Main.setMaximumGroupSize(4);
+        Main.setMinimumGroupSize();
+        Main.readCSVCreate(filenames);
+        Main.beginCreate();
 
         filenames.clear();
     }

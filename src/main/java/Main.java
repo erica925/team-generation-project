@@ -27,7 +27,9 @@ public class Main {
     public static void beginCreate() throws IOException {
     //public static void beginSort() throws IOException {
         sort();
-        sort2();
+        if(labSectionFlag && gradeFlag && programsFlag && teamLeaderFlag) {
+            sort2();
+        }
         assignGroupNumbers();
         writeCSV();
         optimizationSummary();
@@ -1261,6 +1263,7 @@ public class Main {
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
             else if (s.getGrade().equals("F")) groupF.add(s);
+            else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
 
         }
 
@@ -1376,6 +1379,8 @@ public class Main {
     public static void setTeamLeaderFlag(boolean value){
         teamLeaderFlag = value;
     }
+
+
 
     /**
      * Print an optimization summary of the formed groups
