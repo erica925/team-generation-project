@@ -18,7 +18,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = new File("src/main/resources/GUI.fxml").toURI().toURL();
+        URL url = new File("src/main/resources/GUI2.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
 

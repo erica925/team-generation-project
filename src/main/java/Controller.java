@@ -1,10 +1,7 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,6 +40,8 @@ public class Controller implements Initializable {
     private Button insertGroupsButton;
     @FXML
     private Spinner<Integer> idealGroupSizeSpinner;
+    @FXML
+    private TextArea textArea;
 
     private List<File> newStudentsChosenFiles;
     private List<File> withdrawnStudentsChosenFiles;
@@ -80,6 +79,7 @@ public class Controller implements Initializable {
         for (File file : newStudentsChosenFiles) {
             newStudentsChosenFileNames.add(file.getPath());
         }
+        textArea.setText("New students file(s) selected: " + newStudentsChosenFileNames);
     }
 
     /**
@@ -100,6 +100,7 @@ public class Controller implements Initializable {
         for (File file : withdrawnStudentsChosenFiles) {
             withdrawnStudentsChosenFileNames.add(file.getPath());
         }
+        textArea.setText("Withdrawn students file(s) selected: " + withdrawnStudentsChosenFileNames);
     }
 
     /**
@@ -120,6 +121,7 @@ public class Controller implements Initializable {
         for (File file : groupsChosenFiles) {
             groupsChosenFileNames.add(file.getPath());
         }
+        textArea.setText("Group file(s) selected: " + groupsChosenFileNames);
     }
 
     /**
@@ -163,7 +165,8 @@ public class Controller implements Initializable {
 
         Main.beginCreate();
         Stage stage = (Stage) createButton.getScene().getWindow();
-        stage.close();
+        textArea.setText("Groups created, you may now close this window.");
+        //stage.close();
     }
 
     /**
@@ -185,7 +188,8 @@ public class Controller implements Initializable {
 
         Main.beginModify();
         Stage stage = (Stage) modifyButton.getScene().getWindow();
-        stage.close();
+        textArea.setText("Groups modified, you may now close this window.");
+        //stage.close();
     }
 
 }
