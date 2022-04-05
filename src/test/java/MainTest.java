@@ -145,8 +145,8 @@ public class MainTest {
     @Test
     public void testSortPrograms() throws IOException {
         Main.setLabSectionFlag(true);
-        Main.setGradeFlag(true);
-        Main.setTeamLeaderFlag(true);
+        Main.setGradeFlag(false);
+        Main.setTeamLeaderFlag(false);
         Main.setProgramsFlag(true);
 
         filenames.add("test.csv");
@@ -164,7 +164,7 @@ public class MainTest {
         Main.setLabSectionFlag(true);
         Main.setGradeFlag(true);
         Main.setProgramsFlag(true);
-        Main.setTeamLeaderFlag(true);
+        Main.setTeamLeaderFlag(false);
 
         filenames.add("test.csv");
         Main.readCSVCreate(filenames);
@@ -220,8 +220,8 @@ public class MainTest {
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
-        filenames.add("student_list.csv");
-        Main.setMaximumGroupSize(6);
+        filenames.add("test files/student_list.csv");
+        Main.setMaximumGroupSize(5);
         Main.setMinimumGroupSize();
         Main.readCSVCreate(filenames);
         Main.beginCreate();

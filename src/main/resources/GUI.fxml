@@ -19,7 +19,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="152.0" text="Ideal Controller.Group Size:" />
+      <Label layoutX="35.0" layoutY="152.0" text="Ideal Group Size:" />
       <Label layoutX="35.0" layoutY="211.0" text="Check the boxes if the following" />
       <Label layoutX="35.0" layoutY="228.0" text="criteria are to be used:" />
       <Label layoutX="35.0" layoutY="284.0" text="Lab Section:" />
