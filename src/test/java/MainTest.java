@@ -65,9 +65,6 @@ public class MainTest {
         withdrawnStudentsFilenames.add("test_modify_withdrawn_2.csv");
 
         assertTrue(Main.readCSVModify(newStudentsFilenames, withdrawnStudentsFilenames, groupsFilenames));
-        Main.setMaximumGroupSize(4);
-        Main.setMinimumGroupSize();
-        Main.beginModify();
 
         newStudentsFilenames.clear();
         withdrawnStudentsFilenames.clear();
