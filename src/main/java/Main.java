@@ -2,6 +2,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Erica Oliver, Wintana Yosief
@@ -542,7 +544,36 @@ public class Main {
         groups = new ArrayList<>();
         for (String filename : groupsFilenames) {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-            String line = bufferedReader.readLine(); // header
+
+            // first get the optimization criteria used to create the groups
+            String line = bufferedReader.readLine();
+            String[] criteria = line.split(" ");
+            for (int i = 0; i < criteria.length; i++){
+                if (criteria[i].contains("programs")){
+                    programsFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("team leader")){
+                    teamLeaderFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("grade")){
+                    gradeFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("lab section")){
+                    labSectionFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("size")){
+                    char[] sizeString = criteria[i].toCharArray();
+                    for (int j = 0; j < sizeString.length; j++){
+                        if (Character.isDigit(sizeString[j])) {
+                            setMaximumGroupSize(Character.getNumericValue(sizeString[j]));
+                            setMinimumGroupSize();
+                        }
+                    }
+                }
+            }
+
+
+            line = bufferedReader.readLine(); // header
             String[] header = line.split(",");
             if (groups.isEmpty()) { // for the first file or if only one file is given
                 // get the position of each attribute
@@ -1036,6 +1067,8 @@ public class Main {
      */
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
+        writer.append("Optimization Criteria Used: size=" + maximumGroupSize + ", programs=" + programsFlag +
+                ", grades=" + gradeFlag + ", lab section=" + labSectionFlag + ", team leader=" + teamLeaderFlag + "\n");
         writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {

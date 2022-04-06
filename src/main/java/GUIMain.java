@@ -6,6 +6,20 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class GUIMain extends Application {
+    Parent startRoot;
+    Parent fileChooserCreateRoot;
+    Parent fileChooserModifyRoot;
+    Parent optimizationCriteriaRoot;
+
+    Scene startScene;
+    Scene fileChooserCreateScene;
+    Scene fileChooserModifyScene;
+    Scene optimizationCriteriaScene;
+
+    static Stage startStage;
+    static Stage fileChooserCreateStage;
+    static Stage fileChooserModifyStage;
+    static Stage optimizationCriteriaStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -14,12 +28,41 @@ public class GUIMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("main/resources/GUI.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("main/resources/GUI2.fxml"));
-        Scene scene = new Scene(root);
+        //Parent root = FXMLLoader.load(getClass().getResource("main/resources/GUI2.fxml"));
+        //Scene scene = new Scene(root);
+        //stage.setScene(scene);
+        //stage.setTitle("Team Generation Program");
+        //stage.show();
 
-        stage.setScene(scene);
-        stage.setTitle("Team Generation Program");
-        stage.show();
+        startRoot = FXMLLoader.load(getClass().getResource("main/resources/start.fxml"));
+        fileChooserCreateRoot = FXMLLoader.load(getClass().getResource("main/resources/fileChooserCreate.fxml"));
+        fileChooserModifyRoot = FXMLLoader.load(getClass().getResource("main/resources/fileChooserModify.fxml"));
+        optimizationCriteriaRoot = FXMLLoader.load(getClass().getResource("main/resources/optimizationCriteria.fxml"));
+
+        startScene = new Scene(startRoot);
+        fileChooserCreateScene = new Scene(fileChooserCreateRoot);
+        fileChooserModifyScene = new Scene(fileChooserModifyRoot);
+        optimizationCriteriaScene = new Scene(optimizationCriteriaRoot);
+
+        startStage = new Stage();
+        fileChooserCreateStage = new Stage();
+        fileChooserModifyStage = new Stage();
+        optimizationCriteriaStage = new Stage();
+
+        startStage.setScene(startScene);
+        fileChooserCreateStage.setScene(fileChooserCreateScene);
+        fileChooserModifyStage.setScene(fileChooserModifyScene);
+        optimizationCriteriaStage.setScene(optimizationCriteriaScene);
+
+        startStage.setTitle("Team Generation Program");
+        fileChooserCreateStage.setTitle("Team Generation Program");
+        fileChooserModifyStage.setTitle("Team Generation Program");
+        optimizationCriteriaStage.setTitle("Team Generation Program");
+
+        startStage.show();
+        //fileChooserCreateStage.show();
+        //fileChooserModifyStage.show();
+        //optimizationCriteriaStage.show();
     }
 
     /**
