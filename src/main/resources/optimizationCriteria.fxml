@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="467.0" prefWidth="296.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OptimizationCriteriaController">
+   <children>
+      <CheckBox fx:id="checkbox1" layoutX="206.0" layoutY="274.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox4" layoutX="206.0" layoutY="388.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox3" layoutX="206.0" layoutY="350.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox2" layoutX="206.0" layoutY="315.0" mnemonicParsing="false" />
+      <Spinner fx:id="idealGroupSizeSpinner" layoutX="196.0" layoutY="137.0" prefHeight="27.0" prefWidth="70.0" />
+      <Label layoutX="31.0" layoutY="142.0" text="Ideal Group Size:" />
+      <Label layoutX="31.0" layoutY="201.0" text="Check the boxes if the following" />
+      <Label layoutX="31.0" layoutY="218.0" text="criteria are to be used:" />
+      <Label layoutX="31.0" layoutY="274.0" text="Lab Section:" />
+      <Label layoutX="31.0" layoutY="315.0" text="Grades:" />
+      <Label layoutX="31.0" layoutY="350.0" text="Mix of programs:" />
+      <Label layoutX="31.0" layoutY="388.0" text="Team Leader from SYSC:" />
+      <Text layoutX="23.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the optimization criteria you wish to use:" wrappingWidth="250.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="nextButton" layoutX="122.0" layoutY="422.0" mnemonicParsing="false" onAction="#openFileChooserCreate" text="Next" />
+   </children>
+</AnchorPane>

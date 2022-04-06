@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FileChooserModifyController">
+   <children>
+      <Button fx:id="modifyButton" layoutX="109.0" layoutY="304.0" mnemonicParsing="false" onAction="#modifyGroups" text="Modify Groups" />
+      <Button fx:id="insertNewStudentsButton" layoutX="110.0" layoutY="114.0" mnemonicParsing="false" onAction="#insertNewStudentsFile" text="New Students" />
+      <Button fx:id="insertWithdrawnStudentsButton" layoutX="89.0" layoutY="157.0" mnemonicParsing="false" onAction="#insertWithdrawnStudentsFile" text="Withdrawn Students" />
+      <Button fx:id="insertGroupsButton" layoutX="134.0" layoutY="199.0" mnemonicParsing="false" onAction="#insertGroupsFile" text="Groups" />
+      <Label layoutX="108.0" layoutY="21.0" text="Modify Groups">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="127.0" layoutY="87.0" text="Select file(s)" />
+      <Text layoutX="46.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button to modify the groups" />
+      <TextArea fx:id="updatesText" editable="false" layoutX="46.0" layoutY="361.0" prefHeight="125.0" prefWidth="250.0" wrapText="true" />
+   </children>
+</AnchorPane>

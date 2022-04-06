@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
  * @version March 1, 2022
  */
 public class Controller implements Initializable {
-
     @FXML
     private CheckBox checkbox1;
     @FXML
@@ -39,9 +38,15 @@ public class Controller implements Initializable {
     @FXML
     private Button insertGroupsButton;
     @FXML
+    private Button nextButton;
+    @FXML
+    private Button createCaseButton;
+    @FXML
+    private Button modifyCaseButton;
+    @FXML
     private Spinner<Integer> idealGroupSizeSpinner;
     @FXML
-    private TextArea textArea;
+    private TextArea updatesText;
 
     private List<File> newStudentsChosenFiles;
     private List<File> withdrawnStudentsChosenFiles;
@@ -79,7 +84,7 @@ public class Controller implements Initializable {
         for (File file : newStudentsChosenFiles) {
             newStudentsChosenFileNames.add(file.getPath());
         }
-        textArea.setText("New students file(s) selected: " + newStudentsChosenFileNames);
+        updatesText.setText("New students file(s) selected: " + newStudentsChosenFileNames);
     }
 
     /**
@@ -100,7 +105,7 @@ public class Controller implements Initializable {
         for (File file : withdrawnStudentsChosenFiles) {
             withdrawnStudentsChosenFileNames.add(file.getPath());
         }
-        textArea.setText("Withdrawn students file(s) selected: " + withdrawnStudentsChosenFileNames);
+        updatesText.setText("Withdrawn students file(s) selected: " + withdrawnStudentsChosenFileNames);
     }
 
     /**
@@ -121,7 +126,7 @@ public class Controller implements Initializable {
         for (File file : groupsChosenFiles) {
             groupsChosenFileNames.add(file.getPath());
         }
-        textArea.setText("Group file(s) selected: " + groupsChosenFileNames);
+        updatesText.setText("Group file(s) selected: " + groupsChosenFileNames);
     }
 
     /**
@@ -165,7 +170,7 @@ public class Controller implements Initializable {
 
         Main.beginCreate();
         Stage stage = (Stage) createButton.getScene().getWindow();
-        textArea.setText("Groups created, you may now close this window.");
+        updatesText.setText("Groups created, you may now close this window.");
         //stage.close();
     }
 
@@ -188,8 +193,34 @@ public class Controller implements Initializable {
 
         Main.beginModify();
         Stage stage = (Stage) modifyButton.getScene().getWindow();
-        textArea.setText("Groups modified, you may now close this window.");
+        updatesText.setText("Groups modified, you may now close this window.");
         //stage.close();
     }
 
+    /**
+     * Opens the window for choosing the optimization criteria to be used
+     * @param e
+     */
+    public void openOptimizationCriteria(ActionEvent e) {
+        ((Stage) createCaseButton.getScene().getWindow()).close();
+        ((Stage) idealGroupSizeSpinner.getScene().getWindow()).show();
+    }
+
+    /**
+     * Opens the window for choosing the input file(s) to be used for the create groups use case
+     * @param e
+     */
+    public void openFileChooserCreate(ActionEvent e) {
+        ((Stage) nextButton.getScene().getWindow()).close();
+        ((Stage) createButton.getScene().getWindow()).show();
+    }
+
+    /**
+     * Opens the window for choosing the input file(s) to be used for the modify groups use case
+     * @param e
+     */
+    public void openFileChooserModify(ActionEvent e) {
+        ((Stage) modifyCaseButton.getScene().getWindow()).close();
+        ((Stage) modifyButton.getScene().getWindow()).show();
+    }
 }

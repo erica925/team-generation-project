@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="261.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StartController">
+   <children>
+      <Button id="createCaseButton" fx:id="createCaseButton" layoutX="57.0" layoutY="172.0" mnemonicParsing="false" onAction="#openOptimizationCriteria" text="Create Groups" />
+      <Button id="modifyCaseButton" fx:id="modifyCaseButton" layoutX="224.0" layoutY="172.0" mnemonicParsing="false" onAction="#openFileChooserModify" text="Modify Groups" />
+      <Text layoutX="94.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Would you like to create groups or modify existing groups?" textAlignment="CENTER" wrappingWidth="211.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
