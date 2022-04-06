@@ -1,4 +1,3 @@
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -23,16 +22,13 @@ public class Main {
     private static boolean labSectionFlag;
     private static boolean modifyFlag;
 
-
     /**
      * The sorting use case where students are sorted into groups
      * @throws IOException
      */
     public static void beginCreate() throws IOException {
-    //public static void beginSort() throws IOException {
         sort();
         sort2();
-
         assignGroupNumbers();
         writeCSV();
         optimizationSummary();
@@ -59,7 +55,6 @@ public class Main {
             }
         }
 
-
         ArrayList<Group> groupsNotAffected = new ArrayList<>();
         // remove full groups
         ListIterator<Group> groupsIterator = groups.listIterator();
@@ -68,7 +63,6 @@ public class Main {
             if (group.size() == maximumGroupSize) {
                 groupsNotAffected.add(group);
                 groupsIterator.remove();
-
             }
         }
 
@@ -77,7 +71,7 @@ public class Main {
 
         // finds the total number of students
         totalStudents = 0;
-        for(Group group: groups) {
+        for (Group group : groups) {
             totalStudents += group.size();
         }
         totalStudents += students.size();
@@ -86,27 +80,27 @@ public class Main {
         int numGroupsOfMaxSize = (totalStudents - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
         int numGroups = numGroupsOfMaxSize + numGroupsOfMinSize;
 
-        if(numGroups > groups.size()) {
+        if (numGroups > groups.size()) {
             // create additional groups
             int additionalGroups = numGroups - groups.size();
-            for(int i = 0; i < additionalGroups; i++) {
+            for (int i = 0; i < additionalGroups; i++) {
                 Group group = new Group();
                 // find a team leader
                 ListIterator<Student> studentsIterator = students.listIterator();
                 boolean found = false;
-                while(studentsIterator.hasNext()) {
+                while (studentsIterator.hasNext()) {
 
                     Student s = studentsIterator.next();
-                    if(s.isDefaultLeader()) {
+                    if (s.isDefaultLeader()) {
                         found = true;
                         group.add(s);
                         studentsIterator.remove();
                         break;
                     }
                 }
-                if(!found) {
+                if (!found) {
                     studentsIterator = students.listIterator();
-                    while(studentsIterator.hasNext()) {
+                    while (studentsIterator.hasNext()) {
                         Student s = studentsIterator.next();
                         if (s.isBackupLeader()) {
                             found = true;
@@ -115,7 +109,7 @@ public class Main {
                             break;
                         }
                     }
-                    if(!found) {
+                    if (!found) {
                         studentsIterator = students.listIterator();
                         while (studentsIterator.hasNext() && !found) {
                             Student s = studentsIterator.next();
@@ -125,67 +119,54 @@ public class Main {
                         }
                     }
                 }
-
-
-
-
             }
         }
 
-
         // if there are still students left to be added or groups that are too small, re-sort them
         // add the groups to the "students" field
-        if(!students.isEmpty()) {
-            for(Group group: groups){
+        if (!students.isEmpty()) {
+            for (Group group : groups) {
                 ListIterator<Student> studentsIterator = students.listIterator();
-                while(studentsIterator.hasNext()) {
+                while (studentsIterator.hasNext()) {
                     Student s = studentsIterator.next();
-                    if(group.get(0).getLabSection().equals(s.getLabSection()) && group.size() < maximumGroupSize) {
+                    if (group.get(0).getLabSection().equals(s.getLabSection()) && group.size() < maximumGroupSize) {
                         group.add(s);
                         studentsIterator.remove();
                         break;
                     }
                 }
-
             }
 
-        }
-
-        groupsIterator = groups.listIterator();
-        while (groupsIterator.hasNext()) {
-            Group group = groupsIterator.next();
-            if (group.size() == maximumGroupSize) {
-                groupsNotAffected.add(group);
-                groupsIterator.remove();
+            // remove full groups
+            groupsIterator = groups.listIterator();
+            while (groupsIterator.hasNext()) {
+                Group group = groupsIterator.next();
+                if (group.size() == maximumGroupSize) {
+                    groupsNotAffected.add(group);
+                    groupsIterator.remove();
+                }
             }
+
+            if (!students.isEmpty()) {
+                ArrayList<Student> withoutGroup = new ArrayList<>(students);
+                // notify user that these students cannot be added to a group because
+                // groups in this/these lab section(s) are full
+                GUIMain.labSectionsFull(withoutGroup);
+            }
+            //sort();
+            //sort2();
+
+            // add the other groups back
+            groups.addAll(groupsNotAffected);
+
+            totalStudents = 0;
+            for (Group group : groups) {
+                totalStudents += group.size();
+            }
+            assignGroupNumbers();
+            writeCSV();
+            optimizationSummary();
         }
-
-        if(!students.isEmpty()) {
-            ArrayList<Student> withoutGroup = new ArrayList<>(students);
-            // notify user that these students cannot be added to a group because
-            // groups in this/these lab section(s) are full
-            GUIMain.labSectionsFull(withoutGroup);
-
-
-        }
-
-
-
-        //sort();
-        //sort2();
-
-        // add the other groups back
-        groups.addAll(groupsNotAffected);
-
-        totalStudents = 0;
-        for(Group group: groups) {
-            totalStudents += group.size();
-        }
-
-
-        assignGroupNumbers();
-        writeCSV();
-        optimizationSummary();
     }
 
     /**
@@ -943,7 +924,36 @@ public class Main {
         groups = new ArrayList<>();
         for (String filename : groupsFilenames) {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-            String line = bufferedReader.readLine(); // header
+
+            // first get the optimization criteria used to create the groups
+            String line = bufferedReader.readLine();
+            String[] criteria = line.split(" ");
+            for (int i = 0; i < criteria.length; i++){
+                if (criteria[i].contains("programs")){
+                    programsFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("team leader")){
+                    teamLeaderFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("grade")){
+                    gradeFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("lab section")){
+                    labSectionFlag = criteria[i].contains("true");
+                }
+                if (criteria[i].contains("size")){
+                    char[] sizeString = criteria[i].toCharArray();
+                    for (int j = 0; j < sizeString.length; j++){
+                        if (Character.isDigit(sizeString[j])) {
+                            setMaximumGroupSize(Character.getNumericValue(sizeString[j]));
+                            setMinimumGroupSize();
+                        }
+                    }
+                }
+            }
+
+
+            line = bufferedReader.readLine(); // header
             String[] header = line.split(",");
             if (groups.isEmpty()) { // for the first file or if only one file is given
                 // get the position of each attribute
@@ -1437,7 +1447,9 @@ public class Main {
      */
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
-        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Controller.Group Number\n\n");
+        writer.append("Optimization Criteria Used: size=" + maximumGroupSize + ", programs=" + programsFlag +
+                ", grades=" + gradeFlag + ", lab section=" + labSectionFlag + ", team leader=" + teamLeaderFlag + "\n");
+        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
@@ -1663,7 +1675,6 @@ public class Main {
             else if (s.getGrade().equals("D-")) groupDm.add(s);
             else if (s.getGrade().equals("F")) groupF.add(s);
             else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
-
         }
 
         gradeGroup.removeIf(ArrayList::isEmpty);
