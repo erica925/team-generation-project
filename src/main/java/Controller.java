@@ -175,6 +175,8 @@ public class Controller implements Initializable {
      * @throws IOException
      */
     public void modifyGroups(ActionEvent e) throws IOException {
+
+        Main.setModifyFlag(true);
         if(newStudentsChosenFiles == null || withdrawnStudentsChosenFiles == null || groupsChosenFiles == null) {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;

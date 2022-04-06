@@ -15,12 +15,14 @@ public class Main {
     private static int minimumGroupSize;
     private static ArrayList<Group> groups;
     private static int totalStudents;
+    private static ArrayList<Group> modifiedGroups;
 
     private static boolean teamLeaderFlag;
     private static boolean programsFlag;
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
     private static boolean modifyFlag;
+
 
     /**
      * The sorting use case where students are sorted into groups
@@ -69,6 +71,9 @@ public class Main {
 
             }
         }
+
+        // find number of modified groups
+        modifiedGroups = new ArrayList<>(groups);
 
         // finds the total number of students
         totalStudents = 0;
@@ -1774,6 +1779,13 @@ public class Main {
         teamLeaderFlag = value;
     }
 
+    /**
+     * Sets the modify flag value
+     * @param value
+     */
+    public static void setModifyFlag(boolean value){
+        modifyFlag = value;
+    }
 
 
     /**
@@ -1904,6 +1916,19 @@ public class Main {
             writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGradeWithScore);
             writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGradesWithScore);
             writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
+        }
+
+        if(modifyFlag) {
+            SortedSet<String> beenModified = new TreeSet<>();
+
+            for(Group group: modifiedGroups){
+                for(Student student: group){
+                    beenModified.add(student.getGroupNum());
+                }
+            }
+            writer.append("\nThe number of modified groups is " + modifiedGroups.size() + ": " + beenModified.toString());
+
+
         }
 
         writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " out of " + groups.size() + " : " + intersection);
