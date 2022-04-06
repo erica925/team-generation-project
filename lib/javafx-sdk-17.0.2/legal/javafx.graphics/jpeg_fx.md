@@ -1,4 +1,4 @@
-## Independent JPEG Group (IJG) JPEG v9d
+## Independent JPEG Controller.Group (IJG) JPEG v9d
 
 ### IJG License
 ```
@@ -8,7 +8,7 @@
  *
  * Copyright (C) 1994-1998, Thomas G. Lane.
  * Modified 2003-2010 by Guido Vollbeding.
- * This file is part of the Independent JPEG Group's software.
+ * This file is part of the Independent JPEG Controller.Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  */
 
@@ -30,7 +30,7 @@ unaltered; and any additions, deletions, or changes to the original files
 must be clearly indicated in accompanying documentation.
 (2) If only executable code is distributed, then the accompanying
 documentation must state that "this software is based in part on the work of
-the Independent JPEG Group".
+the Independent JPEG Controller.Group".
 (3) Permission for use of this software is granted only if the user accepts
 full responsibility for any undesirable consequences; the authors accept
 NO LIABILITY for damages of any kind.
@@ -41,7 +41,7 @@ acknowledge us.
 
 Permission is NOT granted for the use of any IJG author's name or company name
 in advertising or publicity relating to this software or products derived from
-it.  This software may be referred to only as "the Independent JPEG Group's
+it.  This software may be referred to only as "the Independent JPEG Controller.Group's
 software".
 
 We specifically permit and encourage the use of this software as the basis of

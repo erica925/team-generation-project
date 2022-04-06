@@ -1,3 +1,4 @@
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -5,7 +6,7 @@ import java.io.*;
 
 /**
  * @author Erica Oliver, Wintana Yosief
- * @version March 04, 2022
+ * @version April 2, 2022
  */
 public class Main {
     private static Group students;
@@ -19,6 +20,7 @@ public class Main {
     private static boolean programsFlag;
     private static boolean gradeFlag;
     private static boolean labSectionFlag;
+    private static boolean modifyFlag;
 
     /**
      * The sorting use case where students are sorted into groups
@@ -28,6 +30,7 @@ public class Main {
     //public static void beginSort() throws IOException {
         sort();
         sort2();
+
         assignGroupNumbers();
         writeCSV();
         optimizationSummary();
@@ -54,6 +57,7 @@ public class Main {
             }
         }
 
+
         ArrayList<Group> groupsNotAffected = new ArrayList<>();
         // remove full groups
         ListIterator<Group> groupsIterator = groups.listIterator();
@@ -62,53 +66,117 @@ public class Main {
             if (group.size() == maximumGroupSize) {
                 groupsNotAffected.add(group);
                 groupsIterator.remove();
+
             }
         }
 
-        // fill each group with a new student
-        for (Group group : groups) {
-            while (!students.isEmpty() && group.size() < maximumGroupSize){
+        // finds the total number of students
+        totalStudents = 0;
+        for(Group group: groups) {
+            totalStudents += group.size();
+        }
+        totalStudents += students.size();
+
+        int numGroupsOfMinSize = getNumGroupsOfMinSize(totalStudents);
+        int numGroupsOfMaxSize = (totalStudents - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
+        int numGroups = numGroupsOfMaxSize + numGroupsOfMinSize;
+
+        if(numGroups > groups.size()) {
+            // create additional groups
+            int additionalGroups = numGroups - groups.size();
+            for(int i = 0; i < additionalGroups; i++) {
+                Group group = new Group();
+                // find a team leader
                 ListIterator<Student> studentsIterator = students.listIterator();
-                while (studentsIterator.hasNext()) {
-                    Student student = studentsIterator.next();
-                    boolean tl = false;
-                    // if the student does not fit with the current group, break
-                    if (labSectionFlag && student.getLabSection().equals(group.get(0).getLabSection())) break;
-                    if (teamLeaderFlag && group.get(0).isDefaultLeader() || !student.isDefaultLeader()) tl = true;
-                    for (Student stud : group) {
-                        if (gradeFlag && !student.areGradesSimilar(stud)) break;
-                        if (programsFlag && student.sameProgram(stud)) break;
-                    }
+                boolean found = false;
+                while(studentsIterator.hasNext()) {
 
-                    // if the student is a team leader, add it to the first position
-                    if (tl) group.add(0, student);
-                    // else, add student to the end of the group
-                    else group.add(student);
-                    studentsIterator.remove();
+                    Student s = studentsIterator.next();
+                    if(s.isDefaultLeader()) {
+                        found = true;
+                        group.add(s);
+                        studentsIterator.remove();
+                        break;
+                    }
                 }
+                if(!found) {
+                    studentsIterator = students.listIterator();
+                    while(studentsIterator.hasNext()) {
+                        Student s = studentsIterator.next();
+                        if (s.isBackupLeader()) {
+                            found = true;
+                            group.add(s);
+                            studentsIterator.remove();
+                            break;
+                        }
+                    }
+                    if(!found) {
+                        studentsIterator = students.listIterator();
+                        while (studentsIterator.hasNext() && !found) {
+                            Student s = studentsIterator.next();
+                            group.add(s);
+                            studentsIterator.remove();
+                            found = true;
+                        }
+                    }
+                }
+
+
+
+
             }
         }
 
-        // remove full groups
+
+        // if there are still students left to be added or groups that are too small, re-sort them
+        // add the groups to the "students" field
+        if(!students.isEmpty()) {
+            for(Group group: groups){
+                ListIterator<Student> studentsIterator = students.listIterator();
+                while(studentsIterator.hasNext()) {
+                    Student s = studentsIterator.next();
+                    if(group.get(0).getLabSection().equals(s.getLabSection()) && group.size() < maximumGroupSize) {
+                        group.add(s);
+                        studentsIterator.remove();
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
         groupsIterator = groups.listIterator();
         while (groupsIterator.hasNext()) {
             Group group = groupsIterator.next();
-            if (group.size() == maximumGroupSize || group.size() == minimumGroupSize) {
+            if (group.size() == maximumGroupSize) {
                 groupsNotAffected.add(group);
                 groupsIterator.remove();
             }
         }
 
-        // if there are still students left to be added or groups that are too small, re-sort them
-        // add the groups to the "students" field
-        for (Group group : groups) {
-            students.addAll(group);
+        if(!students.isEmpty()) {
+            ArrayList<Student> withoutGroup = new ArrayList<>(students);
+            // notify user that these students cannot be added to a group because
+            // groups in this/these lab section(s) are full
+            GUIMain.labSectionsFull(withoutGroup);
+
+
         }
-        sort();
-        sort2();
+
+
+
+        //sort();
+        //sort2();
 
         // add the other groups back
         groups.addAll(groupsNotAffected);
+
+        totalStudents = 0;
+        for(Group group: groups) {
+            totalStudents += group.size();
+        }
+
 
         assignGroupNumbers();
         writeCSV();
@@ -204,79 +272,426 @@ public class Main {
      *
      * Reminder that the priority of the criteria is: team leader, grades, programs
      */
-    private static void sort2(){
-        for (int i = 0; i < groups.size()-1; i++){
+    private static void sort2() {
+        for (int i = 0; i < groups.size() - 1; i++) {
             Group group1 = groups.get(i);
-            Group group2 = groups.get(i+1);
+            Group group2 = groups.get(i + 1);
 
-            //the two groups must be the same lab section
-            if (group1.get(0).getLabSection().equals(group2.get(0).getLabSection())) { // do not swap from different lab sections
-                // check team leader
-                if (!group1.hasTeamLeader()) { // else move on to grades
-                    for (int j = 1; j < group2.size(); j++) {
-                        if (group2.get(j).isDefaultLeader() || group2.get(j).isBackupLeader()) { // swap
-                            Student temp = group2.get(j);
-                            group2.set(j, group1.getTeamLeader());
-                            group1.setTeamLeader(temp);
+            if (labSectionFlag && teamLeaderFlag) {
+                //the two groups must be the same lab section
+                if (group1.get(0).getLabSection().equals(group2.get(0).getLabSection())) { // do not swap from different lab sections
+                    // check team leader
+                    if (!group1.hasTeamLeader()) { // else move on to grades
+                        for (int j = 1; j < group2.size(); j++) {
+                            if (group2.get(j).isDefaultLeader() || group2.get(j).isBackupLeader()) { // swap
+                                Student temp = group2.get(j);
+                                group2.set(j, group1.getTeamLeader());
+                                group1.setTeamLeader(temp);
+                            }
+                        }
+                    }
+
+                    if (gradeFlag && programsFlag) {
+                        // check grade score
+                        // If the difference between the highest and lowest grades of group1 is > 2,
+                        // get the student with the lowest grade. Then find a student in group2
+                        // that fits better (ie. find the a student whose grade is within 2 grade levels
+                        // of the highest grade in group1.
+
+                        boolean stop = false;
+                        while (group1.calculateGradeScore() > 2 && !stop) {
+                            int group1initialGradeScore = group1.calculateGradeScore();
+                            int group2initialGradeScore = group2.calculateGradeScore();
+
+                            // get the lowest grade in group1 excluding the team leader
+                            int group1lowestGrade = 0;
+                            Student lowestStudent1 = null;
+                            for (int n = 1; n < group1.size(); n++) {
+                                if (group1.get(n).getGradeInt() > group1lowestGrade) {
+                                    group1lowestGrade = group1.get(n).getGradeInt();
+                                    lowestStudent1 = group1.get(n);
+                                }
+                            }
+                            int group1Index = group1.indexOf(lowestStudent1);
+
+                            // get the highest grade in group2 excluding the team leader
+                            int group2highestGrade = 12;
+                            Student highestStudent2 = null;
+                            for (int n = 1; n < group2.size(); n++) {
+                                if (group2.get(n).getGradeInt() < group2highestGrade) {
+                                    group2highestGrade = group2.get(n).getGradeInt();
+                                    highestStudent2 = group2.get(n);
+                                }
+                            }
+                            int group2Index = group2.indexOf(highestStudent2);
+
+                            if (Math.abs(group2highestGrade - group1.getHighestGrade()) > group1.calculateGradeScore() ||
+                                    group1lowestGrade >= group2highestGrade) {
+                                //group1 grade score cannot be improved so move on to checking the program score
+                                stop = true;
+                            } else {
+                                //swap
+                                Student temp = group1.get(group1Index);
+                                group1.set(group1Index, group2.get(group2Index));
+                                group2.set(group2Index, temp);
+
+                                // check if the two groups benefited from the swap
+                                if (!(group1initialGradeScore < group1.calculateGradeScore() &&
+                                        group2initialGradeScore < group2.calculateGradeScore())) {
+                                    // the swap was not beneficial so swap the students back
+                                    temp = group1.get(group1Index);
+                                    group1.set(group1Index, group2.get(group2Index));
+                                    group2.set(group2Index, temp);
+                                }
+                            }
+                        }
+                        stop = false;
+                        while (group1.calculateProgramsScore() > 0 && !stop) {
+                            int group1initialProgramScore = group1.calculateProgramsScore();
+                            int group2initialProgramScore = group2.calculateProgramsScore();
+                            ArrayList<String> allGroup1programs = new ArrayList<>();
+
+                            // find which student from group1 should be swapped
+
+                            // 1. get the list of programs in group1
+                            for (Student s : group1) {
+                                allGroup1programs.add(s.getProgram());
+                            }
+
+                            // 2. get the repeated program
+                            String program = ""; // the repeated program
+                            int max = 0;
+                            for (String s : allGroup1programs) {
+                                if (Collections.frequency(allGroup1programs, s) > max) {
+                                    max = Collections.frequency(allGroup1programs, s);
+                                    program = s;
+                                }
+                            }
+
+                            // 3. choose the student to be swapped - this will be the student with
+                            // the lowest grade in the repeated program who is not the team leader
+                            int lowestGrade = 0; // 0 is actually an A+
+                            Student studentToSwap1 = null;
+                            for (Student student : group1) {
+                                if ((group1.getTeamLeader() != student) && (student.getGradeInt() > lowestGrade) && student.getProgram().equals(program)) {
+                                    lowestGrade = student.getGradeInt();
+                                    studentToSwap1 = student;
+                                }
+                            }
+                            // 4. get the index of the student to be swapped
+                            int index1 = group1.indexOf(studentToSwap1);
+
+
+                            // find which student from group2 should be swapped
+
+                            // 1. find the student with the highest grade that is not the
+                            // team leader and is a different program to those already in group1
+                            Student studentToSwap2 = null;
+                            int highestGrade = 12; // 12 is an F
+                            for (Student student : group2) {
+                                if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
+                                    highestGrade = student.getGradeInt();
+                                    studentToSwap2 = student;
+                                }
+                            }
+                            if (studentToSwap2 == null) {
+                                stop = true;
+                                continue;
+                            }
+                            // 3. get the index of the student to be swapped
+                            int index2 = group2.indexOf(studentToSwap2);
+
+                            int grade1initial = group1.calculateGradeScore();
+                            int grade2initial = group2.calculateGradeScore();
+
+                            // swap the two students
+                            Student temp = group1.get(index1);
+                            group1.set(index1, group2.get(index2));
+                            group2.set(index2, temp);
+
+                            // check to see if either of the grade or the program scores decreased
+                            // and swap back if necessary
+                            if (grade1initial < group1.calculateGradeScore() ||
+                                    grade2initial < group2.calculateGradeScore() ||
+                                    group1initialProgramScore < group1.calculateProgramsScore() ||
+                                    group2initialProgramScore < group2.calculateProgramsScore()) {
+                                // the swap was not beneficial so swap the students back
+                                temp = group1.get(index1);
+                                group1.set(index1, group2.get(index2));
+                                group2.set(index2, temp);
+                                stop = true;
+                            }
+                        }
+                    } else if (gradeFlag) {
+                        // check grade score
+                        // If the difference between the highest and lowest grades of group1 is > 2,
+                        // get the student with the lowest grade. Then find a student in group2
+                        // that fits better (ie. find the a student whose grade is within 2 grade levels
+                        // of the highest grade in group1.
+
+                        boolean stop = false;
+                        while (group1.calculateGradeScore() > 2 && !stop) {
+                            int group1initialGradeScore = group1.calculateGradeScore();
+                            int group2initialGradeScore = group2.calculateGradeScore();
+
+                            // get the lowest grade in group1 excluding the team leader
+                            int group1lowestGrade = 0;
+                            Student lowestStudent1 = null;
+                            for (int n = 1; n < group1.size(); n++) {
+                                if (group1.get(n).getGradeInt() > group1lowestGrade) {
+                                    group1lowestGrade = group1.get(n).getGradeInt();
+                                    lowestStudent1 = group1.get(n);
+                                }
+                            }
+                            int group1Index = group1.indexOf(lowestStudent1);
+
+                            // get the highest grade in group2 excluding the team leader
+                            int group2highestGrade = 12;
+                            Student highestStudent2 = null;
+                            for (int n = 1; n < group2.size(); n++) {
+                                if (group2.get(n).getGradeInt() < group2highestGrade) {
+                                    group2highestGrade = group2.get(n).getGradeInt();
+                                    highestStudent2 = group2.get(n);
+                                }
+                            }
+                            int group2Index = group2.indexOf(highestStudent2);
+
+                            if (Math.abs(group2highestGrade - group1.getHighestGrade()) > group1.calculateGradeScore() ||
+                                    group1lowestGrade >= group2highestGrade) {
+                                //group1 grade score cannot be improved so move on to checking the program score
+                                stop = true;
+
+                            } else {
+                                //swap
+                                Student temp = group1.get(group1Index);
+                                group1.set(group1Index, group2.get(group2Index));
+                                group2.set(group2Index, temp);
+
+                                // check if the two groups benefited from the swap
+                                if (!(group1initialGradeScore < group1.calculateGradeScore() &&
+                                        group2initialGradeScore < group2.calculateGradeScore())) {
+                                    // the swap was not beneficial so swap the students back
+                                    temp = group1.get(group1Index);
+                                    group1.set(group1Index, group2.get(group2Index));
+                                    group2.set(group2Index, temp);
+                                }
+                            }
+                        }
+                    } else if (programsFlag) {
+                        boolean stop = false;
+                        while (group1.calculateProgramsScore() > 0 && !stop) {
+                            int group1initialProgramScore = group1.calculateProgramsScore();
+                            int group2initialProgramScore = group2.calculateProgramsScore();
+                            ArrayList<String> allGroup1programs = new ArrayList<>();
+
+                            // find which student from group1 should be swapped
+
+                            // 1. get the list of programs in group1
+                            for (Student s : group1) {
+                                allGroup1programs.add(s.getProgram());
+                            }
+
+                            // 2. get the repeated program
+                            String program = ""; // the repeated program
+                            int max = 0;
+                            for (String s : allGroup1programs) {
+                                if (Collections.frequency(allGroup1programs, s) > max) {
+                                    max = Collections.frequency(allGroup1programs, s);
+                                    program = s;
+                                }
+                            }
+
+                            // 3. choose the student to be swapped - this will be the student with
+                            // the lowest grade in the repeated program who is not the team leader
+                            Student studentToSwap1 = null;
+                            for (Student student : group1) {
+                                if ((group1.getTeamLeader() != student) && student.getProgram().equals(program)) {
+                                    studentToSwap1 = student;
+                                    break;
+                                }
+                            }
+                            // 4. get the index of the student to be swapped
+                            int index1 = group1.indexOf(studentToSwap1);
+
+                            // find which student from group2 should be swapped
+
+                            // 1. find the student with the highest grade that is not the
+                            // team leader and is a different program to those already in group1
+                            Student studentToSwap2 = null;
+                            for (Student student : group2) {
+                                if (!allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
+                                    studentToSwap2 = student;
+                                    break;
+                                }
+                            }
+                            if (studentToSwap2 == null) {
+                                stop = true;
+                                continue;
+                            }
+                            // 3. get the index of the student to be swapped
+                            int index2 = group2.indexOf(studentToSwap2);
+
+                            // swap the two students
+                            Student temp = group1.get(index1);
+                            group1.set(index1, group2.get(index2));
+                            group2.set(index2, temp);
+
+                            // check to see if either of the grade or the program scores decreased
+                            // and swap back if necessary
+                            if (group1initialProgramScore < group1.calculateProgramsScore() ||
+                                    group2initialProgramScore < group2.calculateProgramsScore()) {
+                                // the swap was not beneficial so swap the students back
+                                temp = group1.get(index1);
+                                group1.set(index1, group2.get(index2));
+                                group2.set(index2, temp);
+                                stop = true;
+                            }
                         }
                     }
                 }
 
-                // check grade score
-                // If the difference between the highest and lowest grades of group1 is > 2,
-                // get the student with the lowest grade. Then find a student in group2
-                // that fits better (ie. find the a student whose grade is within 2 grade levels
-                // of the highest grade in group1.
-                boolean stop = false;
-                while (group1.calculateGradeScore() > 2 && !stop) {
-                    int group1initialGradeScore = group1.calculateGradeScore();
-                    int group2initialGradeScore = group2.calculateGradeScore();
+            } else if (labSectionFlag && gradeFlag) {
+                if (group1.get(0).getLabSection().equals(group2.get(0).getLabSection())) {
 
-                    // get the lowest grade in group1 excluding the team leader
-                    int group1lowestGrade = 0;
-                    Student lowestStudent1 = null;
-                    for (int n = 1; n < group1.size(); n++){
-                        if (group1.get(n).getGradeInt() > group1lowestGrade) {
-                            group1lowestGrade = group1.get(n).getGradeInt();
-                            lowestStudent1 = group1.get(n);
+
+                    // check grade score
+                    // If the difference between the highest and lowest grades of group1 is > 2,
+                    // get the student with the lowest grade. Then find a student in group2
+                    // that fits better (ie. find the a student whose grade is within 2 grade levels
+                    // of the highest grade in group1.
+                    boolean stop = false;
+                    while (group1.calculateGradeScore() > 2 && !stop) {
+                        int group1initialGradeScore = group1.calculateGradeScore();
+                        int group2initialGradeScore = group2.calculateGradeScore();
+
+                        // get the lowest grade in group1
+                        int group1lowestGrade = 0;
+                        Student lowestStudent1 = null;
+                        for (Student value : group1) {
+                            if (value.getGradeInt() > group1lowestGrade) {
+                                group1lowestGrade = value.getGradeInt();
+                                lowestStudent1 = value;
+                            }
                         }
-                    }
-                    int group1Index = group1.indexOf(lowestStudent1);
+                        int group1Index = group1.indexOf(lowestStudent1);
 
-                    // get the highest grade in group2 excluding the team leader
-                    int group2highestGrade = 12;
-                    Student highestStudent2 = null;
-                    for (int n = 1; n < group2.size(); n++){
-                        if (group2.get(n).getGradeInt() < group2highestGrade) {
-                            group2highestGrade = group2.get(n).getGradeInt();
-                            highestStudent2 = group2.get(n);
+
+                        // get the highest grade in group2
+                        int group2highestGrade = 12;
+                        Student highestStudent2 = null;
+
+                        for (Student student : group2) {
+                            if (student.getGradeInt() < group2highestGrade) {
+                                group2highestGrade = student.getGradeInt();
+                                highestStudent2 = student;
+                            }
+
                         }
-                    }
-                    int group2Index = group2.indexOf(highestStudent2);
+                        int group2Index = group2.indexOf(highestStudent2);
 
-                    if (Math.abs(group2highestGrade - group1.getHighestGrade()) > group1.calculateGradeScore() ||
-                            group1lowestGrade >= group2highestGrade) {
-                        //group1 grade score cannot be improved so move on to checking the program score
-                        stop = true;
-                        break;
-                    } else {
-                        //swap
-                        Student temp = group1.get(group1Index);
-                        group1.set(group1Index, group2.get(group2Index));
-                        group2.set(group2Index, temp);
-
-                        // check if the two groups benefited from the swap
-                        if (!(group1initialGradeScore < group1.calculateGradeScore() &&
-                                group2initialGradeScore < group2.calculateGradeScore())) {
-                            // the swap was not beneficial so swap the students back
-                            temp = group1.get(group1Index);
+                        if (Math.abs(group2highestGrade - group1.getHighestGrade()) > group1.calculateGradeScore() ||
+                                group1lowestGrade >= group2highestGrade) {
+                            //group1 grade score cannot be improved
+                            stop = true;
+                        } else {
+                            //swap
+                            Student temp = group1.get(group1Index);
                             group1.set(group1Index, group2.get(group2Index));
                             group2.set(group2Index, temp);
+
+                            // check if the two groups benefited from the swap
+                            if (!(group1initialGradeScore < group1.calculateGradeScore() &&
+                                    group2initialGradeScore < group2.calculateGradeScore())) {
+                                // the swap was not beneficial so swap the students back
+                                temp = group1.get(group1Index);
+                                group1.set(group1Index, group2.get(group2Index));
+                                group2.set(group2Index, temp);
+                            }
+                        }
+                    }
+                    if (programsFlag) {
+                        stop = false;
+                        while (group1.calculateProgramsScore() > 0 && !stop) {
+                            int group1initialProgramScore = group1.calculateProgramsScore();
+                            int group2initialProgramScore = group2.calculateProgramsScore();
+                            ArrayList<String> allGroup1programs = new ArrayList<>();
+
+                            // find which student from group1 should be swapped
+
+                            // 1. get the list of programs in group1
+                            for (Student s : group1) {
+                                allGroup1programs.add(s.getProgram());
+                            }
+
+                            // 2. get the repeated program
+                            String program = ""; // the repeated program
+                            int max = 0;
+                            for (String s : allGroup1programs) {
+                                if (Collections.frequency(allGroup1programs, s) > max) {
+                                    max = Collections.frequency(allGroup1programs, s);
+                                    program = s;
+                                }
+                            }
+
+                            // 3. choose the student to be swapped - this will be the student with
+                            // the lowest grade in the repeated program
+                            int lowestGrade = 0; // 0 is actually an A+
+                            Student studentToSwap1 = null;
+                            for (Student student : group1) {
+                                if (student.getGradeInt() > lowestGrade && student.getProgram().equals(program)) {
+                                    lowestGrade = student.getGradeInt();
+                                    studentToSwap1 = student;
+                                }
+                            }
+                            // 4. get the index of the student to be swapped
+                            int index1 = group1.indexOf(studentToSwap1);
+
+
+                            // find which student from group2 should be swapped
+
+                            // 1. find the student with the highest grade that is not the
+                            // team leader and is a different program to those already in group1
+                            Student studentToSwap2 = null;
+                            int highestGrade = 12; // 12 is an F
+                            for (Student student : group2) {
+                                if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
+                                    highestGrade = student.getGradeInt();
+                                    studentToSwap2 = student;
+                                }
+                            }
+                            if (studentToSwap2 == null) {
+                                stop = true;
+                                continue;
+                            }
+                            // 3. get the index of the student to be swapped
+                            int index2 = group2.indexOf(studentToSwap2);
+
+                            int grade1initial = group1.calculateGradeScore();
+                            int grade2initial = group2.calculateGradeScore();
+
+                            // swap the two students
+                            Student temp = group1.get(index1);
+                            group1.set(index1, group2.get(index2));
+                            group2.set(index2, temp);
+
+                            // check to see if either of the grade or the program scores decreased
+                            // and swap back if necessary
+                            if (grade1initial < group1.calculateGradeScore() ||
+                                    grade2initial < group2.calculateGradeScore() ||
+                                    group1initialProgramScore < group1.calculateProgramsScore() ||
+                                    group2initialProgramScore < group2.calculateProgramsScore()) {
+                                // the swap was not beneficial so swap the students back
+                                temp = group1.get(index1);
+                                group1.set(index1, group2.get(index2));
+                                group2.set(index2, temp);
+                                stop = true;
+                            }
                         }
                     }
                 }
-                stop = false;
+            } else if (labSectionFlag && programsFlag) {
 
+                boolean stop = false;
                 // check program score
                 while (group1.calculateProgramsScore() > 0 && !stop) {
                     int group1initialProgramScore = group1.calculateProgramsScore();
@@ -299,56 +714,37 @@ public class Main {
                             program = s;
                         }
                     }
-
-                    // 3. choose the student to be swapped - this will be the student with
-                    // the lowest grade in the repeated program who is not the team leader
-                    int lowestGrade = 0; // 0 is actually an A+
                     Student studentToSwap1 = null;
                     for (Student student : group1) {
-                        if ((group1.getTeamLeader() != student) && (student.getGradeInt() > lowestGrade) && student.getProgram().equals(program)){
-                            lowestGrade = student.getGradeInt();
+                        if (student.getProgram().equals(program)) {
                             studentToSwap1 = student;
+                            break;
                         }
                     }
-
-                    // 4. get the index of the student to be swapped
                     int index1 = group1.indexOf(studentToSwap1);
 
-
-                    // find which student from group2 should be swapped
-
-                    // 1. find the student with the highest grade that is not the
-                    // team leader and is a different program to those already in group1
                     Student studentToSwap2 = null;
-                    int highestGrade = 12; // 12 is an F
                     for (Student student : group2) {
-                        if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
-                            highestGrade = student.getGradeInt();
+                        if (!allGroup1programs.contains(student.getProgram())) {
                             studentToSwap2 = student;
+                            break;
                         }
                     }
                     if (studentToSwap2 == null) {
                         stop = true;
-                        break;
+                        continue;
                     }
-
-                    // 3. get the index of the student to be swapped
                     int index2 = group2.indexOf(studentToSwap2);
-
-                    int grade1initial = group1.calculateGradeScore();
-                    int grade2initial = group2.calculateGradeScore();
 
                     // swap the two students
                     Student temp = group1.get(index1);
                     group1.set(index1, group2.get(index2));
                     group2.set(index2, temp);
 
-                    // check to see if either of the grade or the program scores decreased
-                    // and swap back if necessary
-                    if (grade1initial < group1.calculateGradeScore() ||
-                            grade2initial < group2.calculateGradeScore() ||
-                            group1initialProgramScore < group1.calculateProgramsScore() ||
-                            group2initialProgramScore < group2.calculateProgramsScore()) {
+                    int group1ProgramScore = group1.calculateProgramsScore();
+                    int group2ProgramScore = group2.calculateProgramsScore();
+
+                    if (group1ProgramScore < group1initialProgramScore || group2initialProgramScore < group2ProgramScore) {
                         // the swap was not beneficial so swap the students back
                         temp = group1.get(index1);
                         group1.set(index1, group2.get(index2));
@@ -1036,7 +1432,7 @@ public class Main {
      */
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
-        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
+        writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Controller.Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
                 writer.append(student.csvRepresentation());
@@ -1054,7 +1450,8 @@ public class Main {
      * @param students The list of students to be grouped
      */
     private static void simpleSort(Group students) {
-        for (int i = 0; i <= getNumGroupsOfMinSize(students.size()); i++) {
+        int numMinGroups = getNumGroupsOfMinSize(students.size());
+        for (int i = 0; i < numMinGroups; i++) {
             Group group = new Group();
             groups.add(group);
             for (int j = 0; j < minimumGroupSize; j++) {
@@ -1065,7 +1462,8 @@ public class Main {
                 }
             }
         }
-        for (int i = 0; i < (students.size() / maximumGroupSize); i++) {
+        int numGroups = students.size() / maximumGroupSize;
+        for (int i = 0; i < numGroups; i++) {
             Group group = new Group();
             groups.add(group);
             for (int j = 0; j < maximumGroupSize; j++) {
@@ -1259,6 +1657,8 @@ public class Main {
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
             else if (s.getGrade().equals("F")) groupF.add(s);
+            else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
+
         }
 
         gradeGroup.removeIf(ArrayList::isEmpty);
@@ -1373,6 +1773,8 @@ public class Main {
     public static void setTeamLeaderFlag(boolean value){
         teamLeaderFlag = value;
     }
+
+
 
     /**
      * Print an optimization summary of the formed groups

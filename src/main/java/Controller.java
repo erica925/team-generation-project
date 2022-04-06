@@ -191,4 +191,5 @@ public class Controller implements Initializable {
         textArea.setText("Groups modified, you may now close this window.");
         //stage.close();
     }
+
 }
