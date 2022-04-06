@@ -9,14 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StartController implements Initializable {
-    /*@FXML
-    private Button createCaseButton;
-    @FXML
-    private Button modifyCaseButton;
-    @FXML
-    private Spinner idealGroupSizeSpinner;
-    @FXML
-    private Button modifyButton;*/
 
     @Override
     /**
@@ -32,8 +24,6 @@ public class StartController implements Initializable {
     public void openOptimizationCriteria(ActionEvent e) {
         GUIMain.startStage.close();
         GUIMain.optimizationCriteriaStage.show();
-        //((Stage) createCaseButton.getScene().getWindow()).close();
-        //((Stage) idealGroupSizeSpinner.getScene().getWindow()).show();
     }
 
     /**
@@ -43,7 +33,5 @@ public class StartController implements Initializable {
     public void openFileChooserModify(ActionEvent e) {
         GUIMain.startStage.close();
         GUIMain.fileChooserModifyStage.show();
-        //((Stage) modifyCaseButton.getScene().getWindow()).close();
-        //((Stage) modifyButton.getScene().getWindow()).show();
     }
 }

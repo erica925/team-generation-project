@@ -61,8 +61,6 @@ public class OptimizationCriteriaController implements Initializable {
         GUIMain.optimizationCriteriaStage.close();
         GUIMain.fileChooserCreateStage.show();
         submitCriteria();
-        //((Stage) nextButton.getScene().getWindow()).close();
-        //((Stage) createButton.getScene().getWindow()).show();
     }
 }
 

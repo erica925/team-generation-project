@@ -56,9 +56,7 @@ public class FileChooserModifyController implements Initializable {
         }
 
         Main.beginModify();
-        Stage stage = (Stage) modifyButton.getScene().getWindow();
-        updatesText.setText("Groups modified, you may now close this window.");
-        //stage.close();
+        updatesText.setText("Groups modified, you may now close this window and check " + System.getProperty("user.dir") + " for the groups and optimization summary.");
     }
 
     /**

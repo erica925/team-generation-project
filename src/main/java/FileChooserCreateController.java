@@ -59,7 +59,6 @@ public class FileChooserCreateController implements Initializable {
             GUIMain.noFileSelected(); // pop warning message displays to user
             return;
         }
-        //submitCriteria();
 
         boolean insertSuccess = Main.readCSVCreate(newStudentsChosenFileNames); // reads the CSV file
         if(!insertSuccess){
@@ -67,8 +66,6 @@ public class FileChooserCreateController implements Initializable {
         }
 
         Main.beginCreate();
-        //Stage stage = (Stage) createButton.getScene().getWindow();
-        updatesText.setText("Groups created, you may now close this window.");
-        //stage.close();
+        updatesText.setText("Groups created, you may now close this window and check " + System.getProperty("user.dir") + " for the groups and optimization summary.");
     }
 }
