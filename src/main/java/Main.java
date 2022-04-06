@@ -16,6 +16,7 @@ public class Main {
     private static int minimumGroupSize;
     private static ArrayList<Group> groups;
     private static int totalStudents;
+    private static int numGroupsModified;
 
     private static boolean teamLeaderFlag;
     private static boolean programsFlag;
@@ -27,7 +28,6 @@ public class Main {
      * @throws IOException
      */
     public static void beginCreate() throws IOException {
-    //public static void beginSort() throws IOException {
         sort();
         sort2();
         assignGroupNumbers();
@@ -43,6 +43,8 @@ public class Main {
      * @throws IOException
      */
     public static void beginModify() throws IOException {
+        numGroupsModified = 0;
+
         // remove withdrawn students
         for (Student student : withdrawnStudents) {
             breakline:

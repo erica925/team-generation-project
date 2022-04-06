@@ -3,7 +3,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class FileChooserModifyController implements Initializable {
-    @FXML
-    private Button modifyButton;
     @FXML
     private Button insertNewStudentsButton;
     @FXML
