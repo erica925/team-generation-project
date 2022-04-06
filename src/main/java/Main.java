@@ -67,7 +67,7 @@ public class Main {
 
         // finds the total number of students
         totalStudents = 0;
-        for(Group group: groups) {
+        for (Group group : groups) {
             totalStudents += group.size();
         }
         totalStudents += students.size();
@@ -76,27 +76,27 @@ public class Main {
         int numGroupsOfMaxSize = (totalStudents - numGroupsOfMinSize * minimumGroupSize) / maximumGroupSize;
         int numGroups = numGroupsOfMaxSize + numGroupsOfMinSize;
 
-        if(numGroups > groups.size()) {
+        if (numGroups > groups.size()) {
             // create additional groups
             int additionalGroups = numGroups - groups.size();
-            for(int i = 0; i < additionalGroups; i++) {
+            for (int i = 0; i < additionalGroups; i++) {
                 Group group = new Group();
                 // find a team leader
                 ListIterator<Student> studentsIterator = students.listIterator();
                 boolean found = false;
-                while(studentsIterator.hasNext()) {
+                while (studentsIterator.hasNext()) {
 
                     Student s = studentsIterator.next();
-                    if(s.isDefaultLeader()) {
+                    if (s.isDefaultLeader()) {
                         found = true;
                         group.add(s);
                         studentsIterator.remove();
                         break;
                     }
                 }
-                if(!found) {
+                if (!found) {
                     studentsIterator = students.listIterator();
-                    while(studentsIterator.hasNext()) {
+                    while (studentsIterator.hasNext()) {
                         Student s = studentsIterator.next();
                         if (s.isBackupLeader()) {
                             found = true;
@@ -105,7 +105,7 @@ public class Main {
                             break;
                         }
                     }
-                    if(!found) {
+                    if (!found) {
                         studentsIterator = students.listIterator();
                         while (studentsIterator.hasNext() && !found) {
                             Student s = studentsIterator.next();
@@ -120,12 +120,12 @@ public class Main {
 
         // if there are still students left to be added or groups that are too small, re-sort them
         // add the groups to the "students" field
-        if(!students.isEmpty()) {
-            for(Group group: groups){
+        if (!students.isEmpty()) {
+            for (Group group : groups) {
                 ListIterator<Student> studentsIterator = students.listIterator();
-                while(studentsIterator.hasNext()) {
+                while (studentsIterator.hasNext()) {
                     Student s = studentsIterator.next();
-                    if(group.get(0).getLabSection().equals(s.getLabSection()) && group.size() < maximumGroupSize) {
+                    if (group.get(0).getLabSection().equals(s.getLabSection()) && group.size() < maximumGroupSize) {
                         group.add(s);
                         studentsIterator.remove();
                         break;
@@ -133,35 +133,36 @@ public class Main {
                 }
             }
 
-        // remove full groups
-        groupsIterator = groups.listIterator();
-        while (groupsIterator.hasNext()) {
-            Group group = groupsIterator.next();
-            if (group.size() == maximumGroupSize) {
-                groupsNotAffected.add(group);
-                groupsIterator.remove();
+            // remove full groups
+            groupsIterator = groups.listIterator();
+            while (groupsIterator.hasNext()) {
+                Group group = groupsIterator.next();
+                if (group.size() == maximumGroupSize) {
+                    groupsNotAffected.add(group);
+                    groupsIterator.remove();
+                }
             }
-        }
 
-        if(!students.isEmpty()) {
-            ArrayList<Student> withoutGroup = new ArrayList<>(students);
-            // notify user that these students cannot be added to a group because
-            // groups in this/these lab section(s) are full
-            GUIMain.labSectionsFull(withoutGroup);
-        }
-        //sort();
-        //sort2();
+            if (!students.isEmpty()) {
+                ArrayList<Student> withoutGroup = new ArrayList<>(students);
+                // notify user that these students cannot be added to a group because
+                // groups in this/these lab section(s) are full
+                GUIMain.labSectionsFull(withoutGroup);
+            }
+            //sort();
+            //sort2();
 
-        // add the other groups back
-        groups.addAll(groupsNotAffected);
+            // add the other groups back
+            groups.addAll(groupsNotAffected);
 
-        totalStudents = 0;
-        for(Group group: groups) {
-            totalStudents += group.size();
+            totalStudents = 0;
+            for (Group group : groups) {
+                totalStudents += group.size();
+            }
+            assignGroupNumbers();
+            writeCSV();
+            optimizationSummary();
         }
-        assignGroupNumbers();
-        writeCSV();
-        optimizationSummary();
     }
 
     /**
