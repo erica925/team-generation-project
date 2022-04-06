@@ -95,6 +95,8 @@ public class Student {
         else if (grade.equals("D")) gradeInt = 10;
         else if (grade.equals("D-")) gradeInt = 11;
         else if (grade.equals("F")) gradeInt = 12;
+        else if(grade.equals("DEF") || grade.equals("GNA")) gradeInt = 6;
+
     }
 
     /**

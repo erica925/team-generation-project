@@ -1,0 +1,593 @@
+Student ID,Student Name,Lab Section,Grade,Program,Email
+1,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+2,A,ONLINE,A+,Electrical Engineering,xxx@cmail.carleton.ca
+3,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+4,A,ONLINE,DEF,Aerospace Engineering,xxx@cmail.carleton.ca
+5,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+6,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+7,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+8,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+9,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+10,A,ONLINE,A+,Civil Engineering,xxx@cmail.carleton.ca
+11,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+12,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+13,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+14,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+15,A,ONLINE,A,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+16,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+17,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+18,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+19,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+20,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+21,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+22,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+23,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+24,A,ONLINE,A-,Civil Engineering,xxx@cmail.carleton.ca
+25,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+26,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+27,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+28,A,ONLINE,A-,Civil Engineering,xxx@cmail.carleton.ca
+29,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+30,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+31,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+32,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+33,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+34,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+35,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+36,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+37,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+38,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+39,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+40,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+41,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+42,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+43,A,ONLINE,A+,Civil Engineering,xxx@cmail.carleton.ca
+44,A,ONLINE,A+,Electrical Engineering,xxx@cmail.carleton.ca
+45,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+46,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+47,A,ONLINE,A+,Electrical Engineering,xxx@cmail.carleton.ca
+48,A,ONLINE,A+,Civil Engineering,xxx@cmail.carleton.ca
+49,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+50,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+51,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+52,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+53,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+54,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+55,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+56,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+57,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+58,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+59,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+60,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+61,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+62,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+63,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+64,A,ONLINE,A,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+65,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+66,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+67,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+68,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+69,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+70,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+71,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+72,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+73,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+74,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+75,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+76,A,ONLINE,A+,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+77,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+78,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+79,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+80,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+81,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+82,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+83,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+84,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+85,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+86,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+87,A,ONLINE,B-,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+88,A,IN PERSON E2,D,Electrical Engineering,xxx@cmail.carleton.ca
+89,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+90,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+91,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+92,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+93,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+94,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+95,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+96,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+97,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+98,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+99,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+100,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+101,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+102,A,ONLINE,DEF,Electrical Engineering,xxx@cmail.carleton.ca
+103,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+104,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+105,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+106,A,ONLINE,B+,Civil Engineering,xxx@cmail.carleton.ca
+107,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+108,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+109,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+110,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+111,A,ONLINE,C,Civil Engineering,xxx@cmail.carleton.ca
+112,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+113,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+114,A,ONLINE,B,Electrical Engineering,xxx@cmail.carleton.ca
+115,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+116,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+117,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+118,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+119,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+120,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+121,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+122,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+123,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+124,A,ONLINE,D+,Electrical Engineering,xxx@cmail.carleton.ca
+125,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+126,A,ONLINE,A+,Software Engineering,xxx@cmail.carleton.ca
+127,A,ONLINE,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+128,A,ONLINE,DEF,Electrical Engineering,xxx@cmail.carleton.ca
+129,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+130,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+131,A,ONLINE,B+,Civil Engineering,xxx@cmail.carleton.ca
+132,A,ONLINE,D+,Civil Engineering,xxx@cmail.carleton.ca
+133,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+134,A,ONLINE,A,Electrical Engineering,xxx@cmail.carleton.ca
+135,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+136,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+137,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+138,A,ONLINE,B,Civil Engineering,xxx@cmail.carleton.ca
+139,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+140,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+141,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+142,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+143,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+144,A,ONLINE,GNA,Mechanical Engineering,xxx@cmail.carleton.ca
+145,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+146,A,ONLINE,A-,Civil Engineering,xxx@cmail.carleton.ca
+147,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+148,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+149,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+150,A,ONLINE,A-,Civil Engineering,xxx@cmail.carleton.ca
+151,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+152,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+153,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+154,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+155,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+156,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+157,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+158,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+159,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+160,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+161,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+162,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+163,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+164,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+165,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+166,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+167,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+168,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+169,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+170,A,ONLINE,A-,Computer Systems Engineering,xxx@cmail.carleton.ca
+171,A,ONLINE,C,Aerospace Engineering,xxx@cmail.carleton.ca
+172,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+173,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+174,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+175,A,ONLINE,B-,Civil Engineering,xxx@cmail.carleton.ca
+176,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+177,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+178,A,ONLINE,A,Civil Engineering,xxx@cmail.carleton.ca
+179,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+180,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+181,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+182,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+183,A,ONLINE,B+,Civil Engineering,xxx@cmail.carleton.ca
+184,A,ONLINE,B+,Electrical Engineering,xxx@cmail.carleton.ca
+185,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+186,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+187,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+188,A,ONLINE,D,Aerospace Engineering,xxx@cmail.carleton.ca
+189,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+190,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+191,A,ONLINE,C,Aerospace Engineering,xxx@cmail.carleton.ca
+192,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+193,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+194,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+195,A,ONLINE,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+196,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+197,A,ONLINE,A,Software Engineering,xxx@cmail.carleton.ca
+198,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+199,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+200,A,ONLINE,C+,Electrical Engineering,xxx@cmail.carleton.ca
+201,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+202,A,ONLINE,B,Civil Engineering,xxx@cmail.carleton.ca
+203,A,ONLINE,B-,Electrical Engineering,xxx@cmail.carleton.ca
+204,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+205,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+206,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+207,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+208,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+209,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+210,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+211,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+212,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+213,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+214,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+215,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+216,A,ONLINE,C,Aerospace Engineering,xxx@cmail.carleton.ca
+217,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+218,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+219,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+220,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+221,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+222,A,ONLINE,B-,Computer Systems Engineering,xxx@cmail.carleton.ca
+223,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+224,A,ONLINE,C,Electrical Engineering,xxx@cmail.carleton.ca
+225,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+226,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+227,A,ONLINE,B+,Civil Engineering,xxx@cmail.carleton.ca
+228,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+229,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+230,A,ONLINE,B-,Electrical Engineering,xxx@cmail.carleton.ca
+231,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+232,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+233,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+234,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+235,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+236,A,ONLINE,A-,Civil Engineering,xxx@cmail.carleton.ca
+237,A,ONLINE,B-,Electrical Engineering,xxx@cmail.carleton.ca
+238,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+239,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+240,A,ONLINE,D,Electrical Engineering,xxx@cmail.carleton.ca
+241,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+242,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+243,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+244,A,ONLINE,GNA,SSRE: Tech for Power Gen/Distr,xxx@cmail.carleton.ca
+245,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+246,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+247,A,ONLINE,D,Mechanical Engineering,xxx@cmail.carleton.ca
+248,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+249,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+250,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+251,A,ONLINE,B-,Civil Engineering,xxx@cmail.carleton.ca
+252,A,ONLINE,C-,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+253,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+254,A,ONLINE,GNA,Biomedical and Electrical,xxx@cmail.carleton.ca
+255,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+256,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+257,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+258,A,ONLINE,B-,Civil Engineering,xxx@cmail.carleton.ca
+259,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+260,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+261,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+262,A,ONLINE,B-,Civil Engineering,xxx@cmail.carleton.ca
+263,A,ONLINE,C,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+264,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+265,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+266,A,ONLINE,D+,Civil Engineering,xxx@cmail.carleton.ca
+267,A,ONLINE,B,Electrical Engineering,xxx@cmail.carleton.ca
+268,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+269,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+270,A,ONLINE,C,Software Engineering,xxx@cmail.carleton.ca
+271,A,ONLINE,C-,Civil Engineering,xxx@cmail.carleton.ca
+272,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+273,A,ONLINE,C+,Software Engineering,xxx@cmail.carleton.ca
+274,A,ONLINE,D-,Civil Engineering,xxx@cmail.carleton.ca
+275,A,ONLINE,D,Electrical Engineering,xxx@cmail.carleton.ca
+276,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+277,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+278,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+279,A,ONLINE,DEF,Civil Engineering,xxx@cmail.carleton.ca
+280,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+281,A,ONLINE,D-,Software Engineering,xxx@cmail.carleton.ca
+282,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+283,A,ONLINE,D,Civil Engineering,xxx@cmail.carleton.ca
+284,A,ONLINE,B,Electrical Engineering,xxx@cmail.carleton.ca
+285,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+286,A,ONLINE,B-,Electrical Engineering,xxx@cmail.carleton.ca
+287,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+288,A,ONLINE,C,Civil Engineering,xxx@cmail.carleton.ca
+289,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+290,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+291,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+292,A,ONLINE,C,Aerospace Engineering,xxx@cmail.carleton.ca
+293,A,ONLINE,C,Software Engineering,xxx@cmail.carleton.ca
+294,A,ONLINE,C-,Biomedical and Electrical,xxx@cmail.carleton.ca
+295,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+296,A,ONLINE,C-,Civil Engineering,xxx@cmail.carleton.ca
+297,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+298,A,ONLINE,D-,Electrical Engineering,xxx@cmail.carleton.ca
+299,A,ONLINE,A,Aerospace Engineering,xxx@cmail.carleton.ca
+300,A,ONLINE,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+301,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+302,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+303,A,ONLINE,C-,Civil Engineering,xxx@cmail.carleton.ca
+304,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+305,A,ONLINE,D,Software Engineering,xxx@cmail.carleton.ca
+306,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+307,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+308,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+309,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+310,A,ONLINE,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+311,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+312,A,ONLINE,D,Electrical Engineering,xxx@cmail.carleton.ca
+313,A,ONLINE,D+,Software Engineering,xxx@cmail.carleton.ca
+314,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+315,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+316,A,ONLINE,C,Civil Engineering,xxx@cmail.carleton.ca
+317,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+318,A,ONLINE,C,Aerospace Engineering,xxx@cmail.carleton.ca
+319,A,ONLINE,C+,Civil Engineering,xxx@cmail.carleton.ca
+320,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+321,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+322,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+323,A,ONLINE,DEF,Electrical Engineering,xxx@cmail.carleton.ca
+324,A,ONLINE,GNA,Mechanical Engineering,xxx@cmail.carleton.ca
+325,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+326,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+327,A,ONLINE,C,Civil Engineering,xxx@cmail.carleton.ca
+328,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+329,A,ONLINE,B+,Electrical Engineering,xxx@cmail.carleton.ca
+330,A,ONLINE,C,Software Engineering,xxx@cmail.carleton.ca
+331,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+332,A,ONLINE,C-,Civil Engineering,xxx@cmail.carleton.ca
+333,A,ONLINE,A-,Software Engineering,xxx@cmail.carleton.ca
+334,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+335,A,ONLINE,C,Civil Engineering,xxx@cmail.carleton.ca
+336,A,ONLINE,D,Civil Engineering,xxx@cmail.carleton.ca
+337,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+338,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+339,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+340,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+341,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+342,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+343,A,ONLINE,D,Aerospace Engineering,xxx@cmail.carleton.ca
+344,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+345,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+346,A,ONLINE,B,Civil Engineering,xxx@cmail.carleton.ca
+347,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+348,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+349,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+350,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+351,A,ONLINE,DEF,Civil Engineering,xxx@cmail.carleton.ca
+352,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+353,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+354,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+355,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+356,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+357,A,ONLINE,C+,Software Engineering,xxx@cmail.carleton.ca
+358,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+359,A,ONLINE,DEF,Electrical Engineering,xxx@cmail.carleton.ca
+360,A,ONLINE,B,Electrical Engineering,xxx@cmail.carleton.ca
+361,A,ONLINE,B+,Software Engineering,xxx@cmail.carleton.ca
+362,A,ONLINE,B-,Software Engineering,xxx@cmail.carleton.ca
+363,A,ONLINE,C+,Electrical Engineering,xxx@cmail.carleton.ca
+364,A,ONLINE,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+365,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+366,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+367,A,ONLINE,D,Aerospace Engineering,xxx@cmail.carleton.ca
+368,A,ONLINE,D,Electrical Engineering,xxx@cmail.carleton.ca
+369,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+370,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+371,A,ONLINE,D+,Aerospace Engineering,xxx@cmail.carleton.ca
+372,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+373,A,ONLINE,B,Software Engineering,xxx@cmail.carleton.ca
+374,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+375,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+376,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+377,A,ONLINE,C+,Software Engineering,xxx@cmail.carleton.ca
+378,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+379,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+380,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+381,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+382,A,ONLINE,DEF,Civil Engineering,xxx@cmail.carleton.ca
+383,A,ONLINE,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+384,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+385,A,ONLINE,C,Software Engineering,xxx@cmail.carleton.ca
+386,A,ONLINE,D,Civil Engineering,xxx@cmail.carleton.ca
+387,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+388,A,ONLINE,DEF,Electrical Engineering,xxx@cmail.carleton.ca
+389,A,ONLINE,DEF,Software Engineering,xxx@cmail.carleton.ca
+390,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+391,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+392,A,ONLINE,D+,Environmental Engineering,xxx@cmail.carleton.ca
+393,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+394,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+395,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+396,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+397,A,ONLINE,DEF,Civil Engineering,xxx@cmail.carleton.ca
+398,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+399,A,ONLINE,C-,Electrical Engineering,xxx@cmail.carleton.ca
+400,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+401,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+402,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+403,A,ONLINE,GNA,Aero: Space Systems Design,xxx@cmail.carleton.ca
+404,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+405,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+406,A,ONLINE,D,Civil Engineering,xxx@cmail.carleton.ca
+407,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+408,A,ONLINE,D,Aerospace Engineering,xxx@cmail.carleton.ca
+409,A,ONLINE,C+,Software Engineering,xxx@cmail.carleton.ca
+410,A,ONLINE,GNA,"Aerospace:Str, Sys & Vehicle D",xxx@cmail.carleton.ca
+411,A,ONLINE,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+412,A,ONLINE,D+,Civil Engineering,xxx@cmail.carleton.ca
+413,A,ONLINE,D-,Software Engineering,xxx@cmail.carleton.ca
+414,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+415,A,ONLINE,GNA,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+416,A,ONLINE,GNA,Mechanical Engineering,xxx@cmail.carleton.ca
+417,A,ONLINE,C-,Software Engineering,xxx@cmail.carleton.ca
+418,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+419,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+420,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+421,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+422,A,ONLINE,GNA,"Aerospace:Aero,Prop,&Vehicle P",xxx@cmail.carleton.ca
+423,A,ONLINE,GNA,Environmental Engineering,xxx@cmail.carleton.ca
+424,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+425,A,ONLINE,DEF,Software Engineering,xxx@cmail.carleton.ca
+426,A,ONLINE,GNA,"Aerospace:Aero,Prop,&Vehicle P",xxx@cmail.carleton.ca
+427,A,ONLINE,GNA,Arch Conserve and Sustain,xxx@cmail.carleton.ca
+428,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+429,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+430,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+431,A,ONLINE,GNA,Mechanical Engineering,xxx@cmail.carleton.ca
+432,A,ONLINE,GNA,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+433,A,ONLINE,D,Software Engineering,xxx@cmail.carleton.ca
+434,A,ONLINE,GNA,Biomedical and Electrical,xxx@cmail.carleton.ca
+435,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+436,A,ONLINE,GNA,Do not Know,xxx@cmail.carleton.ca
+437,A,ONLINE,D,Software Engineering,xxx@cmail.carleton.ca
+438,A,ONLINE,GNA,Communications Engineering,xxx@cmail.carleton.ca
+439,A,ONLINE,GNA,Biomedical and Electrical,xxx@cmail.carleton.ca
+440,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+441,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+442,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+443,A,ONLINE,A-,Electrical Engineering,xxx@cmail.carleton.ca
+444,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+445,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+446,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+447,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+448,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+449,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+450,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+451,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+452,A,ONLINE,D,Electrical Engineering,xxx@cmail.carleton.ca
+453,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+454,A,ONLINE,C,Software Engineering,xxx@cmail.carleton.ca
+455,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+456,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+457,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+458,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+459,A,ONLINE,C-,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+460,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+461,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+462,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+463,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+464,A,ONLINE,DEF,Software Engineering,xxx@cmail.carleton.ca
+465,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+466,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+467,A,ONLINE,F,Civil Engineering,xxx@cmail.carleton.ca
+468,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+469,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+470,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+471,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+472,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+473,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+474,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+475,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+476,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+477,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+478,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+479,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+480,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+481,A,ONLINE,GNA,Civil Engineering,xxx@cmail.carleton.ca
+482,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+483,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+484,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+485,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+486,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+487,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+488,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+489,A,ONLINE,F,Software Engineering,xxx@cmail.carleton.ca
+490,A,ONLINE,DEF,SSRE: Tech for Power Gen/Distr,xxx@cmail.carleton.ca
+491,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+492,A,ONLINE,F,Electrical Engineering,xxx@cmail.carleton.ca
+493,A,ONLINE,GNA,Communications Engineering,xxx@cmail.carleton.ca
+494,A,ONLINE,F,Aerospace Engineering,xxx@cmail.carleton.ca
+495,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+496,A,ONLINE,GNA,Computer Systems Engineering,xxx@cmail.carleton.ca
+497,A,ONLINE,GNA,Software Engineering,xxx@cmail.carleton.ca
+498,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+499,A,ONLINE,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+500,A,ONLINE,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+501,A,ONLINE,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+502,A,ONLINE,A,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+503,A,ONLINE,B,Aerospace Engineering,xxx@cmail.carleton.ca
+504,A,IN PERSON D1,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+505,A,IN PERSON D1,A+,Electrical Engineering,xxx@cmail.carleton.ca
+506,A,IN PERSON D1,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+507,A,IN PERSON D1,B-,Electrical Engineering,xxx@cmail.carleton.ca
+508,A,IN PERSON D1,A,Aerospace Engineering,xxx@cmail.carleton.ca
+509,A,IN PERSON D1,A,Aerospace Engineering,xxx@cmail.carleton.ca
+510,A,IN PERSON D1,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+511,A,IN PERSON D1,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+512,A,IN PERSON D1,C+,Aerospace Engineering,xxx@cmail.carleton.ca
+513,A,IN PERSON D1,B,Aerospace Engineering,xxx@cmail.carleton.ca
+514,A,IN PERSON D1,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+515,A,IN PERSON D1,A-,Civil Engineering,xxx@cmail.carleton.ca
+516,A,IN PERSON D1,GNA,Civil Engineering,xxx@cmail.carleton.ca
+517,A,IN PERSON D1,B-,Aerospace Engineering,xxx@cmail.carleton.ca
+518,A,IN PERSON D1,C,Aerospace Engineering,xxx@cmail.carleton.ca
+519,A,IN PERSON D1,D+,Aerospace Engineering,xxx@cmail.carleton.ca
+520,A,IN PERSON D1,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+521,A,IN PERSON D1,A,Electrical Engineering,xxx@cmail.carleton.ca
+522,A,IN PERSON D1,F,Aerospace Engineering,xxx@cmail.carleton.ca
+523,A,IN PERSON D1,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+524,A,IN PERSON F1,B,Software Engineering,xxx@cmail.carleton.ca
+525,A,IN PERSON F1,A,Aerospace Engineering,xxx@cmail.carleton.ca
+526,A,IN PERSON F1,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+527,A,IN PERSON F1,A,Civil Engineering,xxx@cmail.carleton.ca
+528,A,IN PERSON F1,B,Software Engineering,xxx@cmail.carleton.ca
+529,A,IN PERSON F1,A,Aerospace Engineering,xxx@cmail.carleton.ca
+530,A,IN PERSON F1,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+531,A,IN PERSON F1,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+532,A,IN PERSON F1,C-,Electrical Engineering,xxx@cmail.carleton.ca
+533,A,IN PERSON F1,GNA,Biomedical and Electrical,xxx@cmail.carleton.ca
+534,A,IN PERSON F1,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+535,A,IN PERSON F1,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+536,A,IN PERSON E2,GNA,Mechanical Engineering,xxx@cmail.carleton.ca
+537,A,IN PERSON F1,B,Aerospace Engineering,xxx@cmail.carleton.ca
+538,A,IN PERSON F1,DEF,Aerospace Engineering,xxx@cmail.carleton.ca
+539,A,IN PERSON F1,C,Civil Engineering,xxx@cmail.carleton.ca
+540,A,IN PERSON F1,B,Electrical Engineering,xxx@cmail.carleton.ca
+541,A,IN PERSON F1,GNA,Civil Engineering,xxx@cmail.carleton.ca
+542,A,IN PERSON F1,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+543,A,IN PERSON F1,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+544,A,IN PERSON F1,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+545,A,IN PERSON F2,A+,Software Engineering,xxx@cmail.carleton.ca
+546,A,IN PERSON F2,A,Aerospace Engineering,xxx@cmail.carleton.ca
+547,A,IN PERSON F2,A,Aerospace Engineering,xxx@cmail.carleton.ca
+548,A,IN PERSON F2,GNA,Aerospace Engineering,xxx@cmail.carleton.ca
+549,A,IN PERSON F2,A,Software Engineering,xxx@cmail.carleton.ca
+550,A,IN PERSON F2,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+551,A,IN PERSON F2,A+,Aerospace Engineering,xxx@cmail.carleton.ca
+552,A,IN PERSON F2,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+553,A,IN PERSON F2,B,Software Engineering,xxx@cmail.carleton.ca
+554,A,IN PERSON F2,A,Aerospace Engineering,xxx@cmail.carleton.ca
+555,A,IN PERSON F2,B+,SSRE: Eff Energy Gen/Convers'n,xxx@cmail.carleton.ca
+556,A,IN PERSON F2,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+557,A,IN PERSON F2,C-,Aerospace Engineering,xxx@cmail.carleton.ca
+558,A,IN PERSON F2,B,Aerospace Engineering,xxx@cmail.carleton.ca
+559,A,IN PERSON F2,C,Electrical Engineering,xxx@cmail.carleton.ca
+560,A,IN PERSON F2,B+,Aerospace Engineering,xxx@cmail.carleton.ca
+561,A,IN-PERSON F2,GNA,Civil Engineering,xxx@cmail.carleton.ca
+562,A,IN PERSON F2,F,Civil Engineering,xxx@cmail.carleton.ca
+563,A,IN PERSON F2,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+564,A,IN PERSON F2,A-,Aerospace Engineering,xxx@cmail.carleton.ca
+565,A,IN PERSON D3,GNA,Software Engineering,xxx@cmail.carleton.ca
+566,A,IN PERSON D3,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+567,A,IN PERSON D3,GNA,Biomedical & Mechanical Eng,xxx@cmail.carleton.ca
+568,A,IN PERSON D3,GNA,Electrical Engineering,xxx@cmail.carleton.ca
+569,A,IN PERSON D3,DEF,Software Engineering,xxx@cmail.carleton.ca
+570,A,IN PERSON D3,A,Electrical Engineering,xxx@cmail.carleton.ca
+571,A,IN PERSON D3,C,Mechanical Engineering,xxx@cmail.carleton.ca
+572,A,IN PERSON D3,A,Electrical Engineering,xxx@cmail.carleton.ca
+573,A,IN PERSON D3,B,Software Engineering,xxx@cmail.carleton.ca
+574,A,IN PERSON D3,B-,Civil Engineering,xxx@cmail.carleton.ca
+575,A,IN PERSON D3,A-,Electrical Engineering,xxx@cmail.carleton.ca
+576,A,IN PERSON D3,B+,Electrical Engineering,xxx@cmail.carleton.ca
+577,A,IN PERSON D3,C+,Software Engineering,xxx@cmail.carleton.ca
+578,A,IN PERSON D3,A,Software Engineering,xxx@cmail.carleton.ca
+579,A,IN PERSON D3,B,Computer Systems Engineering,xxx@cmail.carleton.ca
+580,A,IN PERSON D3,C,Civil Engineering,xxx@cmail.carleton.ca
+581,A,IN PERSON E2,A-,Software Engineering,xxx@cmail.carleton.ca
+582,A,IN PERSON E2,A,Aerospace Engineering,xxx@cmail.carleton.ca
+583,A,IN PERSON E2,A+,Electrical Engineering,xxx@cmail.carleton.ca
+584,A,IN PERSON E2,GNA,Civil Engineering,xxx@cmail.carleton.ca
+585,A,IN PERSON E2,B,Civil Engineering,xxx@cmail.carleton.ca
+586,A,IN PERSON E2,GNA,Software Engineering,xxx@cmail.carleton.ca
+587,A,IN PERSON E2,B-,Civil Engineering,xxx@cmail.carleton.ca
+588,A,IN PERSON E2,B,Electrical Engineering,xxx@cmail.carleton.ca
+589,A,IN PERSON E2,DEF,Aerospace Engineering,xxx@cmail.carleton.ca
+590,A,IN PERSON E2,B-,Civil Engineering,xxx@cmail.carleton.ca
+591,A,IN PERSON E2,C,Aerospace Engineering,xxx@cmail.carleton.ca
+592,A,IN PERSON E2,A-,Aerospace Engineering,xxx@cmail.carleton.ca
