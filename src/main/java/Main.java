@@ -301,7 +301,7 @@ public class Main {
                             int group1Index = group1.indexOf(lowestStudent1);
 
                             // get the highest grade in group2 excluding the team leader
-                            int group2highestGrade = 12;
+                            int group2highestGrade = 11;
                             Student highestStudent2 = null;
                             for (int n = 1; n < group2.size(); n++) {
                                 if (group2.get(n).getGradeInt() < group2highestGrade) {
@@ -373,7 +373,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 12; // 12 is an F
+                            int highestGrade = 11; // 11 is a D
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -432,7 +432,7 @@ public class Main {
                             int group1Index = group1.indexOf(lowestStudent1);
 
                             // get the highest grade in group2 excluding the team leader
-                            int group2highestGrade = 12;
+                            int group2highestGrade = 11;
                             Student highestStudent2 = null;
                             for (int n = 1; n < group2.size(); n++) {
                                 if (group2.get(n).getGradeInt() < group2highestGrade) {
@@ -563,7 +563,7 @@ public class Main {
 
 
                         // get the highest grade in group2
-                        int group2highestGrade = 12;
+                        int group2highestGrade = 11;
                         Student highestStudent2 = null;
 
                         for (Student student : group2) {
@@ -638,7 +638,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 12; // 12 is an F
+                            int highestGrade = 11; // 11 is a D
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -1650,7 +1650,6 @@ public class Main {
         Group groupDp = new Group();
         Group groupD = new Group();
         Group groupDm = new Group();
-        Group groupF = new Group();
 
         gradeGroup.add(groupAp);
         gradeGroup.add(groupA);
@@ -1664,7 +1663,7 @@ public class Main {
         gradeGroup.add(groupDp);
         gradeGroup.add(groupD);
         gradeGroup.add(groupDm);
-        gradeGroup.add(groupF);
+
 
         for (Student s : students) {
             if (s.getGrade().equals("A+")) groupAp.add(s);
@@ -1679,7 +1678,6 @@ public class Main {
             else if (s.getGrade().equals("D+")) groupDp.add(s);
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
-            else if (s.getGrade().equals("F")) groupF.add(s);
             else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
         }
 
