@@ -13,7 +13,7 @@ public class Group extends ArrayList<Student>{
     private int lowestGrade;
 
     public Group(){
-        highestGrade = 12;
+        highestGrade = 11;
         lowestGrade = 0;
     }
 
