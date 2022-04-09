@@ -801,8 +801,10 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    students.add(new Student(name, id, program, grade, lab, email));
-                    // next line
+                    if(!grade.equals("F")) {
+                        students.add(new Student(name, id, program, grade, lab, email));
+                    }
+                        // next line
                     line = bufferedReader.readLine();
                 }
             }
@@ -1017,7 +1019,9 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    currentGroup.add(new Student(name, id, program, grade, lab, email));
+                    if(!grade.equals("F")) {
+                        currentGroup.add(new Student(name, id, program, grade, lab, email));
+                    }
                     // next line
                     line = bufferedReader.readLine();
                 }
@@ -1333,7 +1337,9 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    students.add(new Student(name, id, program, grade, lab, email));
+                    if(!grade.equals("F")) {
+                        students.add(new Student(name, id, program, grade, lab, email));
+                    }
                     // next line
                     line = bufferedReader.readLine();
                 }
