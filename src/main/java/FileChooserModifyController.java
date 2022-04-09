@@ -52,6 +52,7 @@ public class FileChooserModifyController implements Initializable {
             return;
         }
 
+        Main.setModifyFlag(true);
         Main.beginModify();
         updatesText.setText("Groups modified, you may now close this window and check " + System.getProperty("user.dir") + " for the groups and optimization summary.");
     }

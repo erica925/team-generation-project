@@ -932,13 +932,13 @@ public class Main {
                 if (criteria[i].contains("programs")){
                     programsFlag = criteria[i].contains("true");
                 }
-                if (criteria[i].contains("team leader")){
+                if (criteria[i].contains("team_leader")){
                     teamLeaderFlag = criteria[i].contains("true");
                 }
                 if (criteria[i].contains("grade")){
                     gradeFlag = criteria[i].contains("true");
                 }
-                if (criteria[i].contains("lab section")){
+                if (criteria[i].contains("lab_section")){
                     labSectionFlag = criteria[i].contains("true");
                 }
                 if (criteria[i].contains("size")){
@@ -1448,7 +1448,7 @@ public class Main {
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
         writer.append("Optimization Criteria Used: size=" + maximumGroupSize + ", programs=" + programsFlag +
-                ", grades=" + gradeFlag + ", lab section=" + labSectionFlag + ", team leader=" + teamLeaderFlag + "\n");
+                ", grades=" + gradeFlag + ", lab_section=" + labSectionFlag + ", team_leader=" + teamLeaderFlag + "\n");
         writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {

@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 
