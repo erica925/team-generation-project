@@ -1,0 +1,36 @@
+Optimization Summary: 
+
+To meet the group size criteria, students must be sorted into groups of 4 or 3. Any other group size is invalid
+Since there are 78 students, we should expect at least 2 group(s) of 3
+The number of groups with 4 students is 15 : [L1.G1, L1.G2, L1.G3, L1.G4, L1.G5, L2.G9, L2.G10, L2.G11, L3.G14, L3.G15, L3.G16, L4.G18, L4.G19, L4.G20, L4.G21]
+The number of groups with 3 students is 6 : [L2.G6, L2.G7, L2.G8, L3.G12, L3.G13, L4.G17]
+The number of groups with an invalid number of students is 0 : []
+The percentage of groups that adhere to the group size criterion is 100%
+
+To meet the lab section criteria, all students in the same group must be registered in the same lab section.
+The number of groups in which all students are registered in the same lab section is 21 : [L1.G1, L1.G2, L1.G3, L1.G4, L1.G5, L2.G6, L2.G7, L2.G8, L2.G9, L2.G10, L2.G11, L3.G12, L3.G13, L3.G14, L3.G15, L3.G16, L4.G17, L4.G18, L4.G19, L4.G20, L4.G21]
+The number of groups in which not all students are registered in the same lab section is 0 : []
+The percentage of groups that adhere to the lab section criterion is 100%
+
+To meet the programs criteria, the all students in the same group must be enrolled in different engineering streams.
+The number of groups that adhere to the programs criteria is 14 : [L1.G2, L1.G5, L2.G6, L2.G7, L2.G8, L2.G9, L3.G12, L3.G13, L3.G14, L3.G15, L3.G16, L4.G19, L4.G20, L4.G21]
+The number of groups that do not adhere to the programs criteria is 7 : [L1.G1, L1.G3, L1.G4, L2.G10, L2.G11, L4.G17, L4.G18]
+The number of groups with more than two students with the same program is 0 : []
+The percentage of groups that adhere to the programs criterion is 66%
+
+To meet the team leader criteria, groups must have one student in software or computer systems engineering.
+Groups may be assigned a backup team leader from either communications or biomedical engineering, is no default team leader is available
+The number of groups with a team leader from software or computer systems engineering is 14 : [L1.G2, L1.G5, L2.G6, L2.G7, L2.G9, L2.G11, L3.G12, L3.G13, L3.G14, L3.G15, L4.G17, L4.G18, L4.G20, L4.G21]
+The number of groups with a team leader from another SYSC program is 6 : [L1.G1, L1.G3, L2.G8, L2.G10, L3.G16, L4.G19]
+The number of groups with no team leader is 1 : [L1.G4]
+The percentage of groups that have only a backup team leader is 28%
+The percentage of groups that adhere to the team leader criterion is 66%
+
+To meet the grade criteria, each student in a group's grades should be within two grade levels (A+,A,A-, for example)
+Next to each group is a score. This is the difference between the highest and lowest grades in the group. Lower scores are more optimal
+The number of groups with all similar grades is 18 : [(L1.G1,3), (L1.G2,2), (L1.G3,5), (L1.G4,4), (L1.G5,2), (L2.G6,0), (L2.G7,0), (L2.G8,3), (L2.G9,1), (L2.G10,1), (L2.G11,4), (L3.G12,1), (L3.G13,1), (L3.G15,3), (L3.G16,2), (L4.G17,3), (L4.G18,3), (L4.G21,2)]
+The number of groups with different grades is 3 : [(L3.G14,4), (L4.G19,4), (L4.G20,6)]
+The percentage of groups that adhere to the grade criterion is 85%
+
+The number of groups that adhere to all of the above criteria is 9 out of 21 : [L1.G2, L1.G5, L2.G9, L3.G15, L4.G21, L2.G6, L2.G7, L3.G12, L3.G13]
+The percentage of groups that adhere to all criteria is 42%
