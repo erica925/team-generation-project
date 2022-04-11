@@ -34,6 +34,17 @@ public class Main {
         optimizationSummary();
     }
 
+    public static void beginRandomCreate() throws IOException {
+        groups = new ArrayList<>();
+        totalStudents = students.size();
+        System.out.println(totalStudents);
+
+        simpleSort(students);
+        assignGroupNumbers();
+        writeCSV();
+        optimizationSummary();
+    }
+
     /**
      * The modify use case where some pre-made groups are given with some new and withdrawn students
      * Removes the withdrawn students and adds the new students to the groups
@@ -1802,6 +1813,10 @@ public class Main {
         modifyFlag = value;
     }
 
+    public static Group getStudents(){
+        return students;
+    }
+
 
     /**
      * Print an optimization summary of the formed groups
@@ -1841,15 +1856,22 @@ public class Main {
             ArrayList<String> diffLabs = new ArrayList(); //the number of groups in which NOT all students are registered in the same lab section
             ArrayList<String> sameLabs = new ArrayList(); //the number of groups in which all students are registered in the same lab section
             for (Group group : groups) {
+                boolean diff = false;
                 for (int i = 0; i < group.size() - 1; i++) {
+                    if (diff) {
+                        break;
+                    }
                     for (int j = i + 1; j < group.size(); j++) {
                         if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())) {
                             diffLabs.add(group.get(0).getGroupNum());
+                            diff = true;
                             break;
                         }
                     }
                 }
-                sameLabs.add(group.get(0).getGroupNum());
+                if(!diff) {
+                    sameLabs.add(group.get(0).getGroupNum());
+                }
             }
             intersection.retainAll(sameLabs);
             writer.append("\nTo meet the lab section criteria, all students in the same group must be registered in the same lab section.");
