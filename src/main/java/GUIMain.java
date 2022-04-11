@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -113,7 +111,7 @@ public class GUIMain extends Application {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         String text = withoutGroup.size() + " new student(s) could not be added to a group\n\n";
         for(Student s: withoutGroup) {
-            text += "Student Number: " + s.getStudID() + "\nName: " + s.getName() + "\nProgram: " + s.getProgram() +  "\nLab Section " + s.getLabSection() + "\n\n";
+            text += "Student Number: " + s.getStudID() + "\nName: " + s.getName() + "\nProgram: " + s.getProgram() +  "\nLab Section: " + s.getLabSection() + "\n\n";
         }
         alert.setContentText(text);
         alert.show();

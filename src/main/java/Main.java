@@ -14,6 +14,7 @@ public class Main {
     private static int minimumGroupSize;
     private static ArrayList<Group> groups;
     private static int totalStudents;
+    private static ArrayList<Group> modifiedGroups;
 
     private static boolean teamLeaderFlag;
     private static boolean programsFlag;
@@ -64,6 +65,9 @@ public class Main {
                 groupsIterator.remove();
             }
         }
+
+        // find number of modified groups
+        modifiedGroups = new ArrayList<>(groups);
 
         // finds the total number of students
         totalStudents = 0;
@@ -297,7 +301,7 @@ public class Main {
                             int group1Index = group1.indexOf(lowestStudent1);
 
                             // get the highest grade in group2 excluding the team leader
-                            int group2highestGrade = 12;
+                            int group2highestGrade = 11;
                             Student highestStudent2 = null;
                             for (int n = 1; n < group2.size(); n++) {
                                 if (group2.get(n).getGradeInt() < group2highestGrade) {
@@ -369,7 +373,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 12; // 12 is an F
+                            int highestGrade = 11; // 11 is a D-
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -428,7 +432,7 @@ public class Main {
                             int group1Index = group1.indexOf(lowestStudent1);
 
                             // get the highest grade in group2 excluding the team leader
-                            int group2highestGrade = 12;
+                            int group2highestGrade = 11;
                             Student highestStudent2 = null;
                             for (int n = 1; n < group2.size(); n++) {
                                 if (group2.get(n).getGradeInt() < group2highestGrade) {
@@ -559,7 +563,7 @@ public class Main {
 
 
                         // get the highest grade in group2
-                        int group2highestGrade = 12;
+                        int group2highestGrade = 11;
                         Student highestStudent2 = null;
 
                         for (Student student : group2) {
@@ -634,7 +638,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 12; // 12 is an F
+                            int highestGrade = 11; // 11 is a D-
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -797,8 +801,10 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    students.add(new Student(name, id, program, grade, lab, email));
-                    // next line
+                    if(!grade.equals("F")) {
+                        students.add(new Student(name, id, program, grade, lab, email));
+                    }
+                        // next line
                     line = bufferedReader.readLine();
                 }
             }
@@ -928,13 +934,13 @@ public class Main {
                 if (criteria[i].contains("programs")){
                     programsFlag = criteria[i].contains("true");
                 }
-                if (criteria[i].contains("team leader")){
+                if (criteria[i].contains("team_leader")){
                     teamLeaderFlag = criteria[i].contains("true");
                 }
                 if (criteria[i].contains("grade")){
                     gradeFlag = criteria[i].contains("true");
                 }
-                if (criteria[i].contains("lab section")){
+                if (criteria[i].contains("lab_section")){
                     labSectionFlag = criteria[i].contains("true");
                 }
                 if (criteria[i].contains("size")){
@@ -1013,7 +1019,9 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    currentGroup.add(new Student(name, id, program, grade, lab, email));
+                    if(!grade.equals("F")) {
+                        currentGroup.add(new Student(name, id, program, grade, lab, email));
+                    }
                     // next line
                     line = bufferedReader.readLine();
                 }
@@ -1329,7 +1337,9 @@ public class Main {
                     else email = student[emailIndex];
 
                     // adds info
-                    students.add(new Student(name, id, program, grade, lab, email));
+                    if(!grade.equals("F")) {
+                        students.add(new Student(name, id, program, grade, lab, email));
+                    }
                     // next line
                     line = bufferedReader.readLine();
                 }
@@ -1444,7 +1454,7 @@ public class Main {
     private static void writeCSV() throws IOException {
         FileWriter writer = new FileWriter("groups.csv");
         writer.append("Optimization Criteria Used: size=" + maximumGroupSize + ", programs=" + programsFlag +
-                ", grades=" + gradeFlag + ", lab section=" + labSectionFlag + ", team leader=" + teamLeaderFlag + "\n");
+                ", grades=" + gradeFlag + ", lab_section=" + labSectionFlag + ", team_leader=" + teamLeaderFlag + "\n");
         writer.append("Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number\n\n");
         for (Group group : groups) {
             for (Student student : group) {
@@ -1640,7 +1650,6 @@ public class Main {
         Group groupDp = new Group();
         Group groupD = new Group();
         Group groupDm = new Group();
-        Group groupF = new Group();
 
         gradeGroup.add(groupAp);
         gradeGroup.add(groupA);
@@ -1654,7 +1663,6 @@ public class Main {
         gradeGroup.add(groupDp);
         gradeGroup.add(groupD);
         gradeGroup.add(groupDm);
-        gradeGroup.add(groupF);
 
         for (Student s : students) {
             if (s.getGrade().equals("A+")) groupAp.add(s);
@@ -1669,7 +1677,6 @@ public class Main {
             else if (s.getGrade().equals("D+")) groupDp.add(s);
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
-            else if (s.getGrade().equals("F")) groupF.add(s);
         }
         gradeGroup.removeIf(ArrayList::isEmpty);
 
@@ -1782,6 +1789,14 @@ public class Main {
      */
     public static void setTeamLeaderFlag(boolean value){
         teamLeaderFlag = value;
+    }
+
+    /**
+     * Sets the modify flag value
+     * @param value
+     */
+    public static void setModifyFlag(boolean value){
+        modifyFlag = value;
     }
 
     /**
@@ -1912,6 +1927,17 @@ public class Main {
             writer.append("\nThe number of groups with all similar grades is " + similarGrade.size() + " : " + similarGradeWithScore);
             writer.append("\nThe number of groups with different grades is " + diffGrades.size() + " : " + diffGradesWithScore);
             writer.append("\nThe percentage of groups that adhere to the grade criterion is " + similarGrade.size() * 100 / groups.size() + "%\n");
+        }
+
+        if(modifyFlag) {
+            SortedSet<String> beenModified = new TreeSet<>();
+
+            for(Group group: modifiedGroups){
+                for(Student student: group){
+                    beenModified.add(student.getGroupNum());
+                }
+            }
+            writer.append("\nThe number of modified groups is " + modifiedGroups.size() + ": " + beenModified.toString());
         }
 
         writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " out of " + groups.size() + " : " + intersection);
