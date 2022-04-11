@@ -373,7 +373,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 11; // 11 is a D
+                            int highestGrade = 11; // 11 is a D-
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -638,7 +638,7 @@ public class Main {
                             // 1. find the student with the highest grade that is not the
                             // team leader and is a different program to those already in group1
                             Student studentToSwap2 = null;
-                            int highestGrade = 11; // 11 is a D
+                            int highestGrade = 11; // 11 is a D-
                             for (Student student : group2) {
                                 if (student.getGradeInt() < highestGrade && !allGroup1programs.contains(student.getProgram()) && group2.getTeamLeader() != student) {
                                     highestGrade = student.getGradeInt();
@@ -892,8 +892,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1115,8 +1115,8 @@ public class Main {
                 if (student.getEmail().equals("")) {
                     infoMissing = true;
                 }
-                if (student.getGrade().equals("") && gradeFlag) {
-                    infoMissing = true;
+                if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                    student.setGrade("C+");
                 }
                 if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                     infoMissing = true;
@@ -1271,8 +1271,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1428,8 +1428,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1664,7 +1664,6 @@ public class Main {
         gradeGroup.add(groupD);
         gradeGroup.add(groupDm);
 
-
         for (Student s : students) {
             if (s.getGrade().equals("A+")) groupAp.add(s);
             else if (s.getGrade().equals("A")) groupA.add(s);
@@ -1678,13 +1677,11 @@ public class Main {
             else if (s.getGrade().equals("D+")) groupDp.add(s);
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
-            else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
         }
-
         gradeGroup.removeIf(ArrayList::isEmpty);
 
         //move some students to the first grade level (number of students to be sorted into the smaller groups)
-        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size()); //FIXME issue with smaller numbers of students
+        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
         int numStudents = numGroupsOfMinSize * minimumGroupSize;
         if (numGroupsOfMinSize != 0) {
             while (gradeGroup.get(0).size() < numStudents) {
@@ -1801,7 +1798,6 @@ public class Main {
     public static void setModifyFlag(boolean value){
         modifyFlag = value;
     }
-
 
     /**
      * Print an optimization summary of the formed groups
@@ -1942,8 +1938,6 @@ public class Main {
                 }
             }
             writer.append("\nThe number of modified groups is " + modifiedGroups.size() + ": " + beenModified.toString());
-
-
         }
 
         writer.append("\nThe number of groups that adhere to all of the above criteria is " + intersection.size() + " out of " + groups.size() + " : " + intersection);

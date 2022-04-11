@@ -1,0 +1,101 @@
+Optimization Criteria Used: size=4, programs=true, grades=true, lab section=true, team leader=true
+Student Name,Student ID,Program,Grade,Lab Section,Email,Group Number
+
+G,7,Communications Engineering,A-,L1,xxx,L1.G1
+A,1,Civil Engineering,B+,L1,xxx,L1.G1
+T,20,Electrical Engineering,A,L1,xxx,L1.G1
+M,13,Electrical Engineering,A+,L1,xxx,L1.G1
+
+H,8,Software Engineering,B+,L1,xxx,L1.G2
+I,9,Aerospace Engineering,B+,L1,xxx,L1.G2
+F,6,SREE,B+,L1,xxx,L1.G2
+E,5,Mechanical Engineering,B+,L1,xxx,L1.G2
+
+P,16,Biomedical Engineering,B-,L1,xxx,L1.G3
+O,15,Engineering Physics,B-,L1,xxx,L1.G3
+Q,17,Engineering Physics,B+,L1,xxx,L1.G3
+N,14,Environmental Engineering,B+,L1,xxx,L1.G3
+
+R,18,SREE,C+,L1,xxx,L1.G4
+L,12,SREE,C-,L1,xxx,L1.G4
+J,10,Mechanical Engineering,C-,L1,xxx,L1.G4
+D,4,Environmental Engineering,C,L1,xxx,L1.G4
+
+C,3,Software Engineering,D,L1,xxx,L1.G5
+K,11,Aerospace Engineering,D,L1,xxx,L1.G5
+B,2,Civil Engineering,D,L1,xxx,L1.G5
+S,19,SREE,C-,L1,xxx,L1.G5
+
+F,32,Computer Systems Engineering,A+,L2,xxx,L2.G6
+K,37,Environmental Engineering,A+,L2,xxx,L2.G6
+U,21,SREE,A+,L2,xxx,L2.G6
+
+N,40,Computer Systems Engineering,A,L2,xxx,L2.G7
+L,38,Environmental Engineering,A,L2,xxx,L2.G7
+B,28,Engineering Physics,A,L2,xxx,L2.G7
+
+O,41,Biomedical Engineering,B+,L2,xxx,L2.G8
+D,30,Civil Engineering,B-,L2,xxx,L2.G8
+I,35,Electrical Engineering,A-,L2,xxx,L2.G8
+
+E,31,Software Engineering,B-,L2,xxx,L2.G9
+G,33,Engineering Physics,C+,L2,xxx,L2.G9
+X,24,Communications Engineering,C+,L2,xxx,L2.G9
+M,39,Aerospace Engineering,B-,L2,xxx,L2.G9
+
+Y,25,Communications Engineering,C-,L2,xxx,L2.G10
+Z,26,Communications Engineering,C-,L2,xxx,L2.G10
+V,22,Electrical Engineering,C-,L2,xxx,L2.G10
+A,27,Engineering Physics,C,L2,xxx,L2.G10
+
+W,23,Computer Systems Engineering,D,L2,xxx,L2.G11
+J,36,Environmental Engineering,F,L2,xxx,L2.G11
+H,34,Engineering Physics,C-,L2,xxx,L2.G11
+C,29,Engineering Physics,C-,L2,xxx,L2.G11
+
+W,49,Software Engineering,A,L3,xxx,L3.G12
+X,50,Civil Engineering,A-,L3,xxx,L3.G12
+A,53,Electrical Engineering,A,L3,xxx,L3.G12
+
+E,57,Software Engineering,B,L3,xxx,L3.G13
+F,58,Electrical Engineering,B+,L3,xxx,L3.G13
+B,54,SREE,B+,L3,xxx,L3.G13
+
+P,42,Computer Systems Engineering,B,L3,xxx,L3.G14
+D,56,Engineering Physics,B-,L3,xxx,L3.G14
+Y,51,Civil Engineering,A,L3,xxx,L3.G14
+Z,52,Biomedical Engineering,B-,L3,xxx,L3.G14
+
+G,59,Computer Systems Engineering,C-,L3,xxx,L3.G15
+Q,43,SREE,D,L3,xxx,L3.G15
+S,45,Aerospace Engineering,C-,L3,xxx,L3.G15
+V,48,Biomedical Engineering,C,L3,xxx,L3.G15
+
+T,46,Communications Engineering,D,L3,xxx,L3.G16
+U,47,Mechanical Engineering,F,L3,xxx,L3.G16
+R,44,SREE,F,L3,xxx,L3.G16
+C,55,Civil Engineering,D,L3,xxx,L3.G16
+
+R,70,Computer Systems Engineering,A+,L4,xxx,L4.G17
+Q,69,Communications Engineering,A-,L4,xxx,L4.G17
+K,63,Communications Engineering,A-,L4,xxx,L4.G17
+
+X,76,Computer Systems Engineering,A-,L4,xxx,L4.G18
+I,61,Communications Engineering,B,L4,xxx,L4.G18
+W,75,Software Engineering,B+,L4,xxx,L4.G18
+Y,77,Communications Engineering,A-,L4,xxx,L4.G18
+
+U,73,Biomedical Engineering,C-,L4,xxx,L4.G19
+O,67,Engineering Physics,C,L4,xxx,L4.G19
+V,74,Electrical Engineering,C+,L4,xxx,L4.G19
+H,60,Civil Engineering,B-,L4,xxx,L4.G19
+
+Z,78,Computer Systems Engineering,C-,L4,xxx,L4.G20
+M,65,Aerospace Engineering,B,L4,xxx,L4.G20
+L,64,Engineering Physics,D,L4,xxx,L4.G20
+S,71,Communications Engineering,D,L4,xxx,L4.G20
+
+N,66,Software Engineering,F,L4,xxx,L4.G21
+P,68,Engineering Physics,F,L4,xxx,L4.G21
+J,62,Electrical Engineering,F,L4,xxx,L4.G21
+T,72,Environmental Engineering,D,L4,xxx,L4.G21
