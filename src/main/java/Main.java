@@ -886,8 +886,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1107,8 +1107,8 @@ public class Main {
                 if (student.getEmail().equals("")) {
                     infoMissing = true;
                 }
-                if (student.getGrade().equals("") && gradeFlag) {
-                    infoMissing = true;
+                if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                    student.setGrade("C+");
                 }
                 if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                     infoMissing = true;
@@ -1263,8 +1263,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1418,8 +1418,8 @@ public class Main {
             if (student.getEmail().equals("")) {
                 infoMissing = true;
             }
-            if (student.getGrade().equals("") && gradeFlag) {
-                infoMissing = true;
+            if ((student.getGrade().equals("") || student.getGrade().equals("DEF") || student.getGrade().equals("GNA")) && gradeFlag) {
+                student.setGrade("C+");
             }
             if (student.getProgram().equals("") && (programsFlag || teamLeaderFlag)) {
                 infoMissing = true;
@@ -1670,13 +1670,11 @@ public class Main {
             else if (s.getGrade().equals("D")) groupD.add(s);
             else if (s.getGrade().equals("D-")) groupDm.add(s);
             else if (s.getGrade().equals("F")) groupF.add(s);
-            else if(s.getGrade().equals("DEF") || s.getGrade().equals("GNA")) groupCp.add(s);
         }
-
         gradeGroup.removeIf(ArrayList::isEmpty);
 
         //move some students to the first grade level (number of students to be sorted into the smaller groups)
-        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size()); //FIXME issue with smaller numbers of students
+        int numGroupsOfMinSize = getNumGroupsOfMinSize(students.size());
         int numStudents = numGroupsOfMinSize * minimumGroupSize;
         if (numGroupsOfMinSize != 0) {
             while (gradeGroup.get(0).size() < numStudents) {
