@@ -20,10 +20,10 @@ public class MainTest {
         Main.setTeamLeaderFlag(true);
 
         // insert a valid file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         assertTrue(Main.readCSVCreate(filenames));
 
-        filenames.remove("test.csv");
+        filenames.remove("sample files/students_sample.csv");
 
         // insert two files and merge
         filenames.add("test files/test_merge_1.csv");
@@ -82,7 +82,7 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         // adds test student file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -105,7 +105,7 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         // adds students file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -128,7 +128,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
 
         // add student file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -150,7 +150,7 @@ public class MainTest {
         Main.setProgramsFlag(false);
 
         // adds students file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -172,7 +172,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
 
         // adds students file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -194,7 +194,7 @@ public class MainTest {
         Main.setTeamLeaderFlag(false);
 
         // adds students file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // set group size
@@ -218,7 +218,7 @@ public class MainTest {
         Main.setTeamLeaderFlag(true);
 
         // adds students file
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         // reads file
         assertTrue(Main.readCSVCreate(filenames));
         // sets group size
@@ -282,7 +282,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
         assertTrue(Main.readCSVCreate(filenames));
@@ -329,7 +329,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
-        filenames.add("test.csv");
+        filenames.add("sample files/students_sample.csv");
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
         assertTrue(Main.readCSVCreate(filenames));

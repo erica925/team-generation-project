@@ -37,7 +37,6 @@ public class Main {
     public static void beginRandomCreate() throws IOException {
         groups = new ArrayList<>();
         totalStudents = students.size();
-        System.out.println(totalStudents);
 
         simpleSort(students);
         assignGroupNumbers();
