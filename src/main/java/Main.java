@@ -35,6 +35,20 @@ public class Main {
     }
 
     /**
+     * Creates random assignments of groups
+     * @throws IOException
+     */
+    public static void beginRandomCreate() throws IOException {
+        groups = new ArrayList<>();
+        totalStudents = students.size();
+
+        randomSort(students);
+        assignGroupNumbers();
+        writeCSV();
+        optimizationSummary();
+    }
+
+    /**
      * The modify use case where some pre-made groups are given with some new and withdrawn students
      * Removes the withdrawn students and adds the new students to the groups
      * Outputs the new groups on top with the unaffected groups at the bottom
@@ -1500,6 +1514,36 @@ public class Main {
     }
 
     /**
+     * Just split the students into groups of maxGroupSize
+     * by randomly selecting students
+     *
+     * @param students The list of students to be grouped
+     */
+    private static void randomSort(Group students) {
+        int numMinGroups = getNumGroupsOfMinSize(students.size());
+        for (int i = 0; i < numMinGroups; i++) {
+            Group group = new Group();
+            groups.add(group);
+
+        }
+        Random r = new Random();
+        int numGroups = students.size() / maximumGroupSize;
+        for (int i = 0; i < numGroups; i++) {
+            Group group = new Group();
+            groups.add(group);
+            for (int j = 0; j < maximumGroupSize; j++) {
+                int index = r.nextInt(students.size());
+                group.add(students.get(index));
+                students.remove(index);
+                if (students.size() == 0) {
+                    break;
+                }
+            }
+        }
+    }
+
+
+    /**
      * Creates groups with only a team leader assigned
      *
      * @param students The list of students to be sorted
@@ -1837,15 +1881,22 @@ public class Main {
             ArrayList<String> diffLabs = new ArrayList(); //the number of groups in which NOT all students are registered in the same lab section
             ArrayList<String> sameLabs = new ArrayList(); //the number of groups in which all students are registered in the same lab section
             for (Group group : groups) {
+                boolean diff = false;
                 for (int i = 0; i < group.size() - 1; i++) {
+                    if (diff) {
+                        break;
+                    }
                     for (int j = i + 1; j < group.size(); j++) {
                         if (!group.get(i).getLabSection().equals(group.get(j).getLabSection())) {
                             diffLabs.add(group.get(0).getGroupNum());
+                            diff = true;
                             break;
                         }
                     }
                 }
-                sameLabs.add(group.get(0).getGroupNum());
+                if(!diff) {
+                    sameLabs.add(group.get(0).getGroupNum());
+                }
             }
             intersection.retainAll(sameLabs);
             writer.append("\nTo meet the lab section criteria, all students in the same group must be registered in the same lab section.");
