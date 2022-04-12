@@ -298,7 +298,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
-        filenames.add("test files/random1.csv");
+        filenames.add("sample files/students_sample.csv");
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
         assertTrue(Main.readCSVCreate(filenames));
@@ -315,7 +315,7 @@ public class MainTest {
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
-        filenames.add("test files/random2.csv");
+        filenames.add("sample files/students_sample.csv");
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
         assertTrue(Main.readCSVCreate(filenames));

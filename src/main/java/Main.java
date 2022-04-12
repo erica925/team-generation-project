@@ -38,7 +38,7 @@ public class Main {
         groups = new ArrayList<>();
         totalStudents = students.size();
 
-        simpleSort(students);
+        randomSort(students);
         assignGroupNumbers();
         writeCSV();
         optimizationSummary();
@@ -1508,6 +1508,36 @@ public class Main {
             }
         }
     }
+
+    /**
+     * Just split the students into groups of maxGroupSize
+     * by randomly selecting students
+     *
+     * @param students The list of students to be grouped
+     */
+    private static void randomSort(Group students) {
+        int numMinGroups = getNumGroupsOfMinSize(students.size());
+        for (int i = 0; i < numMinGroups; i++) {
+            Group group = new Group();
+            groups.add(group);
+
+        }
+        Random r = new Random();
+        int numGroups = students.size() / maximumGroupSize;
+        for (int i = 0; i < numGroups; i++) {
+            Group group = new Group();
+            groups.add(group);
+            for (int j = 0; j < maximumGroupSize; j++) {
+                int index = r.nextInt(students.size());
+                group.add(students.get(index));
+                students.remove(index);
+                if (students.size() == 0) {
+                    break;
+                }
+            }
+        }
+    }
+
 
     /**
      * Creates groups with only a team leader assigned
