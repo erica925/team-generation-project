@@ -277,15 +277,20 @@ public class MainTest {
 
     @Test
     public void randomAlgorithm1() throws IOException {
+        // sets flags
         Main.setLabSectionFlag(true);
         Main.setGradeFlag(true);
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
+        // adds student file
         filenames.add("sample files/students_sample.csv");
+        // sets group size
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
+        // reads file
         assertTrue(Main.readCSVCreate(filenames));
+        // creates groups
         Main.beginRandomCreate();
 
         filenames.clear();
@@ -293,15 +298,20 @@ public class MainTest {
 
     @Test
     public void randomAlgorithm2() throws IOException {
+        // sets flags
         Main.setLabSectionFlag(true);
         Main.setGradeFlag(true);
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
+        // adds student file
         filenames.add("sample files/students_sample.csv");
+        // sets group size
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
+        // reads file
         assertTrue(Main.readCSVCreate(filenames));
+        // creates groups
         Main.beginRandomCreate();
 
         filenames.clear();
@@ -310,28 +320,36 @@ public class MainTest {
 
     @Test
     public void randomAlgorithm3() throws IOException {
+        // sets flags
         Main.setLabSectionFlag(true);
         Main.setGradeFlag(true);
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
+        // adds student file
         filenames.add("sample files/students_sample.csv");
+        // sets group size
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
+        // reads file
         assertTrue(Main.readCSVCreate(filenames));
         Main.beginRandomCreate();
     }
 
     @Test
     public void originalAlgorithm() throws IOException {
+        // sets flags
         Main.setLabSectionFlag(true);
         Main.setGradeFlag(true);
         Main.setProgramsFlag(true);
         Main.setTeamLeaderFlag(true);
 
+        // adds student file
         filenames.add("sample files/students_sample.csv");
+        // sets group size
         Main.setMaximumGroupSize(4);
         Main.setMinimumGroupSize();
+        // reads file
         assertTrue(Main.readCSVCreate(filenames));
         Main.beginCreate();
     }
