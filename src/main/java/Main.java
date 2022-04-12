@@ -34,6 +34,10 @@ public class Main {
         optimizationSummary();
     }
 
+    /**
+     * Creates random assignments of groups
+     * @throws IOException
+     */
     public static void beginRandomCreate() throws IOException {
         groups = new ArrayList<>();
         totalStudents = students.size();
